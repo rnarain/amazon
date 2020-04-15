@@ -1,5 +1,5 @@
 body {
-  font-family: "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif";
+  font-family: "Ubuntu","Segoe UI", "Roboto", "Helvetica Neue", "sans-serif";
   background-color: #f7f7f7;
 
 }
@@ -7,9 +7,14 @@ body {
 a{
   color :#333
 }
+ /* a:hover ,a:active, a:link, a:visited {
+  text-decoration: none !important;
+  color: #0066c0 !important;
+  background-color: none !important;
+} */
 
-.handshake-body{
-  margin-top:50px;
+.amazon-body{
+  margin-top:110px;
   background-color: #f7f7f7;
 }
 
@@ -92,19 +97,23 @@ margin:10px 0px;
 .back { text-align: left; margin-top:10px;}
 .back a {color: #444444; font-size: 13px;text-decoration: none;}
 
-.navbar-brand .navbar-brand__logo-full {
-  height: 20px;
+.navbar-brand__logo-full {
+  height: 35px;
   vertical-align: middle;
 }
 
 .navbar{
   border-bottom: 1px solid #e0e0e0;
-  background-color: white;
-  height: 70px;
+  background-color:#232f3e;
+  height: 110px;
   line-height: 50px;
-  padding: 10px 50px;
-  font-weight: 500;
+  padding: 5px 10px;
+  font-weight: 520;
 
+}
+
+.xshop li a{
+  color: #ccc !important;
 }
 
 
@@ -220,7 +229,8 @@ margin:10px 0px;
 } */
 
 .searchbox{
-width:300px !important;
+width:85% !important;
+padding:5px 10px;
 }
 
 .profile-container{
@@ -332,12 +342,16 @@ width:300px !important;
 }
 
 .navbar li a{
-  color: #444;
+  color: #fff;
   font-size: 14px;
   height: 60px;
   margin: 0 5px;
   padding-bottom: 4px;
   text-decoration: none;
+}
+
+.nav li a:hover , .nav li a:active{
+  background-color: transparent;
 }
 
 .nav-postings{
@@ -569,4 +583,31 @@ img{ max-width:100%;}
 
 .delete-button{
 margin-left:10px;
+}
+
+.badge{
+  background:orange;
+  position:relative;
+  top: -20px;
+  left: 3px;
+  font-size:12px
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-logo{
+  padding: 30px 0px;
+  text-align: center;
+  background-color:#232f3e;
+}
+
+.footer-credits{
+  padding: 10px 0px;
+  text-align: center;
+  background-color:#131A22;
+  color:white;
 }
