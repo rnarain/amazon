@@ -2,11 +2,17 @@ import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
+import axios from 'axios';
+import backendServer from '../../webConfig'
 
 //create the Navbar Component
 class Navbar extends Component {
     constructor(props){
         super(props);
+        this.state={
+            categories : [],
+            selectedCategory : "All Departments"
+        }
         this.handleLogout = this.handleLogout.bind(this);
     }
     //handle logout to destroy the cookie
@@ -15,6 +21,22 @@ class Navbar extends Component {
         localStorage.removeItem('type');
     }
 
+    componentDidMount(){
+        axios.get(`${backendServer}/category/getAllCategories`)
+        .then(response => {
+                this.setState({
+                    categories : response.data.data
+                })
+            }
+        ).catch( ex =>{
+           alert(ex);
+        });
+    }
+    categoriesChangeHandler = (e) =>{
+        this.setState({
+            selectedCategory : e.target.value
+        })
+    }
 
     render(){
         let navLinks = null;
@@ -24,10 +46,6 @@ class Navbar extends Component {
                 <ul className="nav navbar-nav navbar-right">
                 <li><Link to={profileLink}>Profile</Link></li>
                         <li><Link to="/student/postings">Jobs</Link></li>
-                        <li><Link to="/student/messages">Messages</Link></li>
-                        <li><Link to="/student/events">Events</Link></li>
-                        <li><Link to="/student/students">Students</Link></li>
-
                 </ul>
             );
         }
@@ -60,6 +78,11 @@ class Navbar extends Component {
             )
         }
         let redirectVar = null;
+        let categoriesDropDownOptions = this.state.categories.map(c => {
+            return (
+                <li className="li-dropdown" key= {c.category}><button className="btn btn-link" onClick={this.categoriesChangeHandler}  value={c.category}> {c.category} </button></li>
+            )
+        });
         // if(!localStorage.getItem('id')){
         //     redirectVar = <Redirect to="/login"/>
         // }
@@ -72,10 +95,25 @@ class Navbar extends Component {
                     <a className="navbar-brand " href="#"><img className="navbar-brand__logo-full"  src="../images/amazon-logo.png" /></a>
                     </div>
                     <div className="navbar-header col-sm-8">
-                            <form className="form-inline my-2 my-lg-0 ml-auto">
+                    <div className="input-group">
+                <div className="input-group-btn search-panel">
+                    <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    	<span id="search_concept">{this.state.selectedCategory}</span> <span className="caret"></span>
+                    </button>
+                    <ul className="dropdown-menu" role="menu">
+                    {categoriesDropDownOptions}
+                    </ul>
+                </div>
+                <input type="text" className="form-control searchbox" name="x" placeholder="Search term..." />
+                <span className="input-group-btn">
+                    <button className="btn btn-default searchbutton" type="button"><span className="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        
+                            {/* <select onChange={this.categoriesChangeHandler} className="form-control departments">{categoriesDropDownOptions}</select>
                 <input className="form-control searchbox" type="search" placeholder="Search" aria-label="Search" />
                 <button className="btn btn-outline-white btn-md my-2 my-sm-0 ml-3 searchbutton" type="submit">Search</button>
-            </form>
+            </form> */}
             </div>
                     {navLinks}                    
                     <div className="row">

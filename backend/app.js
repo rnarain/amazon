@@ -68,11 +68,15 @@ mongoose.connect(mongoDB, options, (err, res) => {
 
   app.use(express.json());
 var studentRouter =  require('./api/student/student.router');
+var categoryRouter =  require('./api/category/category.router');
+
 
 
 
 
 app.use('/student',studentRouter);
+app.use('/category',categoryRouter);
+
 
 //start your server on port 3001
 module.exports = app.listen(3001);

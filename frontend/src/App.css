@@ -78,7 +78,7 @@ padding: 8px 40px;
 margin:10px 0px;
 }
 .searchbutton {
-  margin:0px 10px;
+  background-color: orange;
 }
  
 .forgot a {
@@ -229,8 +229,7 @@ margin:10px 0px;
 } */
 
 .searchbox{
-width:85% !important;
-padding:5px 10px;
+  margin-top: 13px !important;
 }
 
 .profile-container{
@@ -611,3 +610,20 @@ margin-left:10px;
   background-color:#131A22;
   color:white;
 }
+
+.departments{
+  width:130px !important;
+  margin-right: 10px;
+}
+
+.li-dropdown{
+  line-height:15px !important;
+  padding: 0px 5px;
+}
+
+.li-dropdown button{
+  margin : 0px !important;
+  padding: 0px !important;
+
+}
+

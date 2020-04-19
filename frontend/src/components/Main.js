@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Route,Switch} from 'react-router-dom';
 
 import Login from './Login/Login';
-import Home from './Home/Home';
+import Home from './Customer/Dashboard/Dashboard';
 
 
 import Navbar from './LandingPage/Navbar';

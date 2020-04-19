@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import backendServer from "../../../webConfig";
 import { connect } from 'react-redux';
+import backendServer from '../../../webConfig'
 
 
 
 
-class HomePage extends Component {
+
+class DashboardPage extends Component {
     constructor(props) {
         //Call the constrictor of Super class i.e The Component
         super(props);
@@ -17,12 +19,7 @@ class HomePage extends Component {
     }
     //Call the Will Mount to set the auth Flag to false
      componentDidMount() {
-        // if (this.props.match.params.id == localStorage.getItem('id')) {
-        //     this.setState({
-        //         editable: true
-        //     })
-        // }
-        // this.props.studentdata(this.props.match.params.id);
+        
     }
 
     componentDidUpdate() {
@@ -44,8 +41,8 @@ class HomePage extends Component {
     render() {
         return (
             <div className="amazon-body container-fluid">
-                <div className=" col-sm-8 col-sm-offset-2 profile-container card-columns">
-                    test
+                <div className="col-sm-8 col-sm-offset-2 profile-container card-columns">
+                    
                    </div>
             </div>
         )
@@ -64,5 +61,5 @@ function mapDispatchToProps(dispatch) {
         
     };
 }
-const Home = connect(mapStateToProps, mapDispatchToProps)(HomePage);
-export default Home;
+const Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
+export default Dashboard;
