@@ -44,8 +44,9 @@ class Navbar extends Component {
             let profileLink = "/student/profile/" + localStorage.getItem('id');
             navLinks= (
                 <ul className="nav navbar-nav navbar-right">
-                <li><Link to={profileLink}>Profile</Link></li>
-                        <li><Link to="/student/postings">Jobs</Link></li>
+                <li><Link to="/company/postings">Sign In</Link></li>
+                        <li><Link to={profileLink}>Orders</Link></li>
+                        <li><Link to="/company/messages"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">2</span></Link></li>
                 </ul>
             );
         }
