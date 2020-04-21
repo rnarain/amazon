@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {Route,Switch} from 'react-router-dom';
 
 import Login from './Login/Login';
-import Home from './Customer/Dashboard/Dashboard';
+import Dashboard from './Customer/Dashboard/Dashboard';
+import ProductSearch from './Customer/Product/ProductSearch/ProductSearch';
+
 
 
 import Navbar from './LandingPage/Navbar';
@@ -27,7 +29,8 @@ class Main extends Component {
             <div>
                 {/*Render Different Component based on Route*/}
                 {navRoute}
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={Dashboard} />
+                <Route exact path="/product-search" component={ProductSearch} />
                 <Route path="/login" component={Login}/>
                 {footer}
             </div>

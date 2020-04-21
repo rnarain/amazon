@@ -6,6 +6,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
     "jwt-decode": "^2.2.0",
+    "query-string": "^6.12.1",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-cookies": "^0.1.1",
