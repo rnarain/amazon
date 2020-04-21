@@ -69,6 +69,7 @@ mongoose.connect(mongoDB, options, (err, res) => {
   app.use(express.json());
 var studentRouter =  require('./api/student/student.router');
 var categoryRouter =  require('./api/category/category.router');
+var customerRouter = require('./api/customer/customer.router');
 
 
 
@@ -76,6 +77,7 @@ var categoryRouter =  require('./api/category/category.router');
 
 app.use('/student',studentRouter);
 app.use('/category',categoryRouter);
+app.use('/customer', customerRouter);
 
 
 //start your server on port 3001
