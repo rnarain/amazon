@@ -35,7 +35,7 @@ class Main extends Component {
                         {footer}
                     </Fragment>
                 }
-                {localStorage.getItem('id') &&
+                {!localStorage.getItem('id') &&
                     <Route path="/" component={Login} />
                 }
                 {/*<Route path="/login" component={Login}/>*/}
