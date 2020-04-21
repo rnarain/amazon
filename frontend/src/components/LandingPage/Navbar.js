@@ -11,7 +11,9 @@ class Navbar extends Component {
         super(props);
         this.state={
             categories : [],
-            selectedCategory : "All Departments"
+            selectedCategory : "All",
+            searchValue : "",
+            redirect : false
         }
         this.handleLogout = this.handleLogout.bind(this);
     }
@@ -32,10 +34,34 @@ class Navbar extends Component {
            alert(ex);
         });
     }
+
+    componeneDidUpdate(){
+        if(this.stat.redirect){
+            this.setState({
+                redirect : false
+            })
+        }
+    }
     categoriesChangeHandler = (e) =>{
         this.setState({
             selectedCategory : e.target.value
         })
+    }
+
+    searchChangeHandler = (e) =>{
+        this.setState({
+            searchValue: e.target.value,
+            redirect:false
+        })
+    }
+
+    submitSearch = () =>{
+        if(this.state.searchValue){
+            this.setState({
+                redirect: true
+            })
+        }
+        
     }
 
     render(){
@@ -84,9 +110,10 @@ class Navbar extends Component {
                 <li className="li-dropdown" key= {c.category}><button className="btn btn-link" onClick={this.categoriesChangeHandler}  value={c.category}> {c.category} </button></li>
             )
         });
-        // if(!localStorage.getItem('id')){
-        //     redirectVar = <Redirect to="/login"/>
-        // }
+        if(this.state.redirect){
+            let link = "/product-search?name="+this.state.searchValue + "&category=" + this.state.selectedCategory;
+            redirectVar = <Redirect to={link}/>
+        }
         return(
             <div className="container">
                  {redirectVar} 
@@ -105,9 +132,9 @@ class Navbar extends Component {
                     {categoriesDropDownOptions}
                     </ul>
                 </div>
-                <input type="text" className="form-control searchbox" name="x" placeholder="Search term..." />
+                <input type="text" className="form-control searchbox"  placeholder="Search term..." onChange={this.searchChangeHandler} value={this.state.searchValue} />
                 <span className="input-group-btn">
-                    <button className="btn btn-default searchbutton" type="button"><span className="glyphicon glyphicon-search"></span></button>
+                    <button className="btn btn-default searchbutton" type="button" onClick={this.submitSearch}><span className="glyphicon glyphicon-search"></span></button>
                 </span>
             </div>
         

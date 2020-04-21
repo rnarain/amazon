@@ -1,6 +1,5 @@
 body {
   font-family: "Ubuntu","Segoe UI", "Roboto", "Helvetica Neue", "sans-serif";
-  background-color: #f7f7f7;
 
 }
 
@@ -15,7 +14,7 @@ a{
 
 .amazon-body{
   margin-top:110px;
-  background-color: #f7f7f7;
+  min-height:425px;
 }
 
 
@@ -121,8 +120,10 @@ margin:10px 0px;
   background:#FFF;
   border-radius:0;
   padding:20px 20px;
-  margin:30px 0px;
-  box-shadow: 0 0 4px 1px rgba(0,0,0,0.05);
+  margin:0px 0px;
+  border-bottom: 2px solid #ddd;
+  height:300px
+  /* box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); */
 
 }
 
@@ -130,11 +131,16 @@ margin:10px 0px;
     background:#FFF;
     border-radius:0;
     margin:30px 0px;
-    box-shadow: 0 0 4px 1px rgba(0,0,0,0.05);
+    padding:0px 5px;
+    /* box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); */
+}
+
+.bottom-border{
+  border-bottom: 2px solid #ddd;
 }
 
 .padding-inside{
-  padding:20px 20px;
+  /* padding:20px 20px; */
 }
 
 .box-part-container{
@@ -592,8 +598,7 @@ margin-left:10px;
   font-size:12px
 }
 
-#footer {
-  position: fixed;
+.footer {
   bottom: 0;
   width: 100%;
 }
@@ -627,3 +632,29 @@ margin-left:10px;
 
 }
 
+.product-image{
+width:100%;
+height:223px ;
+position : relative
+}
+
+.product-image img{
+  position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.product-heading{
+  font-size:16px;
+}
+
+.glyphicon-star{color:orange;}
+
+.font550{
+font-weight:550
+}
