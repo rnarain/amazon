@@ -1,71 +1,45 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
-import cookie from 'react-cookies';
 import { Redirect } from 'react-router';
-import { colleges, majors } from '../../enum';
 import backendServer from '../../webConfig'
+//import importScripts from 'import-scripts'
+import logo from './Amazon Registration_files/amazonlogo.png';
 
+import './Amazon Registration_files/61Brdu0o6LL._RC_11Fd9tJOdtL.css,21y5jWQoUML.css,31Q3id-QR0L.css,31P8A7PnBZL.css_.css';
+import './Amazon Registration_files/01SdjaY0ZsL._RC_419sIPk+mYL.css,41DvNOWXxOL.css_.css';
+import './Amazon Registration_files/11E08O3eXDL.css';
+//import './Amazon Sign-In_files/sc-unified._CB420062852_.png';
 
+//importScripts('./Amazon Sign-In_files/01dTJcsqFWL.js');
+//importScripts ('./Amazon Sign-In_files/01dTJcsqFWL.js','./Amazon Sign-In_files/21G215oqvfL._RC_21OJDARBhQL.js,218GJg15I8L.js,31lucpmF4CL.js,21juQdw6GzL.js,01VX5nZp3aL.js,51Frc-C+fbL.js_.js','./Amazon Sign-In_files/313ogLTl-7L.js','./Amazon Sign-In_files/31BVuidgT8L.js','./Amazon Sign-In_files/61-6nKPKyWL._RC_11nbb7wy9oL.js,61q-U9rAZ3L.js,31x4ENTlVIL.js,31f4+QIEeqL.js,01N6xzIJxbL.js,518BI433aLL.js,01rpauTep4L.js,31QZSjMuoeL.js,61ofwvddDeL.js,01KsMxlPtzL.js_.js','./Amazon Sign-In_files/71YykWp-LFL.js');
 
-//Define a Signup Component
-class Signup extends Component {
+// import { connect } from 'react-redux';
+const jwt_decode = require('jwt-decode');
+
+//Define a Login Component
+class Login extends Component {
     //call the constructor method
     constructor(props) {
         //Call the constrictor of Super class i.e The Component
         super(props);
         //maintain the state required for this component
         this.state = {
-            fname:"",
-            lname:"",
-            college:"",
-            yearOfPassing:"",
-            major:"",
             email: "",
             password: "",
-            confpassword:"",
+            type: 'Customer',
             authFlag: false
         }
         //Bind the handlers to this className
-        this.fnameChangeHandler = this.fnameChangeHandler.bind(this);
-        this.lnameChangeHandler = this.lnameChangeHandler.bind(this);
-        this.collegeChangeHandler = this.collegeChangeHandler.bind(this);
-        this.yearOfPassingHandler = this.yearOfPassingHandler.bind(this);
-        this.majorChangeHandler = this.majorChangeHandler.bind(this);
         this.emailChangeHandler = this.emailChangeHandler.bind(this);
         this.passwordChangeHandler = this.passwordChangeHandler.bind(this);
-        this.confirmPasswordChangeHandler = this.confirmPasswordChangeHandler.bind(this);
-        this.submitSignup = this.submitSignup.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     //Call the Will Mount to set the auth Flag to false
     componentWillMount() {
         this.setState({
             authFlag: false
-        })
-    }
-    fnameChangeHandler = (e) => {
-        this.setState({
-            fname: e.target.value
-        })
-    }
-    lnameChangeHandler = (e) => {
-        this.setState({
-            lname: e.target.value
-        })
-    }
-    collegeChangeHandler = (e) => {
-        this.setState({
-            college: e.target.value
-        })
-    }
-    yearOfPassingHandler = (e) => {
-        this.setState({
-            yearOfPassing: e.target.value
-        })
-    }
-    majorChangeHandler = (e) => {
-        this.setState({
-            major: e.target.value
         })
     }
     //email change handler to update state variable with the text entered by the user
@@ -80,171 +54,237 @@ class Signup extends Component {
             password: e.target.value
         })
     }
-    confirmPasswordChangeHandler = (e) => {
+    userTypeChangeHandler = (e) => {
         this.setState({
-            confpassword: e.target.value
+            type: e.target.value
         })
     }
-    //submit Signup handler to send a request to the node backend
-    submitSignup = (e) => {
+
+    handleChange = (e) => {
+        console.log('e', e.target.name);
+        console.log('e', e.target.value);
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    //submit Login handler to send a request to the node backend
+    handleLogin = (e) => {
         var headers = new Headers();
         //prevent page from refresh
         e.preventDefault();
         const data = {
-            fname:this.state.fname,
-            lname:this.state.lname,
-            college:this.state.college,
-            yearOfPassing:this.state.yearOfPassing,
-            major:this.state.major,
             email: this.state.email,
-            password: this.state.password,
+            password: this.state.password
         }
-
-        console.log(data);
         //set the with credentials to true
         axios.defaults.withCredentials = true;
         //make a post request with the user data
-        axios.post(`${backendServer}/api/account/createStudent`, data)
+        axios.post('http://localhost:3000/' + 'login', data)
             .then(response => {
-                console.log("Status Code : ", response.status);
-                if (response.status === 200) {
-                    this.setState({
-                        authFlag: true
-                    })
-                } else {
-                    this.setState({
-                        authFlag: false
-                    })
-                }
+                console.log(response);
+                var decoded = jwt_decode(response.data.data);
+                localStorage.setItem("token", "Bearer " + response.data.data);
+                localStorage.setItem("id", decoded._id);
+                localStorage.setItem("name", decoded.name);
+                //localStorage.setItem("profilePicURL", decoded.profilePicURL);
+
+                // localStorage.setItem("type", this.state.type);
+                this.setState({
+                    authFlag: true
+                })
+
+            }
+            ).catch(ex => {
+                this.setState({
+                    authFlag: false
+                })
             });
     }
 
-
-
     render() {
-
-        //redirect based on successful Signup
+        //redirect based on successful login
         let redirectVar = null;
-        if (this.state.authFlag) {
-            redirectVar = <Redirect to="/login" />
+        if (this.state.type === 'student' && this.state.authFlag) {
+            localStorage.setItem("type", 0);
+            let redVar = "/student/profile/" + localStorage.getItem('id');
+            redirectVar = <Redirect to={redVar} />
         }
-
-        var years = [];
-        for (var i = 2025; i > 1950; i--) {
-            years.push(i);
+        else if (this.state.type === 'company' && this.state.authFlag) {
+            localStorage.setItem("type", 1);
+            redirectVar = <Redirect to="/company/postings" />
         }
-        let listOfYears = years.map(year => {
-            return (
-                <option key= {year} value={year}> {year} </option>
-            )
-        })
-
-        let collegeSelect =
-        (
-            <select onChange={this.collegeChangeHandler} value={this.state.college} className="form-control">
-                <option key={colleges[0]} value="0" > {colleges[0]} </option>
-                <option key={colleges[1]} value="1"> {colleges[1]} </option>
-                <option key={colleges[2]} value="2"> {colleges[2]} </option>
-                <option key={colleges[3]} value="3"> {colleges[3]} </option>
-            </select>
-        );
-
-    let majorSelect =
-        (
-            <select onChange={this.majorChangeHandler} value={this.state.major} className="form-control">
-                <option key={majors[0]} value="0" >{majors[0]} </option>
-                <option key={majors[1]} value="1"> {majors[1]} </option>
-                <option key={majors[2]} value="2"> {majors[2]} </option>
-                <option key={majors[3]} value="3"> {majors[3]} </option>
-                <option key={majors[4]} value="4" >{majors[4]} </option>
-                <option key={majors[5]} value="5"> {majors[5]} </option>
-                <option key={majors[6]} value="6"> {majors[6]} </option>
-                <option key={majors[7]} value="7"> {majors[7]} </option>
-                <option key={majors[8]} value="8" >{majors[8]} </option>
-            </select>
-        );
-
+        let userType =
+            (
+                <select onChange={this.userTypeChangeHandler} value={this.state.userType} className="form-control">
+                    <option value="student" > Student </option>
+                    <option value="company"> Employer </option>
+                </select>
+            );
         return (
-            <div className="container">
-                {redirectVar}
-                <div className="Signup-form">
 
-                    <div className="sidebar col-sm-4">
-                        <a className="logo" href=""><img alt="Handshake logo image" src="https://handshake-production-cdn.joinhandshake.com/assets/logo-icon-2d294d9834da88f5fdf0ab747dd89fb15f8ab7c12a3e193294bab3d522d71a2c.svg" height="42" /></a>
-                        <div className="content">
-
-                            <h1 className="marketing-title">
-                                Join the Handshake community
-                                    &nbsp;
-</h1>
-                            <div className="marketing-content">
-                                <p>Discover jobs and internships based on your interests.</p>
+            <div>
+                {/* saved from url=(0014)about:internet */}
+                <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
+                {/* 1b2l */}
+                <title dir="ltr">Amazon Registration</title>
+                <link rel="stylesheet" href="./Amazon Registration_files/61Brdu0o6LL._RC_11Fd9tJOdtL.css,21y5jWQoUML.css,31Q3id-QR0L.css,31P8A7PnBZL.css_.css" />
+                <link rel="stylesheet" href="./Amazon Registration_files/01SdjaY0ZsL._RC_419sIPk+mYL.css,41DvNOWXxOL.css_.css" />
+                <link rel="stylesheet" href="./Amazon Registration_files/11E08O3eXDL.css" />
+                <div id="a-page">
+                    <div className="a-section a-padding-medium auth-workflow">
+                        <div className="a-section a-spacing-none auth-navbar">
+                            <div className="a-section a-spacing-medium a-text-center">
+                                <a className="a-link-nav-icon" tabIndex={-1} href="https://www.amazon.com/ref=ap_frn_logo">
+                                    <i className="a-icon a-icon-logo" role="img" src={logo} aria-label="Amazon" />
+                                </a>
                             </div>
-                            <div data-bind="invisible: prompt_for_linked_account_password">
-                                <a href="/employer_registrations/new">Are you an employer? Create an account here.</a>
-
+                        </div>
+                        <div id="authportal-center-section" className="a-section">
+                            <div id="authportal-main-section" className="a-section">
+                                <div className="a-section a-spacing-base auth-pagelet-container">
+                                    <div id="auth-cookie-warning-message" className="a-box a-alert a-alert-warning"><div className="a-box-inner a-alert-container"><h4 className="a-alert-heading">Please Enable Cookies to Continue</h4><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                        <p>
+                                            <a className="a-link-normal" href="https://www.amazon.com/gp/help/customer/display.html/ref=ap_cookie_error_help?">
+                                            </a>
+                                        </p>
+                                    </div></div></div>
+                                </div>
+                                <div className="a-section auth-pagelet-container">
+                                    {/* show a warning modal dialog when the third party account is connected with Amazon */}
+                                    <div className="a-section">
+                                        <form id="ap_register_form" name="register" method="post" noValidate action="https://www.amazon.com/ap/register" data-enable-mobile-account-js="false" data-post-verification-action="https://www.amazon.com/ap/register" className="a-spacing-none auth-validate-form auth-real-time-validation" data-fwcim-id="m4B9056D">
+                                            <input type="hidden" name="appActionToken" defaultValue="Wir7JCXZQLLHAEgCNhVZ6DpjvmEj3D" /><input type="hidden" name="appAction" defaultValue="REGISTER" />
+                                            <input type="hidden" name="openid.return_to" defaultValue="ape:aHR0cHM6Ly93d3cuYW1hem9uLmNvbS9ncC95b3Vyc3RvcmUvaG9tZT9pZT1VVEY4JnJlZl89bmF2X2N1c3RyZWNfbmV3Y3VzdA==" />
+                                            <input type="hidden" name="prevRID" defaultValue="ape:WTgwNDE4WEFLNDMwVEc5QkhQMEQ=" />
+                                            <input type="hidden" name="workflowState" defaultValue="eyJ6aXAiOiJERUYiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiQTI1NktXIn0.rpTbU2VeFER-uncrqvNUKGmLpQbPhFpzrrJR9wAhyj-qfwmw2mFWlQ.jLtDssrAE29k7ugw.9ZbJM0meCap6YS_FMyrkYUGJltK4CJC5zXcDM0ion5U6zX09XfF-rYeLRqr7feGM7AkwhwAi6OB8oiH6dK94X6300hFXlC2Najo2gguT2aP0rx2OmgK0R9nwkpYClfJPvq376kN2IxhdVRf2EH_N04rXMvpK8l9Te7vBwKSHaqI_uyg-XRxbJrge1Lttyk9jGxFHsDXshearvo8lWn49OQFVj5ftn1AiAIIhAF33lRWrpWVWoqnlT9EvLP1Cm8tolrpgYMXrLusvZucutC3a7PkbLrVWqIFffygH5ntq.NWSI-C8ijvoK17EoGf0N9w" />
+                                            <input type="hidden" name="claimToken" className="auth-contact-verification-claim-token" />
+                                            <div className="a-box a-spacing-extra-large"><div className="a-box-inner">
+                                                <h1 className="a-spacing-small">
+                                                    Create account
+                              </h1>
+                                                {/* optional subheading element */}
+                                                <div className="a-row a-spacing-base">
+                                                    <label htmlFor="ap_customer_name" className="a-form-label">
+                                                        Your name
+                                </label>
+                                                    <input type="text" maxLength={50} id="ap_customer_name" autoComplete="off" name="customerName" tabIndex={1} className="a-input-text a-span12 auth-autofocus auth-required-field auth-contact-verification-request-info" />
+                                                    <div id="auth-customerName-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                        Enter your name
+                                    </div></div></div>
+                                                </div>
+                                                <div className="auth-require-fields-match-group">
+                                                    <div className="a-row a-spacing-base">
+                                                        <label htmlFor="ap_email" className="a-form-label">
+                                                            Email
+                                  </label>
+                                                        <input type="email" maxLength={64} id="ap_email" name="email" tabIndex={3} className="a-input-text a-span12 auth-required-field auth-require-fields-match auth-require-email-validaton auth-require-reverify-on-change auth-contact-verification-request-info" />
+                                                        <div id="auth-email-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Enter your email
+                                      </div></div></div>
+                                                        <div id="auth-email-invalid-email-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Enter a valid email address
+                                      </div></div></div>
+                                                        <div id="auth-email-invalid-claim-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Wrong or Invalid email address or mobile phone number. Please correct and try again.
+                                      </div></div></div>
+                                                        <div id="auth-email-missing-alert-ango-email" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Enter your email
+                                      </div></div></div>
+                                                        <div id="auth-email-missing-alert-ango-phone" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Enter your mobile phone number
+                                      </div></div></div>
+                                                    </div>
+                                                </div>
+                                                <div className="auth-require-fields-match-group">
+                                                    <div className="a-row a-spacing-base">
+                                                        <label htmlFor="ap_password" className="a-form-label">
+                                                            Password
+                                  </label>
+                                                        <input type="password" maxLength={1024} id="ap_password" autoComplete="off" placeholder="At least 6 characters" name="password" tabIndex={5} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match auth-require-password-validation" />
+                                                        <div className="a-box a-alert-inline a-alert-inline-info auth-inlined-information-message a-spacing-top-mini"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Passwords must be at least 6 characters.
+                                      </div></div></div>
+                                                        <div id="auth-password-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Enter your password
+                                      </div></div></div>
+                                                        <div id="auth-password-invalid-password-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Passwords must be at least 6 characters.
+                                      </div></div></div>
+                                                    </div>
+                                                    <div className="a-row a-spacing-base">
+                                                        <label htmlFor="ap_password_check" className="a-form-label">
+                                                            Re-enter password
+                                  </label>
+                                                        <input type="password" maxLength={1024} id="ap_password_check" autoComplete="off" name="passwordCheck" tabIndex={6} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match" />
+                                                        <div id="auth-passwordCheck-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Type your password again
+                                      </div></div></div>
+                                                        <div id="auth-password-mismatch-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                            Passwords must match
+                                      </div></div></div>
+                                                    </div>
+                                                </div>
+                                                <div className="a-row a-spacing-extra-large">
+                                                    <span className="a-button a-button-normal a-button-span12 a-button-primary" id="a-autoid-0"><span className="a-button-inner"><input id="continue" tabIndex={11} className="a-button-input" type="submit" aria-labelledby="a-autoid-0-announce" /><span className="a-button-text" aria-hidden="true" id="a-autoid-0-announce">
+                                                        Create your Amazon account
+                                    </span></span></span>
+                                                    <div id="legalTextRow" className="a-row a-spacing-top-medium a-size-small">
+                                                        By creating an account, you agree to Amazon's <a href="https://www.amazon.com/gp/help/customer/display.html/ref=ap_register_notification_condition_of_use?ie=UTF8&nodeId=508088">Conditions of Use</a> and <a href="https://www.amazon.com/gp/help/customer/display.html/ref=ap_register_notification_privacy_notice?ie=UTF8&nodeId=468496">Privacy Notice</a>.
+                                </div>
+                                                </div>
+                                                <div className="a-divider a-divider-section"><div className="a-divider-inner" /></div>
+                                                <div className="a-row">
+                                                    Already have an account?
+                                <a className="a-link-emphasis" href="https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2Fgp%2Fyourstore%2Fhome%3Fie%3DUTF8%26ref_%3Dnav_custrec_newcust&prevRID=Y80418XAK430TG9BHP0D&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&pageId=usflex&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0">
+                                                        Sign-In
+                                </a>
+                                                </div>
+                                            </div></div>
+                                            <input name="metadata1" type="hidden" defaultValue="ECdITeCs:++xere7C6PVi42qtuOCc9TAkYLwEKHfmlIEvGwP7/BAvB07Ym6Mx1JBwu2gCC6k2YuKxBmalteHePhVfb3LqPde4z0ShXXlIy/RwP1liF7A9ihxnfOwR4v3+jgx3QbOTOY91flpAngEKriG0cj8oZZ+lZgu91Wci19eDHuQ013bMd+7gS60z8EeK5b0EEPyWj3iXYYfod5FC37MrxTiWh1F9kNHuXzxv7Oq6wsYPwD4hT2XBkHe8u5LSOqJBiv5KWCELhB13AW6SMTLI4QO61/OFjr4aKudJZ+csroK/A56GIRbcxD7g9gk2N45JsVWbN7UUp7vM2rt5zUFCCBsxzYeXGhlEAwe4/yGCDGUwJREfPXE0J584fporNfHKW0I/d8RktRrIUrpdU7cPoR5XEHT4TTh/Mt6c78i7JePCeiAmB66tKPELgzDIuyj0ub3xyl1uV7f6t0E62SAe1yWkhVfHtE0/Uo3eKxhzuhljKB2pc1WlvstsPEyeFFhazknXdyrE0E1Rq8gEPtEiNlBPvvOM6C9XdHmF2cn1VvlJNIAFnXN2274PSGtsi5nUVkGDfkV9BNqdplqrSEHfQa1m9ovkGlZo1q3WOWuNhENKg94rBuzngQ3oUlCLkoO72f41WQeHyPCGAFxAhu3DiZfG43Arv5wTXHX6zOWejU+4FttqY+tfgnlbXlxtskSm3WFuSeYoik4cqQBl7OC/zJBBAra9nGNn+9dazeKLUXIbdN6GO7LL5zs9CJYqLh8lOPUMvfqZ9054fcD/Hio4392rAppsqXamfW2kGR867WUDvkeu3kyu26jzkPk/ZpGa1nNxtLcpnKwN/PxzGBoEzjID7do2zJK9gSfsPyaoy5SwHiy7LimTwnCqkL++UX5kkKlBW5LXjmwwxdSJS+bVxQKkn6c/NeZfJ2fDbpZdeTr84S6Gh3lnOSo9fesCkUcm/wCugXxIxZao1gBXAr5B7vBYLObt0XWxYtA9CymLalC2vOZDWmMf7bbC7puGZjngi2gFIvQYi0nbGnhlMUwKdXVuofLF/4aLskdG7Ggc7uZgHpJZtlUiYiD/c0L4vcgefKd8NmMlz1jdo3uOPXlUGFoovDxi/WSpUkCHLiyCS7/nDc0L9WhqXOdQisv9XlvbrTGm48+DyGoAKkTxErlLLCSzuh7f8VOYYgpFSTbiSBqEZztLJtrepR7Dr8kvki9jwIjpltmL+AFG++/qa/6TQoptwGZtNP2L3DYnBHKhD9NBYAz+SRzj/4Lm6xivFuf8/w7Fd0105zX0wFPAltik36S/lsmAbTJRhuVtyKFdBuYCHOUKYkSN6b5hyj0e8eBIe2IyhZb7hZCBaT8n5YmSjrr0h0Jw8ZBFMncpSqFrSOecYx4GjCOY+0Y6yD7/qW2r78tQsnIvaFLuLGMRdzBAUViiUURdaiQgi33nOFk+Xdh58F7S4NcuJ3u06pC9O8wDei6wTBA2jUamYNhKseZtusiJViAJgaWd18UEnqF3sA==" /></form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="right-2">
+                        </div>
+                        <div className="a-section a-spacing-top-extra-large auth-footer">
+                            <div className="a-divider a-divider-section"><div className="a-divider-inner" /></div>
+                            <div className="a-section a-spacing-small a-text-center a-size-mini">
+                                <span className="auth-footer-seperator" />
+                                <a className="a-link-normal" target="_blank" rel="noopener" href="https://www.amazon.com/gp/help/customer/display.html/ref=ap_desktop_footer_cou?ie=UTF8&nodeId=508088">
+                                    Conditions of Use
+                    </a>
+                                <span className="auth-footer-seperator" />
+                                <a className="a-link-normal" target="_blank" rel="noopener" href="https://www.amazon.com/gp/help/customer/display.html/ref=ap_desktop_footer_privacy_notice?ie=UTF8&nodeId=468496">
+                                    Privacy Notice
+                    </a>
+                                <span className="auth-footer-seperator" />
+                                <a className="a-link-normal" target="_blank" rel="noopener" href="https://www.amazon.com/help">
+                                    Help
+                    </a>
+                                <span className="auth-footer-seperator" />
+                            </div>
+                            <div className="a-section a-spacing-none a-text-center">
+                                <span className="a-size-mini a-color-secondary">
+                                    © 1996-2020, Amazon.com, Inc. or its affiliates
+                    </span>
                             </div>
                         </div>
                     </div>
-
-
-                    <div className="main col-sm-8">
-                        <div className="centered-container top-aligned">
-                            <div className="margin70">
-                                <form>
-                                    <div className="form-group col-md-12">
-                                        <label >College</label>
-                                        {collegeSelect}
-                                        {/* <input onChange={this.collegeChangeHandler} type="text" className="form-control" name="college" placeholder="College" /> */}
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="col-md-6">
-                                            <label >First Name</label>
-                                            <input type="text" onChange={this.fnameChangeHandler} className="form-control" placeholder="First name" />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label >Last Name</label>
-                                            <input type="text" onChange={this.lnameChangeHandler} className="form-control" placeholder="Last name" />
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="col-md-6">
-                                            <label >Major</label>
-                                            {majorSelect}
-                                            {/* <input type="text" onChange={this.majorChangeHandler} className="form-control" placeholder="Major" /> */}
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label >Year of passing</label>
-                                            <select onChange={this.yearOfPassingHandler} className="form-control">{listOfYears}</select>
-                                        </div>
-
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label >Email</label>
-                                        <input onChange={this.emailChangeHandler} type="text" className="form-control" name="email" placeholder="Email" />
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="col-md-6">
-                                            <label >Password</label>
-                                            <input onChange={this.passwordChangeHandler} type="password" className="form-control" name="password" placeholder="Password" />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label>Confirm Password</label>
-                                            <input onChange={this.confirmPasswordChangeHandler} type="password" className="form-control" name="confpassword" placeholder="Confirm Password" />
-                                        </div>
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <button onClick={this.submitSignup} className="btn btn-primary">Signup</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
+                    <div id="auth-external-javascript" className="auth-external-javascript" data-external-javascripts>
                     </div>
+                    {/* cache slot rendered */}
+                </div><div id="be" style={{ display: 'none', visibility: 'hidden' }}><form name="ue_backdetect" action="https://www.amazon.com/ap/get"><input type="hidden" name="ue_back" defaultValue={2} /></form>
                 </div>
-            </div >
+                <noscript>
+                    &lt;img height="1" width="1" style='display:none;visibility:hidden;' src='//fls-na.amazon.com/1/batch/1/OP/ATVPDKIKX0DER:142-7893387-8678938:Y80418XAK430TG9BHP0D$uedata=s:%2Fap%2Fuedata%3Fnoscript%26id%3DY80418XAK430TG9BHP0D:0' alt=""/&gt;
+            </noscript>
+                <div id="a-popover-root" style={{ zIndex: -1, position: 'absolute' }} />
+            </div>
+
         )
     }
 }
-//export Signup Component
-export default Signup;
+//export Login Component
+export default Login;

@@ -3,7 +3,7 @@ var JwtStrategy = require("passport-jwt").Strategy;
 var ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
 var { secret } = require("./configValues");
-const Student = require('../Models/StudentModel');
+//const Student = require('../Models/StudentModel');
 const Company = require('../Models/CompanyModel');
 
 
@@ -16,7 +16,7 @@ module.exports = function (passport) {
             console.log(jwt_payload);
             const user_id = jwt_payload._id;
             if (jwt_payload.type == 0) {
-                Student.findById(user_id, (err, results) => {
+                /*Student.findById(user_id, (err, results) => {
                     console.log(user_id);
                     if (err) {
                         return callback(err, false);
@@ -27,7 +27,7 @@ module.exports = function (passport) {
                     else {
                         callback(null, false);
                     }
-                });
+                });*/ //Commented for dev
             }
             else {
                 Company.findById(user_id, (err, results) => {

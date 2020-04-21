@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
-import {Route,Switch} from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import Login from './Login/Login';
-import Home from './Customer/Dashboard/Dashboard';
+import Dashboard from './Customer/Dashboard/Dashboard';
+import ProductSearch from './Customer/Product/ProductSearch/ProductSearch';
+
 
 
 import Navbar from './LandingPage/Navbar';
@@ -13,7 +15,7 @@ import { Redirect } from 'react-router';
 
 //Create a Main Component
 class Main extends Component {
-    render(){
+    render() {
         let navRoute = <Navbar />
         let footer = <Footer />
 
@@ -23,13 +25,21 @@ class Main extends Component {
         // else{
         // }
 
-        return(
+        return (
             <div>
-                {/*Render Different Component based on Route*/}
-                {navRoute}
-                <Route exact path="/" component={Home} />
-                <Route path="/login" component={Login}/>
-                {footer}
+                {localStorage.getItem('id') &&
+                    <Fragment>
+                        {navRoute}
+                        <Route exact path="/" component={Dashboard} />
+                        <Route exact path="/product-search" component={ProductSearch} />
+                        {footer}
+                    </Fragment>
+                }
+                {localStorage.getItem('id') &&
+                    <Route path="/" component={Login} />
+                }
+                {/*<Route path="/login" component={Login}/>*/}
+
             </div>
         )
     }
