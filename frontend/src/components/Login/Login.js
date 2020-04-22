@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
-import { Redirect } from 'react-router';
+import { Redirect,withRouter,Route } from 'react-router';
 import backendServer from '../../webConfig'
 //import importScripts from 'import-scripts'
 import logo from './Amazon Sign-In_files/amazonlogo.png';
@@ -28,7 +28,8 @@ class Login extends Component {
             email: "",
             password: "",
             type: 'Customer',
-            authFlag: false
+            authFlag: false,
+            redirectToHome : false
         }
         //Bind the handlers to this className
         this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -88,8 +89,10 @@ class Login extends Component {
                 localStorage.setItem("name", response.data[0].name);
                 localStorage.setItem("type", response.data[0].userType);
                 
-                this.props.history.push('/product-search');
-
+                //this.props.history.push('/product-search');
+                window.location.href = "/product-search";
+                this.setState({ redirectToHome: true });  
+                
                 //var decoded = jwt_decode(response.data[0]);
                 //localStorage.setItem("token", "Bearer " + response.data[0]);
                
@@ -111,7 +114,7 @@ class Login extends Component {
     render() {
         //redirect based on successful login
         let redirectVar = null;
-        if (this.state.type === 'student' && this.state.authFlag) {
+        /*if (this.state.type === 'student' && this.state.authFlag) {
             localStorage.setItem("type", 0);
             let redVar = "/student/profile/" + localStorage.getItem('id');
             redirectVar = <Redirect to={redVar} />
@@ -119,7 +122,13 @@ class Login extends Component {
         else if (this.state.type === 'company' && this.state.authFlag) {
             localStorage.setItem("type", 1);
             redirectVar = <Redirect to="/company/postings" />
+        }*/
+
+        if(this.state.redirectToHome){
+            redirectVar = <Redirect push to="/somewhere/else" />
         }
+        
+        
         let userType =
             (
                 <select onChange={this.userTypeChangeHandler} value={this.state.userType} className="form-control">
@@ -130,6 +139,7 @@ class Login extends Component {
         return (
           
                 <div>
+                {redirectVar}
                     {/* saved from url=(0014)about:internet */}
                     <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
                     {/* 2ta5cia0xkzcd4w9ysd12ugwcrqrjjvp46damm5oj0wg6rmtv */}
@@ -141,6 +151,7 @@ class Login extends Component {
                                 <div className="a-section a-spacing-medium a-text-center">
                                     <a className="a-link-nav-icon" tabIndex={-1} href="/login">
                                         <img src={logo} />
+                                        {redirectVar}
                                     </a>
                                 </div>
                             </div>
@@ -315,4 +326,4 @@ class Login extends Component {
     }
 }
 //export Login Component
-export default Login;
+export default withRouter(Login);
