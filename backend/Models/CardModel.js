@@ -3,9 +3,11 @@ const Schema = mongoose.Schema;
 
 var cardSchema = new Schema({
   userid : {type: String, required: true},
+  _id : {type : Schema.ObjectId,auto:true},
   card : 
   [{
-      cardType : String,
+      _id : {type : Schema.ObjectId,auto:true},
+      cardtype : String,
       cardname : String,
       cardnumber : Number,
       cvv : Number,
