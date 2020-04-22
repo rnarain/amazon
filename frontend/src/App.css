@@ -1,16 +1,22 @@
 body {
-  font-family: "Ubuntu","Segoe UI", "Roboto", "Helvetica Neue", "sans-serif";
+  font-family: "Ubuntu" !important;
 
 }
 
 a{
   color :#333
 }
- /* a:hover ,a:active, a:link, a:visited {
-  text-decoration: none !important;
-  color: #0066c0 !important;
-  background-color: none !important;
-} */
+ul{
+  margin:0 0 !important;
+}
+ li{
+   list-style-type: none !important;
+ }
+
+ h1, h2, h3, h4 {
+  font-family: "Ubuntu" !important;
+
+ }
 
 .amazon-body{
   margin-top:110px;
@@ -111,27 +117,28 @@ margin:10px 0px;
 
 }
 
+li{
+  text-decoration:none
+}
+
 .xshop li a{
   color: #ccc !important;
 }
 
 
 .box-part{
-  background:#FFF;
   border-radius:0;
   padding:20px 20px;
   margin:0px 0px;
-  border-bottom: 2px solid #ddd;
-  height:300px
+  height:320px
   /* box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); */
 
 }
 
 .box-part-nopadding{
-    background:#FFF;
     border-radius:0;
-    margin:30px 0px;
-    padding:0px 5px;
+    /* margin:30px 0px;
+    padding:0px 5px; */
     /* box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); */
 }
 
@@ -140,7 +147,7 @@ margin:10px 0px;
 }
 
 .padding-inside{
-  /* padding:20px 20px; */
+  padding:20px 0px;
 }
 
 .box-part-container{
@@ -235,7 +242,8 @@ margin:10px 0px;
 } */
 
 .searchbox{
-  margin-top: 13px !important;
+  margin-top: 8px !important;
+  height:34px !important;
 }
 
 .profile-container{
@@ -377,8 +385,8 @@ margin:10px 0px;
 }
 
 .header-filter{
-border-bottom: gray 2px;}
-
+border-right:2px solid  #e0e0e0 ;
+}
 .style-divider{
   width: 100%;
   height: 0;
@@ -451,7 +459,7 @@ img{ max-width:100%;}
 .srch_bar {
   display: inline-block;
   text-align: right;
-  width: 60%; padding:
+  width: 60%;
 }
 .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
 
@@ -651,10 +659,42 @@ position : relative
 
 .product-heading{
   font-size:16px;
+  margin: 4px 0px;
 }
 
 .glyphicon-star{color:orange;}
 
 .font550{
 font-weight:550
+}
+
+.pointer{
+  cursor:pointer
+}
+
+.sorting-bar{
+  border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 0 10px #ddd;
+    line-height:40px;
+    position: relative;
+}
+
+.small-button{
+  font-size:12px;
+  line-height: 1;
+}
+
+.alignRight{
+  text-align: right;
+}
+
+.right-menu{
+right:0;
+left:65%
+}
+
+.right-menu li{
+  font-size:12px;
+  line-height: 1;
 }
