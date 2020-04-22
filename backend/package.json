@@ -32,6 +32,6 @@
     "path-to-regexp": "^6.1.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.3"
   }
 }

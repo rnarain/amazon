@@ -1,0 +1,79 @@
+
+/* US-secure-sprites-payselectSprites-2298893580.css start */
+
+.payselectButtonsSprite { display: -moz-inline-box; display: inline-block; margin: 0;padding: 0; position: relative; overflow: hidden; vertical-align: middle; background: url('https://images-na.ssl-images-amazon.com/images/G/01/common/sprites/payselect-buttons-sprites._V155431845_.png') no-repeat; }
+.payselectButtonsSprite span { position: absolute; left: -9999px; }
+.s_add-checking-account-primary { background-position: 0px 0px; width: 155px; height: 22px;  } 
+.s_add-checking-account { background-position: 0px -32px; width: 132px; height: 17px;  } 
+.s_add-loc-med-prim-btn { background-position: 0px -59px; width: 127px; height: 22px;  } 
+.s_add-loc-sm-sec-btn { background-position: 0px -91px; width: 110px; height: 17px;  } 
+.s_add-new-card { background-position: 0px -118px; width: 96px; height: 17px;  } 
+.s_add-your-card { background-position: 0px -145px; width: 95px; height: 22px;  } 
+.s_apply-now { background-position: 0px -177px; width: 66px; height: 17px;  } 
+.s_carrot { background-position: 0px -204px; width: 11px; height: 11px;  } 
+.s_blocker-arrow { background-position: 0px -225px; width: 5px; height: 7px;  } 
+.s_apply { background-position: 0px -242px; width: 42px; height: 17px;  } 
+.s_button-sign-up-now-md-sec { background-position: 0px -269px; width: 90px; height: 22px;  } 
+.s_continue-tan { background-position: 0px -301px; width: 71px; height: 22px;  } 
+.s_continue { background-position: 0px -333px; width: 83px; height: 22px;  } 
+.s_link_rewards_account { background-position: 0px -365px; width: 137px; height: 22px;  } 
+.s_no-thanks { background-position: 0px -397px; width: 111px; height: 22px;  } 
+.s_continue-disabled { background-position: 0px -429px; width: 83px; height: 22px;  } 
+.s_switch_currency { background-position: 0px -461px; width: 90px; height: 17px;  } 
+.s_add-direct-debit-account-primary { background-position: 0px -488px; width: 143px; height: 22px;  } 
+.s_add-direct-debit-account { background-position: 0px -520px; width: 126px; height: 17px;  } 
+.s_add-invoice-account-primary { background-position: 0px -547px; width: 169px; height: 22px;  } 
+.s_add-invoice-account { background-position: 0px -579px; width: 151px; height: 17px;  } 
+.s_confirm-card { background-position: 0px -606px; width: 82px; height: 22px;  }
+.s_donsbeak_alert_arrow { background-position: 0px -638px; width: 24px; height: 15px; }
+.payOptionsSprite { display: -moz-inline-box; display: inline-block; margin: 0;padding: 0; position: relative; overflow: hidden; vertical-align: middle; background: url('https://images-na.ssl-images-amazon.com/images/G/01/common/sprites/pay-options-sprites._V158499024_.png') no-repeat; }
+.payOptionsSprite span { position: absolute; left: -9999px; }
+.s_amazon-payments { background-position: 0px 0px; width: 101px; height: 16px;  } 
+.s_amex_cvv2 { background-position: 0px -26px; width: 32px; height: 20px;  } 
+.s_amex_membership_logo_small { background-position: 0px -56px; width: 203px; height: 42px;  } 
+.s_check-example { background-position: 0px -108px; width: 297px; height: 99px;  } 
+.s_credit-cards { background-position: 0px -217px; width: 96px; height: 97px;  } 
+.s_direct-debit-de { background-position: 0px -324px; width: 96px; height: 61px;  } 
+.s_corp-credit-graphic_2011 { background-position: 0px -395px; width: 109px; height: 67px;  } 
+.s_echecks { background-position: 0px -472px; width: 98px; height: 64px;  } 
+.s_gc { background-position: 0px -546px; width: 96px; height: 61px;  } 
+.s_plcc_l { background-position: 0px -617px; width: 95px; height: 61px;  } 
+.s_de-invoice { background-position: 0px -688px; width: 98px; height: 68px;  } 
+
+/* US-secure-sprites-payselectSprites-2298893580.css end */
+
+/* US-secure-sprites-spcSprites-3434970868.css start */
+
+.spcSprite { display: -moz-inline-box; display: inline-block; margin: 0;padding: 0; position: relative; overflow: hidden; vertical-align: middle; background: url('https://images-na.ssl-images-amazon.com/images/G/01/common/sprites/spc-sprites._V158499666_.png') no-repeat; }
+.spcSprite span { position: absolute; left: -9999px; }
+.s_spc_apply { background-position: 0px 0px; width: 42px; height: 17px;  } 
+.s_place-order-primary { background-position: 0px -27px; width: 137px; height: 27px;  } 
+.s_switch_currency { background-position: 0px -64px; width: 90px; height: 17px;  } 
+.s_prime-check { background-position: 0px -91px; width: 48px; height: 16px;  } 
+.s_spc_blocker-arrow { background-position: 0px -117px; width: 5px; height: 7px;  } 
+.s_callout-arrow { background-position: 0px -134px; width: 13px; height: 14px;  } 
+.s_spc_carrot { background-position: 0px -158px; width: 11px; height: 11px;  } 
+.s_no-img-sm { background-position: 0px -179px; width: 60px; height: 40px;  }
+
+/* US-secure-sprites-spcSprites-3434970868.css end */
+
+/* US-secure-sprites-pipelineSprites-738766738.css start */
+
+.creditCardsSprite { display: -moz-inline-box; display: inline-block; margin: 0;padding: 0; position: relative; overflow: hidden; vertical-align: middle; background: url('https://images-na.ssl-images-amazon.com/images/G/01/common/sprites/credit-cards-sprites._V146644979_.png') no-repeat; }
+.creditCardsSprite span { position: absolute; left: -9999px; }
+.s_amex { background-position: 0px 0px; width: 34px; height: 22px;  } 
+.s_amzn { background-position: 0px -32px; width: 34px; height: 22px;  } 
+.s_blank { background-position: 0px -64px; width: 34px; height: 22px;  } 
+.s_cartasi-mastercard { background-position: 0px -96px; width: 34px; height: 21px;  } 
+.s_cartasi-visa { background-position: 0px -127px; width: 34px; height: 21px;  } 
+.s_carte-aurore { background-position: 0px -158px; width: 34px; height: 22px;  } 
+.s_carte-bancaire { background-position: 0px -190px; width: 34px; height: 22px;  } 
+.s_diners { background-position: 0px -222px; width: 34px; height: 22px;  } 
+.s_discover { background-position: 0px -254px; width: 34px; height: 21px;  } 
+.s_jcb { background-position: 0px -285px; width: 34px; height: 22px;  } 
+.s_mc { background-position: 0px -317px; width: 34px; height: 21px;  } 
+.s_plcc { background-position: 0px -348px; width: 34px; height: 21px;  } 
+.s_postepay-visa { background-position: 0px -379px; width: 34px; height: 21px;  } 
+.s_visa { background-position: 0px -410px; width: 34px; height: 21px;  } 
+
+/* US-secure-sprites-pipelineSprites-738766738.css end */
