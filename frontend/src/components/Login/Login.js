@@ -28,7 +28,8 @@ class Login extends Component {
             email: "",
             password: "",
             type: 'Customer',
-            authFlag: false
+            authFlag: false,
+            redirectToHome : false
         }
         //Bind the handlers to this className
         this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -88,7 +89,8 @@ class Login extends Component {
                 localStorage.setItem("name", response.data[0].name);
                 localStorage.setItem("type", response.data[0].userType);
                 
-                this.props.history.push('/product-search');
+                //this.props.history.push('/product-search');
+                this.setState({ redirectToHome: true });  
 
                 //var decoded = jwt_decode(response.data[0]);
                 //localStorage.setItem("token", "Bearer " + response.data[0]);
@@ -111,7 +113,7 @@ class Login extends Component {
     render() {
         //redirect based on successful login
         let redirectVar = null;
-        if (this.state.type === 'student' && this.state.authFlag) {
+        /*if (this.state.type === 'student' && this.state.authFlag) {
             localStorage.setItem("type", 0);
             let redVar = "/student/profile/" + localStorage.getItem('id');
             redirectVar = <Redirect to={redVar} />
@@ -119,7 +121,13 @@ class Login extends Component {
         else if (this.state.type === 'company' && this.state.authFlag) {
             localStorage.setItem("type", 1);
             redirectVar = <Redirect to="/company/postings" />
+        }*/
+
+        if(this.state.redirectToHome){
+            redirectVar = <Redirect to="/product-search" />
         }
+        
+        
         let userType =
             (
                 <select onChange={this.userTypeChangeHandler} value={this.state.userType} className="form-control">
@@ -130,6 +138,7 @@ class Login extends Component {
         return (
           
                 <div>
+                {redirectVar}
                     {/* saved from url=(0014)about:internet */}
                     <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
                     {/* 2ta5cia0xkzcd4w9ysd12ugwcrqrjjvp46damm5oj0wg6rmtv */}
