@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Login from './Login/Login';
 import Dashboard from './Customer/Dashboard/Dashboard';
 import ProductSearch from './Customer/Product/ProductSearch/ProductSearch';
+import ProductDetail from './Customer/Product/ProductDetails/ProductDetail'
 
 
 
@@ -32,6 +33,7 @@ class Main extends Component {
                         {navRoute}
                         <Route exact path="/" component={Dashboard} />
                         <Route exact path="/product-search" component={ProductSearch} />
+                        <Route exact path="/product-detail" component={ProductDetail} />
                         {footer}
                     </Fragment>
                 }

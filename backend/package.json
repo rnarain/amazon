@@ -28,7 +28,8 @@
     "mysql": "^2.18.1",
     "npm-install-all": "^1.1.21",
     "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "path-to-regexp": "^6.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

@@ -1,5 +1,6 @@
 const {
-  searchProduct
+  searchProduct,
+  getProductDetails
 } = require("./product.service");
 
 const jwt = require('jsonwebtoken');
@@ -47,5 +48,19 @@ module.exports = {
         data: results
       });
     });
-  }
+  },
+  
+  getProductDetails: (req, res) => {
+    body = req.query
+    getProductDetails(body, (err, results) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        return res.json({
+            success: 1,
+            data: results
+        });
+    });
+}
 }
