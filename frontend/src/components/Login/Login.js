@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
-import { Redirect } from 'react-router';
+import { Redirect,withRouter,Route } from 'react-router';
 import backendServer from '../../webConfig'
 //import importScripts from 'import-scripts'
 import logo from './Amazon Sign-In_files/amazonlogo.png';
@@ -90,8 +90,9 @@ class Login extends Component {
                 localStorage.setItem("type", response.data[0].userType);
                 
                 //this.props.history.push('/product-search');
+                window.location.href = "/product-search";
                 this.setState({ redirectToHome: true });  
-
+                
                 //var decoded = jwt_decode(response.data[0]);
                 //localStorage.setItem("token", "Bearer " + response.data[0]);
                
@@ -124,7 +125,7 @@ class Login extends Component {
         }*/
 
         if(this.state.redirectToHome){
-            redirectVar = <Redirect to="/product-search" />
+            redirectVar = <Redirect push to="/somewhere/else" />
         }
         
         
@@ -150,6 +151,7 @@ class Login extends Component {
                                 <div className="a-section a-spacing-medium a-text-center">
                                     <a className="a-link-nav-icon" tabIndex={-1} href="/login">
                                         <img src={logo} />
+                                        {redirectVar}
                                     </a>
                                 </div>
                             </div>
@@ -324,4 +326,4 @@ class Login extends Component {
     }
 }
 //export Login Component
-export default Login;
+export default withRouter(Login);
