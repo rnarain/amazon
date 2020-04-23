@@ -20,8 +20,8 @@ let checkAuth = passport.authenticate('jwt', { session: false });
  router.get("/getAllCards/:id", getAllCards);
 
  router.post("/updateCard", updateCard);
- router.post("/addCard", checkAuth ,addCard);
- router.post("/deleteCard", checkAuth ,deleteCard);
+ router.post("/addCard" ,addCard);
+ router.post("/deleteCard",deleteCard);
  
 // router.patch("/", checkToken, updateCard);
 // router.delete("/", checkToken, deleteCard);

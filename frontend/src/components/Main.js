@@ -5,9 +5,11 @@ import Login from './Login/Login';
 import Dashboard from './Customer/Dashboard/Dashboard';
 import ProductSearch from './Customer/Product/ProductSearch/ProductSearch';
 import ProductDetail from './Customer/Product/ProductDetails/ProductDetail'
+import Checkout from './Checkout/Checkout';
 
 
 
+import UserCart from './Cart/Cart';
 import Navbar from './LandingPage/Navbar';
 import Footer from './LandingPage/Footer';
 
@@ -30,10 +32,14 @@ class Main extends Component {
             <div>
                 {localStorage.getItem('id') &&
                     <Fragment>
+                    
                         {navRoute}
+                      
                         <Route exact path="/" component={Dashboard} />
                         <Route exact path="/product-search" component={ProductSearch} />
                         <Route exact path="/product-detail" component={ProductDetail} />
+                        <Route exact path="/carthome" component={UserCart}/>
+                        <Route exact path="/checkout" component={Checkout} />
                         {footer}
                     </Fragment>
                 }
