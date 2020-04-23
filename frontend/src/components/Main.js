@@ -5,6 +5,8 @@ import Login from './Login/Login';
 import Dashboard from './Customer/Dashboard/Dashboard';
 import ProductSearch from './Customer/Product/ProductSearch/ProductSearch';
 import ProductDetail from './Customer/Product/ProductDetails/ProductDetail'
+import Checkout from './Checkout/Checkout';
+
 
 
 import UserCart from './Cart/Cart';
@@ -30,22 +32,16 @@ class Main extends Component {
             <div>
                 {localStorage.getItem('id') &&
                     <Fragment>
-                    <div>
-                        {/* {navRoute} */}
-                        </div>
-                       <div>
+                    
+                        {navRoute}
+                      
                         <Route exact path="/" component={Dashboard} />
                         <Route exact path="/product-search" component={ProductSearch} />
                         <Route exact path="/product-detail" component={ProductDetail} />
                         <Route exact path="/carthome" component={UserCart}/>
-                     </div>
-                     <div>
-                     {footer}
-
-                     </div>
-                        </Fragment>
-                        
-                   
+                        <Route exact path="/checkout" component={Checkout} />
+                        {footer}
+                    </Fragment>
                 }
                 {!localStorage.getItem('id') &&
                     <Route path="/" component={Login} />
