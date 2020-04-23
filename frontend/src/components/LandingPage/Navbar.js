@@ -72,7 +72,7 @@ class Navbar extends Component {
                 <ul className="nav navbar-nav navbar-right">
                 <li><Link to="/company/postings">Sign In</Link></li>
                         <li><Link to={profileLink}>Orders</Link></li>
-                        <li><Link to="/company/messages"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">2</span></Link></li>
+                        <li><Link to="/carthome"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">2</span></Link></li>
                 </ul>
             );
         }
@@ -82,7 +82,7 @@ class Navbar extends Component {
             <ul className="nav navbar-nav navbar-right">
             <li><Link to="/company/postings">Sign In</Link></li>
                     <li><Link to={profileLink}>Orders</Link></li>
-                    <li><Link to="/company/messages"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">2</span></Link></li>
+                    <li><Link to="/carthome"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">2</span></Link></li>
             </ul>
             );
         }

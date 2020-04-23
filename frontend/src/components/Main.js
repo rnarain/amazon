@@ -30,13 +30,22 @@ class Main extends Component {
             <div>
                 {localStorage.getItem('id') &&
                     <Fragment>
-                        {navRoute}
+                    <div>
+                        {/* {navRoute} */}
+                        </div>
+                       <div>
                         <Route exact path="/" component={Dashboard} />
                         <Route exact path="/product-search" component={ProductSearch} />
                         <Route exact path="/product-detail" component={ProductDetail} />
                         <Route exact path="/carthome" component={UserCart}/>
-                        {footer}
-                    </Fragment>
+                     </div>
+                     <div>
+                     {footer}
+
+                     </div>
+                        </Fragment>
+                        
+                   
                 }
                 {!localStorage.getItem('id') &&
                     <Route path="/" component={Login} />
