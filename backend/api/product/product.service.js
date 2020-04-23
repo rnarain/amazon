@@ -24,7 +24,7 @@ module.exports = {
 
   getProductDetails: (data, callBack) => {
       
-    Product.find({_id: data._id}, (error, result) => {
+    Product.findOne({_id: data._id}, (error, result) => {
       if (error) {
         callBack(error);
       }
