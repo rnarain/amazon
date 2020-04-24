@@ -19,7 +19,7 @@ class ProductDetail extends Component {
             view_count: 0,
             images: [],
             ratings: [],
-            selected_image : '',
+            selected_image: '',
             price: 0,
             addReview: 0,
             reviewEditable: false
@@ -42,7 +42,7 @@ class ProductDetail extends Component {
                     price: response_data.price,
                     selected_image: response_data.images[0].filename
                 })
-            })
+            });
 
     }
 
@@ -50,7 +50,7 @@ class ProductDetail extends Component {
         renderedOutput = this.state.images.map(item =>
 
             <div class="images_preview" style={{ marginBottom: '15px' }}>
-                <img src={item.filename} style={{ width: '80px' }} alt="im" onClick={(e)=>{this.setState({ selected_image : item.filename})}} />
+                <img src={item.filename} style={{ width: '80px' }} alt="im" onClick={(e) => { this.setState({ selected_image: item.filename }) }} />
                 {/* <div className="row"> " " </div> */}
 
             </div>
@@ -70,18 +70,43 @@ class ProductDetail extends Component {
         )
     }
 
+    postData = (e) => {
+
+        const data = {
+            ratings : this.state.ratings,
+            id : this.state.product_id
+        }
+        axios.post(`${backendServer}/product/addReview`, data)
+        .then(response => {
+        });
+    }
+
     addReviewCallBackFunction = (data) => {
-        console.log('data : ', data)
+        // console.log('data : ', data)
         if (data.cancel === 1) {
             this.setState({ addReview: 0 })
         }
         else {
-            this.setState({
-                addReview: 0
-            })
+
             this.setState(prevState => ({
+                addReview: 0,
                 ratings: [...prevState.ratings, data]
-            }))
+            }), function(){
+                const data = {
+                    ratings : this.state.ratings,
+                    id : this.state.product_id
+                }
+                console.log('data in callback ', data)
+                axios.post(`${backendServer}/product/addReview`, data)
+                .then(response => {
+                });
+            })
+
+            // setState(
+            //     { name: "Michael" },
+            //     () => console.log(this.state)
+            //   );
+
         }
         console.log(this.state)
         console.log('woa')

@@ -34,7 +34,7 @@ class ReviewPopUp extends Component {
     }
     handleSubmit = (e) => {
         const data = {
-            rating: this.state.rating,
+            stars: this.state.rating,
             comment: this.state.comment,
             user_id: localStorage.getItem('id'),
             user_name: localStorage.getItem('name')

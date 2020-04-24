@@ -1,6 +1,6 @@
 const {
-  searchProduct,
-  getProductDetails
+  searchProduct, getProductDetails,
+  addReview
 } = require("./product.service");
 
 const jwt = require('jsonwebtoken');
@@ -36,7 +36,7 @@ var upload = multer({
 
 module.exports = {
   searchProduct: (req, res) => {
-    var queryObject = url.parse(req.url,true).query;
+    var queryObject = url.parse(req.url, true).query;
     console.log(queryObject);
     searchProduct(queryObject, (err, results) => {
       if (err) {
@@ -49,18 +49,33 @@ module.exports = {
       });
     });
   },
-  
+
   getProductDetails: (req, res) => {
     body = req.query
     getProductDetails(body, (err, results) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        return res.json({
-            success: 1,
-            data: results
-        });
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
     });
-}
+  },
+
+  addReview: (req, res) => {
+    body = req.body;
+    console.log('In controller ', body)
+    addReview(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  }
 }
