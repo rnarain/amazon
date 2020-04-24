@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import backendServer from '../../../../webConfig'
 import axios from 'axios';
-import { getRatings } from '../../../../helperFunctions/ratings'
+import { getRatings } from '../../../../helperFunctions/ratings';
+import ReviewPopUp from './ReviewPopUp';
 // import { Dropdown } from 'primereact/dropdown';
 
+var renderedOutput;
+var reviewOutput;
 class ProductDetail extends Component {
     constructor(props) {
         super(props);
@@ -16,20 +19,10 @@ class ProductDetail extends Component {
             view_count: 0,
             images: [],
             ratings: [],
+            selected_image : '',
             price: 0,
-            quantity: 1,
-            quantities: [
-                { label: '1', value: '1' },
-                { label: '2', value: '2' },
-                { label: '3', value: '3' },
-                { label: '4', value: '4' },
-                { label: '5', value: '5' },
-                { label: '6', value: '6' },
-                { label: '7', value: '7' },
-                { label: '8', value: '8' },
-                { label: '9', value: '9' },
-                { label: '10', value: '10' }
-            ]
+            addReview: 0,
+            reviewEditable: false
         }
     }
 
@@ -46,10 +39,52 @@ class ProductDetail extends Component {
                     view_count: response_data.view_count,
                     images: response_data.images,
                     ratings: response_data.ratings,
-                    price: response_data.price
+                    price: response_data.price,
+                    selected_image: response_data.images[0].filename
                 })
             })
 
+    }
+
+    showImages = (e) => {
+        renderedOutput = this.state.images.map(item =>
+
+            <div class="images_preview" style={{ marginBottom: '15px' }}>
+                <img src={item.filename} style={{ width: '80px' }} alt="im" onClick={(e)=>{this.setState({ selected_image : item.filename})}} />
+                {/* <div className="row"> " " </div> */}
+
+            </div>
+        )
+    }
+
+    showReviews = (e) => {
+        reviewOutput = this.state.ratings.map(item =>
+
+            <div class="ratings" style={{ marginTop: '15px', marginBottom: '15px' }}>
+                <h4>{item.user_name}</h4>
+                <div className="star-rating">
+                    {getRatings(item.stars)}
+                </div>
+                <p> {item.comment}</p>
+            </div>
+        )
+    }
+
+    addReviewCallBackFunction = (data) => {
+        console.log('data : ', data)
+        if (data.cancel === 1) {
+            this.setState({ addReview: 0 })
+        }
+        else {
+            this.setState({
+                addReview: 0
+            })
+            this.setState(prevState => ({
+                ratings: [...prevState.ratings, data]
+            }))
+        }
+        console.log(this.state)
+        console.log('woa')
     }
 
     render() {
@@ -59,7 +94,20 @@ class ProductDetail extends Component {
             <div className="amazon-body container-fluid">
                 <div className="profile-container card-columns">
                     <div className="row">
-                        <div className="col-md-5"></div>
+                        <div className="col-sm-1">
+                            {this.showImages()}
+                            {renderedOutput}
+                        </div>
+                        <div className="col-sm-4">
+                            {/* <div className="col-sm-1">
+
+                            </div> */}
+                            {this.state.images[0] != null ?
+                                <img src={this.state.selected_image} style={{ width: '450px' }} class="image-fluid"></img> :
+                                null}
+
+                        </div>
+                        {/* <div className="col-md-2"></div> */}
                         <div className="col-md-2">
                             <h1> {this.state.name} </h1>
 
@@ -96,7 +144,7 @@ class ProductDetail extends Component {
                                 <br /> <br />
                                 {/* <input id="add-to-cart-button" title="Add to Shopping Cart" data-hover="Select <b>__dims__</b> from the left<br> to add to Shopping Cart" class="a-button-input" type="submit" value="Add to Cart" aria-labelledby="submit.add-to-cart-announce"></input> */}
                                 {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
-                                <input type = "button" style={{background: '#f0c14b', borderColor: '#a88734'}} value="Add to Cart"></input>
+                                <input type="button" style={{ background: '#f0c14b', borderColor: '#a88734' }} value="Add to Cart"></input>
                             </div>
                         </div>
 
@@ -105,15 +153,21 @@ class ProductDetail extends Component {
                             <h2> {this.state.name}</h2>
                         </div> */}
                     </div>
-                    <img src={this.state.images[0]} class="image-fluid"></img>
-                </div>
 
-                {/* <div className="col-sm-8 col-sm-offset-5  profile-container card-columns">
-                    <h1> {this.state.name} </h1>
-                    <h2> {this.state.description} </h2>
-                    
-                    <img src={this.state.images[0]} class="image-fluid"></img>
-                </div> */}
+                </div>
+                <div className="col-md-1"></div>
+                <div className="col-md-4" >
+                    <div className="" style={{ marginTop: '15px' }}>
+                        <h2> Customer Reviews</h2>
+                        {this.showReviews()}
+                        {reviewOutput}
+                    </div>
+                    <div>
+                        {/* <input type = "button" style = {{marginBottom: '10px'}} value="Write A Review"  onClick={() => this.setState({ addReview: 1, reviewEditable: true })} />  */}
+                        {this.state.addReview === 1 ? <ReviewPopUp parentCallback={this.addReviewCallBackFunction} /> : <input type="button" style={{ marginBottom: '10px' }} value="Write A Review" onClick={() => this.setState({ addReview: 1 })} />}
+
+                    </div>
+                </div>
             </div>
 
         )
