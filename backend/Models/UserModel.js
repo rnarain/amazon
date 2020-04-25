@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-    // _id: {type: Schema.ObjectId, auto: true },
+    _id: {type: Schema.ObjectId, auto: true },
     email : {type: String, required: true},
     name : {type: String, required: true}, //To be unique for seller
     password : {type: String, required: true},
@@ -31,7 +31,28 @@ var userSchema = new Schema({
     }],
     saveforlater : {type:Boolean}
     }],
-    profile_pic:{type: String}
+    profile_pic:{type: String},
+    addresses : 
+    [{
+      _id : {type : Schema.ObjectId,auto:true},
+      name : String,
+      streetaddressline_1 : String,
+      streetaddressline_2 : String,
+      country : String,
+      state : String,
+      city : String,
+      zipcode : Number,
+      phone : String
+    }],
+    cards : 
+    [{
+        _id : {type : Schema.ObjectId,auto:true},
+        cardtype : String,
+        cardname : String,
+        cardnumber : Number,
+        cvv : Number,
+        expirydate : Date,
+    }],
 }
 ,
 {
