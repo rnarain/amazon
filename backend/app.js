@@ -10,8 +10,8 @@ var passport = require('passport');
 app.set('view engine', 'ejs');
 require('dotenv').config();
 
-const { mongoDB} = require('./config/configValues');
 
+const { mongoDB } = require('./config/configValues');
 
 
 //use cors to allow cross origin resource sharing
@@ -28,24 +28,24 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use(bodyParser.urlencoded({
     extended: true
-  }));
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 require('./config/passport')(passport);
 
 //Allow Access Control
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
     res.setHeader('Cache-Control', 'no-cache');
     next();
-  });
+});
 
-  //mongodb connection
-  const mongoose = require('mongoose');
+//mongodb connection
+const mongoose = require('mongoose');
 
 var options = {
     useNewUrlParser: true,
@@ -67,19 +67,19 @@ mongoose.connect(mongoDB, options, (err, res) => {
 
 
 app.use(express.json());
-var studentRouter =  require('./api/student/student.router');
-var categoryRouter =  require('./api/category/category.router');
-var cardRouter =  require('./api/card/card.router');
-var loginRouter =  require('./api/login/login.router');
-var productRouter =  require('./api/product/product.router');
+var studentRouter = require('./api/student/student.router');
+var categoryRouter = require('./api/category/category.router');
+var cardRouter = require('./api/card/card.router');
+var loginRouter = require('./api/login/login.router');
+var productRouter = require('./api/product/product.router');
 var cartRouter = require('./api/cart/cart.router');
 
-app.use('/student',studentRouter);
-app.use('/category',categoryRouter);
+app.use('/student', studentRouter);
+app.use('/category', categoryRouter);
 app.use('/card', cardRouter);
 app.use('/login', loginRouter);
-app.use('/product',productRouter);
-app.use('/cart',cartRouter);
+app.use('/product', productRouter);
+app.use('/cart', cartRouter);
 
 //start your server on port 3001
 module.exports = app.listen(3001);

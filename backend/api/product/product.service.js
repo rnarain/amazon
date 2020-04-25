@@ -1,4 +1,5 @@
 const Product = require("../../Models/ProductModel");
+const client = require("../../config/redisconfig");
 
 module.exports = {
   searchProduct: (data, callBack) => {
@@ -23,13 +24,34 @@ module.exports = {
   },
 
   getProductDetails: (data, callBack) => {
+    const productDetailsRedisKey = 'product_id:details';
 
-    Product.findOne({ _id: data._id }, (error, result) => {
-      if (error) {
-        callBack(error);
+    return client.get(productDetailsRedisKey, (err, details) => {
+      if(details){
+        console.log('GETTING KEY VALUE')
+        return callBack(null, details);
       }
-      return callBack(null, result);
-    });
+      else{
+        Product.findOne({ _id: data._id }, (error, details) => {
+          if (error) {
+            callBack(error);
+          }
+          client.setex(productDetailsRedisKey, 3600, JSON.stringify(details))
+          console.log('SET KEY VALUE')
+          return callBack(null, details);
+
+        });
+
+      }
+    })
+
+
+    // Product.findOne({ _id: data._id }, (error, result) => {
+    //   if (error) {
+    //     callBack(error);
+    //   }
+    //   return callBack(null, result);
+    // });
   },
 
   addReview : (data, callBack) => {

@@ -70,17 +70,6 @@ class ProductDetail extends Component {
         )
     }
 
-    postData = (e) => {
-
-        const data = {
-            ratings : this.state.ratings,
-            id : this.state.product_id
-        }
-        axios.post(`${backendServer}/product/addReview`, data)
-        .then(response => {
-        });
-    }
-
     addReviewCallBackFunction = (data) => {
         // console.log('data : ', data)
         if (data.cancel === 1) {
@@ -96,20 +85,13 @@ class ProductDetail extends Component {
                     ratings : this.state.ratings,
                     id : this.state.product_id
                 }
-                console.log('data in callback ', data)
                 axios.post(`${backendServer}/product/addReview`, data)
                 .then(response => {
+                    alert('Comment Successfully Posted');
                 });
             })
 
-            // setState(
-            //     { name: "Michael" },
-            //     () => console.log(this.state)
-            //   );
-
         }
-        console.log(this.state)
-        console.log('woa')
     }
 
     render() {
