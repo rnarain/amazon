@@ -6,16 +6,18 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
 var passport = require('passport');
+var configValues = require('./config/configValues')
 
 app.set('view engine', 'ejs');
 require('dotenv').config();
+
 
 
 const { mongoDB } = require('./config/configValues');
 
 
 //use cors to allow cross origin resource sharing
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: configValues.frontendURL, credentials: true }));
 
 //use express session to maintain session data
 // app.use(session({
@@ -36,7 +38,7 @@ require('./config/passport')(passport);
 
 //Allow Access Control
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', configValues.frontendURL);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
@@ -73,6 +75,7 @@ var cardRouter = require('./api/card/card.router');
 var loginRouter = require('./api/login/login.router');
 var productRouter = require('./api/product/product.router');
 var cartRouter = require('./api/cart/cart.router');
+var sellerRouter = require('./api/seller/seller.router');
 
 app.use('/student', studentRouter);
 app.use('/category', categoryRouter);
@@ -80,6 +83,7 @@ app.use('/card', cardRouter);
 app.use('/login', loginRouter);
 app.use('/product', productRouter);
 app.use('/cart', cartRouter);
+app.use('/seller', sellerRouter);
 
 //start your server on port 3001
 module.exports = app.listen(3001);

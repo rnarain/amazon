@@ -7,6 +7,7 @@ var userSchema = new Schema({
     name : {type: String, required: true}, //To be unique for seller
     password : {type: String, required: true},
     userType: {type: String, required: true},
+    address: {type: String},
     cart : 
     [{
         product_id : {type:String},
@@ -29,7 +30,8 @@ var userSchema = new Schema({
         user_name: {type:String}
     }],
     saveforlater : {type:Boolean}
-    }]
+    }],
+    profile_pic:{type: String}
 }
 ,
 {

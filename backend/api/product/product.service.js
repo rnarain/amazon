@@ -28,8 +28,9 @@ module.exports = {
 
     return client.get(productDetailsRedisKey, (err, details) => {
       if(details){
-        console.log('GETTING KEY VALUE')
-        return callBack(null, details);
+        console.log('GETTING KEY VALUE ' )
+
+        return callBack(null, JSON.parse(details));
       }
       else{
         Product.findOne({ _id: data._id }, (error, details) => {

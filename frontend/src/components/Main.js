@@ -4,7 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 import Login from './Login/Login';
 import Dashboard from './Customer/Dashboard/Dashboard';
 import ProductSearch from './Customer/Product/ProductSearch/ProductSearch';
-import ProductDetail from './Customer/Product/ProductDetails/ProductDetail'
+import ProductDetail from './Customer/Product/ProductDetails/ProductDetail';
+import SellerPage from './Customer/SellerPage';
 import Checkout from './Checkout/Checkout';
 
 
@@ -40,6 +41,7 @@ class Main extends Component {
                         <Route exact path="/product-detail" component={ProductDetail} />
                         <Route exact path="/carthome" component={UserCart}/>
                         <Route exact path="/checkout" component={Checkout} />
+                        <Route exact path="/seller" component={SellerPage} />
                         {footer}
                     </Fragment>
                 }

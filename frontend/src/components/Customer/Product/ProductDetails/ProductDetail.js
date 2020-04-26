@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import backendServer from '../../../../webConfig'
 import axios from 'axios';
-import { getRatings } from '../../../../helperFunctions/ratings';
+import { StarRating } from '../../../../helperFunctions/ratings';
 import ReviewPopUp from './ReviewPopUp';
-// import { Dropdown } from 'primereact/dropdown';
+import SellerPage from '../../SellerPage';
+import { Link } from 'react-router-dom';
 
 var renderedOutput;
 var reviewOutput;
@@ -30,6 +31,7 @@ class ProductDetail extends Component {
         axios.get(`${backendServer}/product/getProductDetails`, { params: { _id: '5e967879668b061d392f4b7d' } })
             .then(response => {
                 var response_data = response.data.data
+                console.log('YEAAHHH', response_data.images)
                 this.setState({
                     product_id: response_data._id,
                     description: response_data.description,
@@ -40,7 +42,7 @@ class ProductDetail extends Component {
                     images: response_data.images,
                     ratings: response_data.ratings,
                     price: response_data.price,
-                    selected_image: response_data.images[0].filename
+                    selected_image: response_data.images[0].file_name
                 })
             });
 
@@ -50,7 +52,7 @@ class ProductDetail extends Component {
         renderedOutput = this.state.images.map(item =>
 
             <div class="images_preview" style={{ marginBottom: '15px' }}>
-                <img src={item.filename} style={{ width: '80px' }} alt="im" onClick={(e) => { this.setState({ selected_image: item.filename }) }} />
+                <img src={item.file_name} style={{ width: '80px' }} alt="im" onClick={(e) => { this.setState({ selected_image: item.file_name }) }} />
                 {/* <div className="row"> " " </div> */}
 
             </div>
@@ -63,7 +65,7 @@ class ProductDetail extends Component {
             <div class="ratings" style={{ marginTop: '15px', marginBottom: '15px' }}>
                 <h4>{item.user_name}</h4>
                 <div className="star-rating">
-                    {getRatings(item.stars)}
+                    {<StarRating ratings={item.stars} />}
                 </div>
                 <p> {item.comment}</p>
             </div>
@@ -79,19 +81,26 @@ class ProductDetail extends Component {
 
             this.setState(prevState => ({
                 addReview: 0,
+                // ratings: [...prevState.ratings, data]
                 ratings: [...prevState.ratings, data]
-            }), function(){
+            }), function () {
                 const data = {
-                    ratings : this.state.ratings,
-                    id : this.state.product_id
+                    ratings: this.state.ratings,
+                    id: this.state.product_id
                 }
                 axios.post(`${backendServer}/product/addReview`, data)
-                .then(response => {
-                    alert('Comment Successfully Posted');
-                });
+                    .then(response => {
+                        alert('Comment Successfully Posted');
+                    });
             })
 
         }
+    }
+
+    showSellerPage = (e) => {
+        console.log(this.state.seller_name);
+        debugger;
+        return <SellerPage name={this.state.seller_name} />
     }
 
     render() {
@@ -117,10 +126,10 @@ class ProductDetail extends Component {
                         {/* <div className="col-md-2"></div> */}
                         <div className="col-md-2">
                             <h1> {this.state.name} </h1>
+                            <Link to={{ pathname: "/seller", seller_id: this.state.seller_id }} style={{ color: '#0066c0' }} > by {this.state.seller_name} </Link>
 
-                            <h3 style={{ color: '#0066c0' }}> by  {this.state.seller_name} </h3>
                             <div className="star-rating">
-                                {getRatings(avgRating)}
+                                {isNaN(avgRating) ? null : <StarRating ratings={avgRating} />}
                                 <p className="product-heading">${this.state.price}</p>
                             </div>
                             <h5> {this.state.description} </h5>
@@ -149,16 +158,9 @@ class ProductDetail extends Component {
                                     <option value="10">Qty: 10</option>
                                 </select>
                                 <br /> <br />
-                                {/* <input id="add-to-cart-button" title="Add to Shopping Cart" data-hover="Select <b>__dims__</b> from the left<br> to add to Shopping Cart" class="a-button-input" type="submit" value="Add to Cart" aria-labelledby="submit.add-to-cart-announce"></input> */}
-                                {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
                                 <input type="button" style={{ background: '#f0c14b', borderColor: '#a88734' }} value="Add to Cart"></input>
                             </div>
                         </div>
-
-
-                        {/* <div className="col-md-2">
-                            <h2> {this.state.name}</h2>
-                        </div> */}
                     </div>
 
                 </div>
@@ -170,7 +172,6 @@ class ProductDetail extends Component {
                         {reviewOutput}
                     </div>
                     <div>
-                        {/* <input type = "button" style = {{marginBottom: '10px'}} value="Write A Review"  onClick={() => this.setState({ addReview: 1, reviewEditable: true })} />  */}
                         {this.state.addReview === 1 ? <ReviewPopUp parentCallback={this.addReviewCallBackFunction} /> : <input type="button" style={{ marginBottom: '10px' }} value="Write A Review" onClick={() => this.setState({ addReview: 1 })} />}
 
                     </div>

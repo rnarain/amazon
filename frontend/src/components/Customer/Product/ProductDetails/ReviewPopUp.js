@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import { getRatings } from '../../../../helperFunctions/ratings';
+import { StarRating } from '../../../../helperFunctions/ratings';
 
 class ReviewPopUp extends Component {
 
@@ -28,8 +28,8 @@ class ReviewPopUp extends Component {
     }
 
     handleClose = (e) => {
-        this.setState( { show : false});
-        const data = { cancel : 1}
+        this.setState({ show: false });
+        const data = { cancel: 1 }
         this.props.parentCallback(data)
     }
     handleSubmit = (e) => {
@@ -42,12 +42,19 @@ class ReviewPopUp extends Component {
         this.props.parentCallback(data);
     }
 
+    starRatingCallBack = (data) => {
+        console.log('IN Review PopUp - starRatingCallBack ',data);
+        this.setState({
+            rating : data
+        })
+    }
+
 
 
 
     render() {
 
-        
+
         return (
             <>
                 {/* <Button variant="primary" onClick={handleShow}>
@@ -64,8 +71,9 @@ class ReviewPopUp extends Component {
                         <form>
                                 <h4> Overall Rating : </h4>
                                 <div className="star-rating" onClick={this.handleRatingChange}>
-                                    {getRatings(this.state.rating)}
-                                </div> <br />
+                                    {<StarRating parentCallback={this.starRatingCallBack} editable={true} ratings={this.state.rating} />}
+                                </div>
+                                <br />
                                 <h4> Comment : </h4> <textarea rows='5' cols='50' name="comment" onChange={this.handleTextChange} /> <br />
 
                             </form>
