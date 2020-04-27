@@ -1,5 +1,5 @@
 const {
-    getSellerDetails
+    getSellerDetails, getSellerProducts
   } = require("./seller.service");
   
   const jwt = require('jsonwebtoken');
@@ -22,5 +22,22 @@ const {
         });
       });
     },
+
+    getSellerProducts: (req, res) => {
+      var queryObject = req.query;
+      console.log('IN controller ', queryObject);
+      getSellerProducts(queryObject, (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        return res.json({
+          success: 1,
+          data: results
+        });
+      });
+    }
+
+
   
   }

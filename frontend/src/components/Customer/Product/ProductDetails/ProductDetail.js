@@ -126,7 +126,7 @@ class ProductDetail extends Component {
                         {/* <div className="col-md-2"></div> */}
                         <div className="col-md-2">
                             <h1> {this.state.name} </h1>
-                            <Link to={{ pathname: "/seller", seller_id: this.state.seller_id }} style={{ color: '#0066c0' }} > by {this.state.seller_name} </Link>
+                            <Link to={{ pathname: "/seller/"+this.state.seller_name, seller_id: this.state.seller_id }} style={{ color: '#0066c0' }} > by {this.state.seller_name} </Link>
 
                             <div className="star-rating">
                                 {isNaN(avgRating) ? null : <StarRating ratings={avgRating} />}
