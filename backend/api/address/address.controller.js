@@ -1,19 +1,19 @@
 const {
-  addCard,
-  deleteCard,
-  updateCard,
-  getAllCards,
-  getCardDetails
-} = require("./card.service");
+  addAddress,
+  deleteAddress,
+  updateAddress,
+  getAllAddress,
+  getAddressDetails
+} = require("./address.service");
 
 const jwt = require('jsonwebtoken');
 const { secret } = require('../../config/configValues');
 var kafka = require('../../kafka/client');
 
 module.exports = {
-  // createCard: (req, res) => {
+  // createAddress: (req, res) => {
   //   const body = req.body;
-  //   createCard(body, (err, results) => {
+  //   createAddress(body, (err, results) => {
   //     if (err) {
   //       return res.status(400).json({
   //         success: 0,
@@ -23,14 +23,13 @@ module.exports = {
   //     return res.status(200).json({
   //       success: 1,
   //       data: results,
-  //       message: "Card saved successfully"
+  //       message: "Address saved successfully"
   //     });
   //   });
   // },
-
-  getCardDetails: (req , res) => {
-    const cardid = req.params.cardid;
-    getCardDetails(cardid, (err, results) => {
+  getAddressDetails: (req , res) => {
+    const cardid = req.params.addressid;
+    getAddressDetails(cardid, (err, results) => {
       if (err) {
         console.log(err);
         return;
@@ -42,10 +41,10 @@ module.exports = {
     });
   },
 
-  addCard : (req, res) => {
+
+  addAddress : (req, res) => {
     const body = req.body;
-    console.log("here");
-    addCard(body, (err, results) => {
+    addAddress(body, (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
@@ -60,9 +59,9 @@ module.exports = {
     });
   },
 
-  updateCard : (req, res) => {
+  updateAddress : (req, res) => {
     const body = req.body;
-    updateCard(body, (err, results) => {
+    updateAddress(body, (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
@@ -77,9 +76,9 @@ module.exports = {
     });
   },
 
-  deleteCard: (req, res) => {
+  deleteAddress: (req, res) => {
     const body = req.body;
-    deleteCard(body, (err, results) => {
+    deleteAddress(body, (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
@@ -95,10 +94,10 @@ module.exports = {
   },
 
 
-  getAllCards: (req, res) => {
-    console.log("GetAllCards ", req);
+  getAllAddress: (req, res) => {
+    console.log("GetAllAddress ", req);
     const id = req.params.id;
-    getAllCards(id,(err, results) => {
+    getAllAddress(id,(err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({

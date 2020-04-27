@@ -1,45 +1,33 @@
-const Card = require("../../Models/CardModel");
+const User = require("../../Models/UserModel");
 
 module.exports = {
-  createCard : (data, callBack) => {
-    console.log("reached here ",data);
-    var newCard = new Card({
-      userid : data.id,
-      card : [{
-        cardtype : data.cardtype,
-        cardname : data.cardname,
-        cardnumber : data.cardnumber,
-        cvv : data.cvv,
-        expirydate : data.expirydate
-      }]
-    });
-    Card.findOne({ userid : data.id }, (error, user) => {
-      if (error) {
-        callBack(error);
-      }
-      if (!user) {
-        newCard.save((error, data) => {
-          if (error) {
-            callBack(error);
-          }
-          console.log(data);
-          return callBack(null, data);
-        })
-      } 
-    })
-  },
-
-  // getCardDetails: (id, callBack) => {
-  //   console.log(id);
-  //   Card.findById(id , (error, result) => {
+  // createUser : (data, callBack) => {
+  //   console.log("reached here ",data);
+  //   var newUser = new User({
+  //     card : {
+  //       cardtype : data.cardtype,
+  //       cardname : data.cardname,
+  //       cardnumber : data.cardnumber,
+  //       cvv : data.cvv,
+  //       expirydate : data.expirydate
+  //     }
+  //   });
+  //   User.findById({ data.id }, (error, user) => {
   //     if (error) {
-  //       console.log(error);
   //       callBack(error);
   //     }
-  //     console.log("Result inside getCardDetails",result);
-  //     return callBack(null, result);
-  //   });
+  //     if (!user) {
+  //       newCard.save((error, data) => {
+  //         if (error) {
+  //           callBack(error);
+  //         }
+  //         console.log(data);
+  //         return callBack(null, data);
+  //       })
+  //     } 
+  //   })
   // },
+
 
   addCard : (data, callBack) => {
     let newData = {
@@ -49,7 +37,7 @@ module.exports = {
       cvv : data.cvv,
       expirydate : data.expirydate
     }
-    Card.updateOne({ userid : data.id }, { $push : { card : newData }  }, { upsert: false }, (error, results) => {
+    User.updateOne({ _id : data.id }, { $push : { cards : newData }  }, { upsert: false }, (error, results) => {
       if (error) {
         callBack(error);
       }
@@ -59,15 +47,14 @@ module.exports = {
   },
 
   updateCard :(data,callBack)=>{
-    console.log("reached ", data);
-    Card.updateOne({ 'userid' : data.id , 'card._id' : data.cardid}, 
+    User.updateOne({ _id : data.id , 'cards._id' : data.cardid}, 
     { "$set": 
       {
-        'card.$.cardtype': data.cardtype,
-        'card.$.cardname': data.cardname,
-        'card.$.cardnumber': data.cardnumber,
-        'card.$.cvv': data.cvv,
-        'card.$.expirydate': data.expirydate,
+        'cards.$.cardtype': data.cardtype,
+        'cards.$.cardname': data.cardname,
+        'cards.$.cardnumber': data.cardnumber,
+        'cards.$.cvv': data.cvv,
+        'cards.$.expirydate': data.expirydate,
       }  
     },  (error, results) => {
       if (error) {
@@ -79,8 +66,8 @@ module.exports = {
   },
   
   deleteCard : (data, callBack) => {
-    Card.update({ userid: data.id },
-      { "$pull": { 'card': { _id : data.cardid } } },
+    User.update({ _id: data.id },
+      { "$pull": { 'cards': { _id : data.cardid } } },
       (error, result) => {
    
     if (error) {
@@ -90,17 +77,39 @@ module.exports = {
   });
 },
 
+getCardDetails: (cardid , callBack) => {
+  User.findOne({'cards._id' : cardid} , (error, result) => {
+    if (error) {
+      callBack(error);
+    }
+
+    if (!result || result.cards.length <=0) {
+      callBack(null, "Card Not found");
+    }
+    const cards = result.cards;
+
+    cards.forEach(element => {
+      if (element._id == cardid) {
+        return callBack(null, element);
+      }
+    });
+  });
+},
+
+
 getAllCards : (id,callBack) => {
-    Card.findOne({userid : id},
-      (error, results) => {
+    User.findById({_id : id},
+      (error, result) => {
         if (error) {
           callBack(error);
         }
-        return callBack(null, results);
+        return callBack(null, result.cards);
       }
     );
   },
 }
+
+
 
 
 
