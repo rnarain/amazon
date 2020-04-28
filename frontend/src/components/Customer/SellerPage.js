@@ -46,14 +46,18 @@ class SellerPage extends Component {
         let newArr = this.state.products;
         renderedOutput = newArr.map(item =>
             // <div>
-                <div style={{ display: 'inline' }}>
-                    <img src={item.images[0].file_name} style={{ width: '350px', height: '250px', padding: '15px' }} />
-                    
+            <div class="card" style={{display:'inline-block',  width: '450px', height:'350px',  borderBottom:'2px solid #d5dbdb', borderRight:'2px solid #d5dbdb', borderTop:'5px solid #d5dbdb'}}>
+                <img class="card-img-top" src={item.images[0].file_name} style={{ width: '350px', height: '250px', padding: '15px' }} />
+                <div class="card-body">
+                    <h5 class="card-title" style={{padding:'5px',textAlign: 'center'}}> {item.name}</h5>
+                    {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
+
                 </div>
-                
+            </div>
+
 
             // </div>
-            );
+        );
     }
 
     render() {
@@ -75,9 +79,9 @@ class SellerPage extends Component {
 
                 </div>
 
-                <div class='differentiator' style={{ height: '10px', backgroundColor: '#d5dbdb' }}> </div> <br />
-                <div className="col-md-5"></div>
-                <h2 style={{ display: 'inline', fontFamily: 'Amazon Ember' }}>  Products  <br /> </h2>
+                <div class='differentiator' style={{ height: '1px', backgroundColor: '#d5dbdb' }}> </div> 
+                {/* <div className="col-md-5"></div> */}
+                {/* <h2 style={{ display: 'inline', fontFamily: 'Amazon Ember' }}>  Products  <br /> </h2> */}
                 {this.showProductsMap()}
                 {renderedOutput}
             </div>

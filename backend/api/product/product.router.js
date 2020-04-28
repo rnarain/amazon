@@ -7,7 +7,7 @@ const passport = require('passport');
 const {
   searchProduct,
   getProductDetails,
-  addReview
+  addReview, insertProducts
 } = require("./product.controller");
 
 let checkAuth = passport.authenticate('jwt', { session: false });
@@ -15,5 +15,6 @@ let checkAuth = passport.authenticate('jwt', { session: false });
 router.get("/searchProduct", searchProduct);
 router.get("/getProductDetails", getProductDetails);
 router.post("/addReview", addReview);
+router.post("/insertProducts", insertProducts);
 
 module.exports = router;

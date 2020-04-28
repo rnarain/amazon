@@ -1,6 +1,6 @@
 const {
   searchProduct, getProductDetails,
-  addReview
+  addReview, insertProducts
 } = require("./product.service");
 
 const jwt = require('jsonwebtoken');
@@ -70,6 +70,21 @@ module.exports = {
     body = req.body;
     console.log('In controller ', body)
     addReview(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
+
+  insertProducts: (req, res) => {
+    body = req.body;
+    console.log('In controller insert Products ', body)
+    insertProducts(body, (err, results) => {
       if (err) {
         console.log(err);
         return;
