@@ -31,8 +31,8 @@ class Login extends Component {
             password: "",
             userType: "Customer",
             authFlag: false,
-            showPasswordMismatchError : false,
-            name : ""
+            showPasswordMismatchError: false,
+            name: ""
         }
         //Bind the handlers to this className
         this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -71,16 +71,16 @@ class Login extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-    } 
-    
+    }
+
     handlePasswordChange = (e) => {
-        if(this.state.password != e.target.value){
+        if (this.state.password != e.target.value) {
             this.setState({
-                showPasswordMismatchError : true
+                showPasswordMismatchError: true
             })
-        }else{
+        } else {
             this.setState({
-                showPasswordMismatchError : false
+                showPasswordMismatchError: false
             })
         }
     }
@@ -94,14 +94,14 @@ class Login extends Component {
             e.preventDefault();
 
             const data = {
-                name:this.state.name,
+                name: this.state.name,
                 emailID: this.state.email,
                 password: this.state.password,
                 userType: this.state.userType
             }
             //set the with credentials to true
             axios.defaults.withCredentials = true;
-            console.log('data',data);
+            console.log('data', data);
             //make a post request with the user data
             axios.post('http://localhost:3001/' + 'signup', data)
                 .then(response => {
@@ -109,8 +109,8 @@ class Login extends Component {
                     toast.success("Registration succesfull! Redirecting to login page.", {
                         position: toast.POSITION.TOP_CENTER,
                         autoClose: 3000
-                      });
-                      setTimeout(() => {  window.location.href = "/login"; }, 3000);
+                    });
+                    setTimeout(() => { window.location.href = "/login"; }, 3000);
                 }
                 ).catch(ex => {
                     this.setState({
@@ -118,7 +118,7 @@ class Login extends Component {
                     })
                 });
         }
-        
+
     }
 
     render() {
@@ -172,8 +172,8 @@ class Login extends Component {
                                 <div className="a-section auth-pagelet-container">
                                     {/* show a warning modal dialog when the third party account is connected with Amazon */}
                                     <div className="a-section">
-                                        <form id="signup" name="signup" method="post" noValidate  data-enable-mobile-account-js="false"  className="a-spacing-none auth-validate-form auth-real-time-validation" data-fwcim-id="m4B9056D">
-                                            
+                                        <form id="signup" name="signup" method="post" noValidate data-enable-mobile-account-js="false" className="a-spacing-none auth-validate-form auth-real-time-validation" data-fwcim-id="m4B9056D">
+
                                             <input type="hidden" name="claimToken" className="auth-contact-verification-claim-token" />
                                             <div className="a-box a-spacing-extra-large"><div className="a-box-inner">
                                                 <h1 className="a-spacing-small">
@@ -184,7 +184,7 @@ class Login extends Component {
                                                     <label htmlFor="ap_customer_name" className="a-form-label">
                                                         Your name
                                 </label>
-                                                    <input name="name" type="text" onChange={this.handleChange} required maxLength={50} id="ap_customer_name" autoComplete="off"  tabIndex={1} className="a-input-text a-span12 auth-autofocus auth-required-field auth-contact-verification-request-info" />
+                                                    <input name="name" type="text" onChange={this.handleChange} required maxLength={50} id="ap_customer_name" autoComplete="off" tabIndex={1} className="a-input-text a-span12 auth-autofocus auth-required-field auth-contact-verification-request-info" />
                                                     <div id="auth-customerName-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                                                         Enter your name
                                     </div></div></div>
@@ -212,12 +212,28 @@ class Login extends Component {
                                       </div></div></div>
                                                     </div>
                                                 </div>
+
+                                                <div className="a-row a-spacing-base">
+                                                    <label htmlFor="ap_customer_name" className="a-form-label">
+                                                        Role
+                                </label>
+
+                                                    <select name="userType" className="a-input-text a-span12 auth-autofocus auth-required-field auth-contact-verification-request-info" id="inputGroupSelect02" onChange={this.handleChange} required>
+                                                        <option selected value="Customer">Customer</option>
+                                                        <option value="Seller">Seller</option>
+                                                    </select>
+
+
+
+                                                </div>
+
+
                                                 <div className="auth-require-fields-match-group">
                                                     <div className="a-row a-spacing-base">
                                                         <label htmlFor="ap_password" className="a-form-label">
                                                             Password
                                   </label>
-                                                        <input name="password" onChange={this.handleChange}  required type="password" maxLength={1024} id="ap_password" autoComplete="off" placeholder="At least 6 characters" name="password" tabIndex={5} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match auth-require-password-validation" />
+                                                        <input name="password" onChange={this.handleChange} required type="password" maxLength={1024} id="ap_password" autoComplete="off" placeholder="At least 6 characters" name="password" tabIndex={5} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match auth-require-password-validation" />
                                                         <div className="a-box a-alert-inline a-alert-inline-info auth-inlined-information-message a-spacing-top-mini"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                                                             Passwords must be at least 6 characters.
                                       </div></div></div>
@@ -236,11 +252,11 @@ class Login extends Component {
                                                         <div id="auth-passwordCheck-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                                                             Type your password again
                                       </div></div></div>
-                                                    {this.state.showPasswordMismatchError &&
-                                                        <div id="auth-password-mismatch-alert" className="a-box a-alert-inline a-alert-inline-error a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Passwords must match
+                                                        {this.state.showPasswordMismatchError &&
+                                                            <div id="auth-password-mismatch-alert" className="a-box a-alert-inline a-alert-inline-error a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
+                                                                Passwords must match
                                       </div></div></div>
-                                      }
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div className="a-row a-spacing-extra-large">
