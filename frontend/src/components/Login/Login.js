@@ -71,8 +71,10 @@ class Login extends Component {
 
     //submit Login handler to send a request to the node backend
     handleLogin = (e) => {
-        var headers = new Headers();
-        //prevent page from refresh
+        const form = document.getElementById("signIn");
+        form.reportValidity();
+        if (form.checkValidity()) {
+             //prevent page from refresh
         e.preventDefault();
         const data = {
             email: this.state.email,
@@ -84,21 +86,12 @@ class Login extends Component {
         console.log('req.body',data);
         axios.post('http://localhost:3001/' + 'login/', data)
             .then(response => {
-                console.log(response.data[0]);
+                localStorage.setItem("token", response.data[0].token);
                 localStorage.setItem("id", response.data[0]._id);
                 localStorage.setItem("name", response.data[0].name);
                 localStorage.setItem("type", response.data[0].userType);
-                
-                //this.props.history.push('/product-search');
                 window.location.href = "/product-search";
                 this.setState({ redirectToHome: true });  
-                
-                //var decoded = jwt_decode(response.data[0]);
-                //localStorage.setItem("token", "Bearer " + response.data[0]);
-               
-                //localStorage.setItem("profilePicURL", decoded.profilePicURL);
-
-                // localStorage.setItem("type", this.state.type);
                 this.setState({
                     authFlag: true
                 })
@@ -109,6 +102,8 @@ class Login extends Component {
                     authFlag: false
                 })
             });
+        }
+       
     }
 
     render() {
@@ -176,7 +171,7 @@ class Login extends Component {
                                         {/* show a warning modal dialog when the third party account is connected with Amazon */}
                                         <div className="a-section a-spacing-base">
                                             <div className="a-section">
-                                                <form name="signIn"  className="a-spacing-none" data-fwcim-id="u2WWmSpJ">
+                                                <form id="signIn" name="signIn"  className="a-spacing-none" data-fwcim-id="u2WWmSpJ">
                                                     <input type="hidden" name="appActionToken" defaultValue="Kba0W8j2FVN5juj2B1PDTJjAAVkM0sAj3D" /><input type="hidden" name="appAction" defaultValue="SIGNIN" />
                                                     <input type="hidden" name="openid.return_to" defaultValue="ape:aHR0cHM6Ly9zZWxsZXJjZW50cmFsLmFtYXpvbi5jb20vZ3AvaG9tZXBhZ2UuaHRtbA==" />
                                                     <input type="hidden" name="prevRID" defaultValue="ape:REQzUVBTMFBWMTZNWVE5R1dSTUo=" />
@@ -192,7 +187,7 @@ class Login extends Component {
                                                                     <label htmlFor="ap_email" className="a-form-label">
                                                                         Email (phone for mobile accounts)
                                 </label>
-                                                                    <input onChange={this.handleChange} type="email" maxLength={128} id="ap_email" name="email" tabIndex={1} className="a-input-text a-span12 auth-autofocus auth-required-field" />
+                                                                    <input onChange={this.handleChange} required type="email" maxLength={128} id="ap_email" name="email" tabIndex={1} className="a-input-text a-span12 auth-autofocus auth-required-field" />
                                                                     {/*<div id="auth-email-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert">
                                                                         <div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" />
                                                                             <div className="a-alert-content">
@@ -205,7 +200,7 @@ class Login extends Component {
                                                                 <div className="a-section a-spacing-large">
                                                                     <div className="a-row">
                                                                         <div className="a-column a-span5">
-                                                                            <label htmlFor="ap_password" className="a-form-label">
+                                                                            <label htmlFor="ap_password"  className="a-form-label">
                                                                                 Password
                                     </label>
                                                                         </div>
@@ -215,7 +210,7 @@ class Login extends Component {
                                     </a>
                                                                         </div>
                                                                     </div>
-                                                                    <input onChange={this.handleChange} type="password" maxLength={1024} id="ap_password" name="password" tabIndex={2} className="a-input-text a-span12 auth-required-field" />
+                                                                    <input onChange={this.handleChange} required type="password" maxLength={1024} id="ap_password" name="password" tabIndex={2} className="a-input-text a-span12 auth-required-field" />
                                                                     {/*<div id="auth-password-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert">
                                                                         <div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" />
                                                                             <div className="a-alert-content">
@@ -249,7 +244,7 @@ class Login extends Component {
                                                                     </div>
                                                                 </div>
                                                                 <div className="a-row">
-                                                                    <span id="auth-signin-cancel-link" className="a-button a-spacing-base a-spacing-top-base a-button-span12 a-button-base"><span className="a-button-inner"><a id="signInCancelSubmit" tabIndex={6} href="https://services.amazon.com/content/sell-on-amazon.htm?ref=sc_us_soa_login_v2&amp&ld=SCSOAlogin&apCustomerCancelled=true" className="a-button-text" role="button">
+                                                                    <span id="auth-signin-cancel-link" className="a-button a-spacing-base a-spacing-top-base a-button-span12 a-button-base"><span className="a-button-inner"><a id="signInCancelSubmit" tabIndex={6} href="/signup" className="a-button-text" role="button">
                                                                         Register now
                                     </a></span></span>
                                                                 </div>

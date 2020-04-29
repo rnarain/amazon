@@ -28,7 +28,7 @@ class SellerPage extends Component {
                     profile_pic: response.data.data.profile_pic,
                     email: response.data.data.email
                 })
-                debugger;
+                //debugger;
             })
 
         axios.get(`${backendServer}/seller/getSellerProducts`, { params: { name: this.props.match.params.name } })
@@ -42,7 +42,7 @@ class SellerPage extends Component {
     }
 
     showProductsMap = (e) => {
-        debugger
+        //debugger
         let newArr = this.state.products;
         renderedOutput = newArr.map(item =>
             // <div>

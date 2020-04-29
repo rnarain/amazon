@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./config/passport')(passport);
+//require('./config/passport')(passport);
 
 //Allow Access Control
 app.use(function (req, res, next) {

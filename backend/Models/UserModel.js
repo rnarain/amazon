@@ -8,6 +8,7 @@ var userSchema = new Schema({
     password : {type: String, required: true},
     userType: {type: String, required: true},
     address: {type: String},
+    token:{type:String},
     cart : 
     [{
         product_id : {type:String},
