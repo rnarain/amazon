@@ -32,7 +32,8 @@ class Login extends Component {
             userType: "Customer",
             authFlag: false,
             showPasswordMismatchError: false,
-            name: ""
+            name: "",
+            showSignUpError : false
         }
         //Bind the handlers to this className
         this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -66,8 +67,11 @@ class Login extends Component {
     }
 
     handleChange = (e) => {
-        console.log('e', e.target.name);
-        console.log('e', e.target.value);
+        if(this.state.showSignUpError){
+            this.setState({
+                showSignUpError : false
+            })
+        }
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -114,7 +118,7 @@ class Login extends Component {
                 }
                 ).catch(ex => {
                     this.setState({
-                        authFlag: false
+                        showSignUpError: true
                     })
                 });
         }
@@ -133,13 +137,6 @@ class Login extends Component {
             localStorage.setItem("type", 1);
             redirectVar = <Redirect to="/company/postings" />
         }
-        let userType =
-            (
-                <select onChange={this.userTypeChangeHandler} value={this.state.userType} className="form-control">
-                    <option value="student" > Student </option>
-                    <option value="company"> Employer </option>
-                </select>
-            );
         return (
 
             <div>
@@ -169,6 +166,21 @@ class Login extends Component {
                                         </p>
                                     </div></div></div>
                                 </div>
+
+                                {this.state.showSignUpError && 
+                                    <div class="a-section a-spacing-base auth-pagelet-container">
+                                        <div class="a-section">
+                                            <div id="auth-error-message-box" class="a-box a-alert a-alert-error auth-server-side-message-box a-spacing-base"><div class="a-box-inner a-alert-container"><h4 class="a-alert-heading">Important Message!</h4><i class="a-icon a-icon-alert"></i><div class="a-alert-content">
+                                                <ul class="a-unordered-list a-nostyle a-vertical a-spacing-none">
+                                                    <li><span class="a-list-item">
+                                                        User already exists. Please login.
+                                            </span></li>
+                                                </ul>
+                                            </div></div></div>
+                                        </div>
+                                    </div>
+                                }
+
                                 <div className="a-section auth-pagelet-container">
                                     {/* show a warning modal dialog when the third party account is connected with Amazon */}
                                     <div className="a-section">
@@ -233,7 +245,7 @@ class Login extends Component {
                                                         <label htmlFor="ap_password" className="a-form-label">
                                                             Password
                                   </label>
-                                                        <input name="password" onChange={this.handleChange} required type="password" maxLength={1024} id="ap_password" autoComplete="off" placeholder="At least 6 characters" name="password" tabIndex={5} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match auth-require-password-validation" />
+                                                        <input name="password" onChange={this.handleChange} required type="password" minLength={6} maxLength={1024} id="ap_password" autoComplete="off" placeholder="At least 6 characters" name="password" tabIndex={5} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match auth-require-password-validation" />
                                                         <div className="a-box a-alert-inline a-alert-inline-info auth-inlined-information-message a-spacing-top-mini"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                                                             Passwords must be at least 6 characters.
                                       </div></div></div>
@@ -248,7 +260,7 @@ class Login extends Component {
                                                         <label htmlFor="ap_password_check" className="a-form-label">
                                                             Re-enter password
                                   </label>
-                                                        <input onChange={this.handlePasswordChange} required type="password" maxLength={1024} id="ap_password_check" autoComplete="off" name="passwordCheck" tabIndex={6} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match" />
+                                                        <input onChange={this.handlePasswordChange} required type="password" minLength={6} maxLength={1024} id="ap_password_check" autoComplete="off" name="passwordCheck" tabIndex={6} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match" />
                                                         <div id="auth-passwordCheck-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                                                             Type your password again
                                       </div></div></div>
