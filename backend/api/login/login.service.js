@@ -15,6 +15,7 @@ module.exports = {
   }*/
   login: (req, res) => {
     User.find({email: req.body.email,password : req.body.password}, (error, result) => {
+      console.log("in login")
       if (error) {
         console.log(error);
         //callBack(error);

@@ -53,6 +53,7 @@ var userSchema = new Schema({
         cvv : Number,
         expirydate : Date,
     }],
+    total_cart_value : {type : Number}
 }
 ,
 {

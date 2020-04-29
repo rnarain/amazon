@@ -19,22 +19,24 @@ module.exports = {
 },
 
 getallitemsincart : (body,callBack) => {
-      console.log("id is",body.id);
-  User.find({_id: body.id }, (error, result) => {
+      console.log("id is",body);
+  User.find({_id: body }, (error, result) => {
     if (error) {
       callBack(error);
     }
-    console.log(result)
-    console.log(result[0].cart);
-    console.log(result[0].cart[0].ratings)
+    else 
+    {
+    // console.log(result)
+    // console.log(result[0].cart);
+    // console.log(result[0].cart[0].ratings)
 
-    console.log(result[0].cart.length)
+    // console.log(result[0].cart.length)
     
     result = {
       cartvalues:result[0].cart,
       userdetails:result
     }
-
+  }
   return callBack(null, result);
   });
 },
@@ -43,9 +45,12 @@ getallitemsincart : (body,callBack) => {
 deleteproduct :  (body,callBack) => 
 {
   console.log("inside delete product")
-  User.update(
-      {_id: body.id},
-    { $pull: { "cart" : { product_id: "5e967879668b061d392f4b7e" } } } , (error, result) => {
+  console.log("body.total",body.totalamt)
+  console.log("body.saveforlater",body.savedforlater)
+  User.updateOne(
+    {_id: body.id},
+    { $pull: { "cart" : { product_id: body.product_id } } } ,
+     (error, result) => {
       console.log(result)
     if (error) {
       callBack(error);
@@ -53,6 +58,22 @@ deleteproduct :  (body,callBack) =>
     return callBack(null, result);
 
       });
+
+      if(!body.savedforlater)
+      {
+        console.log("this is a acart product")
+      User.updateOne(
+        {_id: body.id},
+        { $set : { total_cart_value : body.totalamt } },
+        (error, result) => {
+          console.log("updating tot ammt",result)
+        if (error) {
+          callBack(error);
+        }
+      }
+          );
+        }
+        
 },
 
 
@@ -64,7 +85,7 @@ updatequantity :(body,callBack)=>{
     {
       'cart.$.product_count': body.count,
       'cart.$.total_value': body.totalvalue,
-
+      'total_cart_value':body.total_cart_value
     }  
   },  (error, results) => {
     if (error) {
@@ -79,6 +100,7 @@ updatequantity :(body,callBack)=>{
 addtocart : (data,callBack) =>
 {
   console.log("data is",data)
+  // var totalamt = data.price * product_count;
  var newItem = {
    userid : data.id,
    cart : {
@@ -93,11 +115,11 @@ addtocart : (data,callBack) =>
      price:data.price,
      isagift : data.isagift,
      giftmessage : data.giftmessage,
-     saveforlater :false
+     saveforlater :false,
    }
  };
 
- User.update({ _id : newItem.userid }, { $push : { cart : newItem.cart }  }, { upsert: false }, (error, results) => {
+ User.update({ _id : newItem.userid }, { $push : { cart : newItem.cart}  }, { upsert: false }, (error, results) => {
    if (error) {
      callBack(error);
    }
@@ -119,9 +141,21 @@ saveforlater :(body,callBack)=>{
     if (error) {
       callBack(error);
     }
-    return callBack(null, results);
+    // return callBack(null, results);
   }
   );
+
+
+  User.updateOne(
+    {_id: body.id},
+    { $set : { total_cart_value : body.totalamt } },
+    (error, result) => {
+      console.log("updating tot ammt",result)
+    if (error) {
+      callBack(error);
+    }
+    return callBack(null, result);
+      });
 },
 
 
@@ -133,8 +167,9 @@ updategiftorder :(body,callBack)=>{
     {
       'cart.$.isagift': body.isagift,
       'cart.$.giftmessage': body.giftmessage,
-      'cart.$.price':  body.extraprice,
-      'cart.$.total_value': body.extraprice 
+      'cart.$.price':  body.price,
+      'cart.$.total_value': body.total_value,
+       total_cart_value : body.total_cart_value 
     }  
   },  (error, results) => {
     if (error) {
