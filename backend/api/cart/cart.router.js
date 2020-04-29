@@ -12,7 +12,7 @@ const {
 } = require("./cart.controller");
 
 let checkAuth = passport.authenticate('jwt', { session: false });
- router.get("/getallitemsincart", getallitemsincart);
+ router.get("/getallitemsincart/:id", getallitemsincart);
  router.post("/deleteproduct",deleteproduct);
  router.post("/updatequantity",updatequantity);
  router.post("/addtocart",addtocart);

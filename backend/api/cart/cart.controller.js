@@ -15,7 +15,7 @@ const {
   module.exports = {
     
     getallitemsincart: (req, res) => {
-      const body = req.body;
+      const body = req.params.id;
       console.log("body",body)
 
       getallitemsincart(body,(err, results) => {
@@ -25,7 +25,7 @@ const {
         }
         else
         {
-          console.log("the results are",results)
+          // console.log("the results are",results)
         return res.json({
           success: 1,
           data: results
@@ -68,7 +68,7 @@ const {
         }
         else
         {
-          console.log("the results are",results)
+          // console.log("the results are",results)
         return res.json({
           success: 1,
           data: results
