@@ -6,7 +6,7 @@ var userSchema = new Schema({
     email : {type: String, required: true},
     name : {type: String, required: true}, //To be unique for seller
     password : {type: String, required: true},
-    userType: {type: String, required: true},
+    userType: {type: String},
     address: {type: String},
     token:{type:String},
     cart : 

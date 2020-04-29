@@ -77,12 +77,15 @@ var loginRouter = require('./api/login/login.router');
 var productRouter = require('./api/product/product.router');
 var cartRouter = require('./api/cart/cart.router');
 var sellerRouter = require('./api/seller/seller.router');
+var signupRouter = require('./api/signup/signup.router');
+
 
 app.use('/student', studentRouter);
 app.use('/category', categoryRouter);
 app.use('/card', cardRouter);
 app.use('/address', addressRouter);
 app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
 app.use('/product', productRouter);
 app.use('/cart', cartRouter);
 app.use('/seller', sellerRouter);
