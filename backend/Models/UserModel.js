@@ -53,6 +53,7 @@ var userSchema = new Schema({
         cvv : Number,
         expirydate : Date,
     }],
+    count_of_votes : {type : Number}
 }
 ,
 {

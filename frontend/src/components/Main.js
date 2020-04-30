@@ -7,6 +7,7 @@ import ProductSearch from './Customer/Product/ProductSearch/ProductSearch';
 import ProductDetail from './Customer/Product/ProductDetails/ProductDetail';
 import SellerPage from './Customer/SellerPage';
 import Checkout from './Checkout/Checkout';
+import CustomerProfile from './Customer/Profile/Profile';
 
 
 
@@ -42,6 +43,7 @@ class Main extends Component {
                         <Route exact path="/carthome" component={UserCart}/>
                         <Route exact path="/checkout" component={Checkout} />
                         <Route exact path="/seller/:name" component={SellerPage} />
+                        <Route exact path="/customer/profile" component={CustomerProfile} />
                         {footer}
                     </Fragment>
                 }

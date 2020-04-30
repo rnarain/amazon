@@ -77,6 +77,7 @@ var loginRouter = require('./api/login/login.router');
 var productRouter = require('./api/product/product.router');
 var cartRouter = require('./api/cart/cart.router');
 var sellerRouter = require('./api/seller/seller.router');
+var customerRouter = require('./api/customer/customer.router');
 
 app.use('/student', studentRouter);
 app.use('/category', categoryRouter);
@@ -86,6 +87,7 @@ app.use('/login', loginRouter);
 app.use('/product', productRouter);
 app.use('/cart', cartRouter);
 app.use('/seller', sellerRouter);
+app.use('/customer', customerRouter);
 
 //start your server on port 3001
 module.exports = app.listen(3001);
