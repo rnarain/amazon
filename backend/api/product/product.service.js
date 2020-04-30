@@ -1,5 +1,6 @@
 const Product = require("../../Models/ProductModel");
-const client = require("../../config/redisconfig");
+ const client = require("../../config/redisconfig");
+var kafka = require('../../kafka/client');
 
 module.exports = {
   searchProduct: (data, callBack) => {
@@ -9,11 +10,10 @@ module.exports = {
     }
     else {
       filter = {
-        name: data.name,
-        category: data.category
+        name:  { "$regex": data.name, "$options": "i" },
+        category: { "$regex": data.category, "$options": "i" } 
       }
     }
-    console.log(filter);
     Product.find(filter, (error, result) => {
       if (error) {
         callBack(error);
@@ -21,6 +21,31 @@ module.exports = {
       console.log(result);
       return callBack(null, result);
     });
+  },
+
+  searchProductWithKafka : (data,callBack) =>{
+    let filter = {};
+    if (data.category == 'All') filter = {
+      name: { "$regex": data.name, "$options": "i" }
+    }
+    else {
+      filter = {
+        name:  { "$regex": data.name, "$options": "i" },
+        category: { "$regex": data.category, "$options": "i" } 
+      }
+    }
+    const params = {
+      data: filter,
+      path: 'search-product'
+    }
+    kafka.make_request('product', params, (error, result) => {
+      if (error) {
+        callBack(error);
+      }
+      console.log(result);
+      return callBack(null, result);
+    });
+
   },
 
   getProductDetails: (data, callBack) => {
