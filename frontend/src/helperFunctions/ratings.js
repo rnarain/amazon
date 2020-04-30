@@ -37,14 +37,14 @@ export class StarRating extends Component {
 
             }
         }
-        debugger;
+        //debugger;
         this.setState({ ratings, selected_rating: x });
         if (this.props.editable === true)
             this.props.parentCallback(x);
     };
 
     onClick(i) {
-        debugger;
+        //debugger;
         return this.getRatings(i + 1);
     }
 }

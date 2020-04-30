@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./config/passport')(passport);
+//require('./config/passport')(passport);
 
 //Allow Access Control
 app.use(function (req, res, next) {
@@ -78,12 +78,15 @@ var productRouter = require('./api/product/product.router');
 var cartRouter = require('./api/cart/cart.router');
 var sellerRouter = require('./api/seller/seller.router');
 var customerRouter = require('./api/customer/customer.router');
+var signupRouter = require('./api/signup/signup.router');
+
 
 app.use('/student', studentRouter);
 app.use('/category', categoryRouter);
 app.use('/card', cardRouter);
 app.use('/address', addressRouter);
 app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
 app.use('/product', productRouter);
 app.use('/cart', cartRouter);
 app.use('/seller', sellerRouter);

@@ -67,7 +67,7 @@ class ProductSearch extends Component {
         console.log(this.state);
         let products = this.state.filteredProducts.map(product => {
             let avgRating = product.ratings.reduce((r, c) => r + c.stars, 0) / product.ratings.length;
-            debugger
+            //debugger
             
             return (
                 <div className="box-part col-sm-3">

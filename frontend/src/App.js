@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
+//import './App.css';
 import Main from './components/Main';
 import {BrowserRouter} from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //App Component
 class App extends Component {

@@ -8,6 +8,7 @@ import ProductDetail from './Customer/Product/ProductDetails/ProductDetail';
 import SellerPage from './Customer/SellerPage';
 import Checkout from './Checkout/Checkout';
 import CustomerProfile from './Customer/Profile/Profile';
+import SignUp from './Signup/Signup';
 
 
 
@@ -48,7 +49,11 @@ class Main extends Component {
                     </Fragment>
                 }
                 {!localStorage.getItem('id') &&
-                    <Route path="/" component={Login} />
+                    <Fragment>
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/" component={Login} />
+                        <Route exact path="/signup" component={SignUp} />
+                    </Fragment>
                 }
                 {/*<Route path="/login" component={Login}/>*/}
 

@@ -1,7 +1,7 @@
-body {
+/*body {
   font-family: "Ubuntu" !important;
 
-}
+}*/
 
 a{
   color :#333
@@ -13,10 +13,10 @@ ul{
    list-style-type: none !important;
  }
 
- h1, h2, h3, h4 {
+ /*h1, h2, h3, h4 {
   font-family: "Ubuntu" !important;
 
- }
+ }*/
 
 .amazon-body{
   margin-top:110px;

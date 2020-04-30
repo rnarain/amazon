@@ -99,7 +99,7 @@ class ProductDetail extends Component {
 
     showSellerPage = (e) => {
         console.log(this.state.seller_name);
-        debugger;
+        //debugger;
         return <SellerPage name={this.state.seller_name} />
     }
 
