@@ -52,7 +52,7 @@ const mongoose = require('mongoose');
 var options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // poolSize: 100,
+    poolSize: 500,
     bufferMaxEntries: 0
 };
 
