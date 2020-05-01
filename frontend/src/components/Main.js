@@ -9,7 +9,7 @@ import SellerPage from './Customer/SellerPage';
 import Checkout from './Checkout/Checkout';
 import CustomerProfile from './Customer/Profile/Profile';
 import SignUp from './Signup/Signup';
-
+import Orders from './Customer/Orders/Orders';
 
 
 import UserCart from './Cart/Cart';
@@ -45,6 +45,7 @@ class Main extends Component {
                         <Route exact path="/checkout" component={Checkout} />
                         <Route exact path="/seller/:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
+                        <Route exact path="/orders/" component={Orders}/>
                         {footer}
                     </Fragment>
                 }

@@ -282,7 +282,7 @@ class Login extends Component {
                                                 <div className="a-divider a-divider-section"><div className="a-divider-inner" /></div>
                                                 <div className="a-row">
                                                     Already have an account?
-                                <a className="a-link-emphasis" href="https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2Fgp%2Fyourstore%2Fhome%3Fie%3DUTF8%26ref_%3Dnav_custrec_newcust&prevRID=Y80418XAK430TG9BHP0D&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&pageId=usflex&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0">
+                                <a className="a-link-emphasis" href="/login">
                                                         Sign-In
                                 </a>
                                                 </div>
