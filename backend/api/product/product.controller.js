@@ -1,7 +1,7 @@
 const {
   searchProduct, getProductDetails,
   addReview, insertProducts,
-  searchProductWithKafka
+  searchProductWithKafka, searchProductWithRedis
 } = require("./product.service");
 
 const jwt = require('jsonwebtoken');
@@ -39,6 +39,21 @@ var upload = multer({
 
 module.exports = {
   searchProduct: (req, res) => {
+    var queryObject = url.parse(req.url, true).query;
+    console.log(queryObject);
+    searchProduct(queryObject, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
+
+  searchProductWithRedis: (req, res) => {
     var queryObject = url.parse(req.url, true).query;
     console.log(queryObject);
     searchProduct(queryObject, (err, results) => {

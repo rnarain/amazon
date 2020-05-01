@@ -8,12 +8,13 @@ const {
   searchProduct,
   searchProductWithKafka,
   getProductDetails,
-  addReview, insertProducts
+  addReview, insertProducts, searchProductWithRedis
 } = require("./product.controller");
 
 let checkAuth = passport.authenticate('jwt', { session: false });
 // router.get("/", checkToken, getUsers);
 router.get("/searchProduct", searchProduct);
+router.get("/searchProductWithRedis", searchProductWithRedis);
 router.get("/searchProductWithKafka", searchProductWithKafka);
 router.get("/getProductDetails", getProductDetails);
 router.post("/addReview", addReview);

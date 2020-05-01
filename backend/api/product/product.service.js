@@ -1,8 +1,9 @@
 const Product = require("../../Models/ProductModel");
- const client = require("../../config/redisconfig");
+const client = require("../../config/redisconfig");
 var kafka = require('../../kafka/client');
 
 module.exports = {
+
   searchProduct: (data, callBack) => {
     let filter = {};
     if (data.category == 'All') filter = {
@@ -23,15 +24,53 @@ module.exports = {
     });
   },
 
-  searchProductWithKafka : (data,callBack) =>{
+  
+  searchProductWithRedis: (data, callBack) => {
+
+    const productSearchRedisKey = 'product_search:details';
     let filter = {};
     if (data.category == 'All') filter = {
       name: { "$regex": data.name, "$options": "i" }
     }
     else {
       filter = {
-        name:  { "$regex": data.name, "$options": "i" },
-        category: { "$regex": data.category, "$options": "i" } 
+        name: { "$regex": data.name, "$options": "i" },
+        category: { "$regex": data.category, "$options": "i" }
+      }
+    }
+
+    return client.get(productSearchRedisKey, (err, details) => {
+      if (details) {
+        console.log('GETTING KEY VALUE ')
+        return callBack(null, JSON.parse(details));
+      }
+      else {
+
+
+        Product.find(filter, (error, details) => {
+          if (error) {
+            callBack(error);
+          }
+          // console.log(details);
+          console.log('SETTING KEY VALUE ')
+          client.setex(productSearchRedisKey, 3600, JSON.stringify(details))
+          return callBack(null, details);
+        });
+
+      }
+    })
+  },
+
+
+  searchProductWithKafka: (data, callBack) => {
+    let filter = {};
+    if (data.category == 'All') filter = {
+      name: { "$regex": data.name, "$options": "i" }
+    }
+    else {
+      filter = {
+        name: { "$regex": data.name, "$options": "i" },
+        category: { "$regex": data.category, "$options": "i" }
       }
     }
     const params = {
@@ -94,10 +133,10 @@ module.exports = {
   insertProducts: (data, callBack) => {
     console.log('IN insertProducts Service');
     for (let i = 0; i < data.num_of_products; i++) {
-      Product.create({ name: "kapil" + i, price: 232, category: 'All', seller_id:'5ea4c57c89f77fce1106f251', seller_name: 'Great Value' }, (error, result) => {
+      Product.create({ name: "kapil" + i, price: 232, category: 'All', seller_id: '5ea4c57c89f77fce1106f251', seller_name: 'Great Value' }, (error, result) => {
         if (error)
           callBack(error);
-        
+
       });
     }
     return callBack(null, '');
