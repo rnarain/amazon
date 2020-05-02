@@ -274,8 +274,6 @@ this.setState({
   
   render() {
 
-    const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
     let savedforlater = this.state.savedcartvalues.map(savedcart => {
       return (<div data-name="Active Items" className="a-row a-spacing-mini sc-list-body sc-java-remote-feature">
 
