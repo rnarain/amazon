@@ -1,6 +1,7 @@
 const {
   searchProduct, getProductDetails,
-  addReview, insertProducts
+  addReview, insertProducts,
+  searchProductWithKafka, searchProductWithRedis
 } = require("./product.service");
 
 const jwt = require('jsonwebtoken');
@@ -52,6 +53,35 @@ module.exports = {
     });
   },
 
+  searchProductWithRedis: (req, res) => {
+    var queryObject = url.parse(req.url, true).query;
+    console.log(queryObject);
+    searchProduct(queryObject, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
+
+  searchProductWithKafka: (req, res) => {
+    var queryObject = url.parse(req.url, true).query;
+    console.log(queryObject);
+    searchProductWithKafka(queryObject, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
   getProductDetails: (req, res) => {
     body = req.query
     getProductDetails(body, (err, results) => {
