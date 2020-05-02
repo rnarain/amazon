@@ -5,7 +5,8 @@ const {
   addtocart,
   saveforlater,
   updategiftorder,
-  checkoutcart
+  checkoutcart,
+  updategiftmsg
   } = require("./cart.service");
   
   const jwt = require('jsonwebtoken');
@@ -160,6 +161,24 @@ const {
       });
     },
     
-    
+    updategiftmsg: (req, res) => {
+      const body = req.body;
+      console.log("body",body)
+
+      updategiftmsg(body,(err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        else
+        {
+          console.log("the results are",results)
+        return res.json({
+          success: 1,
+          data: results
+        });
+        }
+      });
+    }
 
   }

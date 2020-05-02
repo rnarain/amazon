@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal'
+import { Link } from 'react-router-dom';
+import {Button,Form} from 'react-bootstrap';
 
 import './CartStyles/cart.css'
 
@@ -20,14 +22,19 @@ class UserCart extends Component {
       quantity: 0,
       updatedvalue: 0,
       value: "",
+      msgmodal:false,
       selectedOption: null,
       showmsg: false,
-      order_contains_gift: false
+      order_contains_gift: false,
+      showmsgtxt : true,
+      message : ""
     }
     this.handleproductcount = this.handleproductcount.bind(this);
     this.deleteproduct = this.deleteproduct.bind(this);
     this.movetocart = this.movetocart.bind(this);
     this.handleGiftChange = this.handleGiftChange.bind(this);
+    this.submitmsgmodal = this.submitmsgmodal.bind(this);
+    this.handlemsgmodal = this.handlemsgmodal.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
 
@@ -73,12 +80,14 @@ class UserCart extends Component {
           this.setState({
             cartvalues: this.state.cartvalues.concat(response.data.data["cartvalues"][i])
           })
-        }
-        if (response.data.data["cartvalues"][i].isagift) {
+        
+        if (response.data.data["cartvalues"][i].isagift) 
+        {
           this.setState({
             order_contains_gift: true
           })
         }
+      }
       }
       console.log(this.state.cartvalues)
       console.log(this.state.savedcartvalues)
@@ -235,11 +244,35 @@ class UserCart extends Component {
     this.forceUpdate(this.render)
   }
 
+  
+  handlemsgmodal = (e) =>
+  {
+this.setState({
 
+  message : e.target.value
+})
+  }
 
+  submitmsgmodal = async (cart,e) =>
+  {
+    console.log(cart)
+    console.log(this.state.message)
+    const data = {
+      id : localStorage.getItem("id"),
+      msg : this.state.message,
+      product_id: cart.product_id
+
+    }
+    await axios.post('http://localhost:3001/' + 'cart/updategiftmsg/', data).then(response => {
+      console.log(data)
+      console.log(response.data)
+
+    });
+
+    this.getallitems();
+  }
+  
   render() {
-
-
 
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -358,11 +391,17 @@ class UserCart extends Component {
                         <li><span className="a-list-item">
                           <span className="sc-invisible-when-no-js">
                             <div className="a-checkbox sc-gift-option a-align-top a-size-small a-spacing-top-micro"><label>
-                              <input type="checkbox" name defaultValue onChange={(e) => this.handleGiftChange(e.target.checked, cart)} defaultChecked={cart.isagift} />
+                              <input type="checkbox" name defaultValue onChange={(e) => this.handleGiftChange(e.target.checked, cart)} defaultChecked={cart.isagift}/>
                               <span className="a-label a-checkbox-label">
                                 This is a gift
                             </span></label></div>
                           </span>
+
+                          
+                          <span hidden={!cart.isagift}><input type="text" name="message" placeholder="Enter Gift Message" defaultValue={cart.giftmessage} onChange= {this.handlemsgmodal}/><input type="button" onClick={e => this.submitmsgmodal(cart,e)} value="Enter"/></span>
+                        <span>
+                          
+                        </span>
                         </span></li>
                       </ul>
                       <div className="a-row sc-action-links">
@@ -425,20 +464,10 @@ class UserCart extends Component {
         {/* 1yubniyebnhhv9mwtjkh85od62rip4csfpl76byp9n9ao4ffq0xvu */}
         <meta name="format-detection" content="telephone=no" />
         <title dir="ltr">Amazon.com Shopping Cart</title>
-        {/* <link rel="stylesheet" href="./Shopping Cart_files/51AZ-Jz5kmL._RC_51da3H-4SUL.css,01evdoiemkL.css,01K+Ps1DeEL.css,31pdJv9iSzL.css,01W6EiNzKkL.css,11UGC+GXOPL.css,21LK7jaicML.css,11L58Qpo0GL.css,21kyTi1FabL.css,01ruG+gDPFL.css,01YhS3Cs-hL.css,21GwE3cR-yL.css,01.css" /> */}
-        {/* <link rel="stylesheet" href="./Shopping Cart_files/31O6eggiATL._RC_31AkTFKfE7L.css_.css" /> */}
-        {/* <link rel="stylesheet" href="./Shopping Cart_files/21SPCKPhX-L.css" /> */}
-        {/* <link rel="stylesheet" href="./Shopping Cart_files/01QLqx4PXzL.css" /> */}
-        {/* <link rel="stylesheet" href="./Shopping Cart_files/31ZIUoDwD8L.css" /> */}
-        {/* <link rel="stylesheet" href="./Shopping Cart_files/11v0Z16vL9L.css" /> */}
-        <iframe src="./Shopping Cart_files/checkout-prefetch.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: ".s-suggestion { padding: 8px 10px; font-size: 16px; font-family: \"Amazon Ember\"; cursor: pointer; }" }} /><iframe src="./Shopping Cart_files/pipeline-assets.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: "" }} /><iframe src="./Shopping Cart_files/checkout-prefetch(1).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><iframe src="./Shopping Cart_files/checkout-prefetch(2).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" />for head
+        
+        {/* <iframe src="./Shopping Cart_files/checkout-prefetch.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: ".s-suggestion { padding: 8px 10px; font-size: 16px; font-family: \"Amazon Ember\"; cursor: pointer; }" }} /><iframe src="./Shopping Cart_files/pipeline-assets.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: "" }} /><iframe src="./Shopping Cart_files/checkout-prefetch(1).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><iframe src="./Shopping Cart_files/checkout-prefetch(2).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" />for head */}
         <div id="a-page">
           <div id="top" className="a-section a-spacing-none">
-
-
-
-
-
             <a id="skippedLink" tabIndex={-1} />
             {/* EndNav */}
           </div>{/* for #top */}
@@ -490,15 +519,18 @@ class UserCart extends Component {
                               </label>
                             </div>
                           </div>
-                          <span id="sc-buy-box-ptc-button" className="a-button a-button-normal a-button-span12 a-button-primary"><span className="a-button-inner"><input name="proceedToRetailCheckout" className="a-button-input" type="submit" defaultValue="Proceed to checkout" aria-labelledby="sc-buy-box-ptc-button-announce" /><span id="sc-buy-box-ptc-button-announce" className="a-button-text" aria-hidden="true">
-                            <div className="sc-without-fresh">
-                              Proceed to checkout
+                          <span id="sc-buy-box-ptc-button"  className="a-button a-button-normal a-button-span12 a-button-primary">
+                          <span className="a-button-inner">
+                           {/* <input name="proceedToRetailCheckout"  className="a-button-input" type="submit" defaultValue="Proceed to checkout" aria-labelledby="sc-buy-box-ptc-button-announce" /> */}
+                          <span id="sc-buy-box-ptc-button-announce" className="a-button-text" aria-hidden="true"> 
+                          <Link to={{ pathname: "/checkout/"+this.state.totalcartvalue}} style={{ color: '#0066c0' }} ><span style={{color:"black"}}>Proceed to checkout</span> </Link>
+<div className="sc-without-fresh">
+                           
                             </div>
                             <div className="sc-with-fresh">
                               Checkout Amazon Cart
                             </div>
                           </span></span></span>
-                          <input type="hidden" name="proceedToCheckout" defaultValue={1} />
                           <div className="a-section a-text-center sc-buy-box-delivery-info">
                           </div>
                         </div></div>
@@ -559,7 +591,7 @@ class UserCart extends Component {
                     </form>
                   </div>
 
-                 
+               
                
                   
                 </div>{/* for right */}

@@ -181,12 +181,31 @@ updategiftorder :(body,callBack)=>{
 },
 
 
+updategiftmsg : (body,callBack) =>
+{
+  
+  console.log("body in update gift message",body)
+  User.updateOne({ _id : body.id , 'cart.product_id' : body.product_id}, 
+  { 
+    "$set": 
+    {
+      'cart.$.giftmessage': body.msg,
+    }  
+  },  (error, results) => {
+    if (error) {
+      callBack(error);
+    }
+    return callBack(null, results);
+  }
+  );
+},
+
 checkoutcart : (data,callBack) =>
 {
   
+  
 
-},
-
+}
 
 
 
