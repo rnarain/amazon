@@ -22,7 +22,7 @@ var userSchema = new Schema({
         price: {type:Number},
         isagift : {type:Boolean},
         giftmessage : {type:String},
-        images: [{ file_name: String }],
+        image: [{ type: String }],
    ratings: 
    [{
         stars: {type:Number},

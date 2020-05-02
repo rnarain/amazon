@@ -611,10 +611,10 @@ margin-left:10px;
   width: 100%;
 }
 
-.footer-logo{
-  padding: 30px 0px;
+.footer-logo {
+  padding: 5px;
   text-align: center;
-  background-color:#232f3e;
+  background-color: #232f3e;
 }
 
 .footer-credits{

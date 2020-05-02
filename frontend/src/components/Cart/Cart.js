@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
+import Modal from 'react-bootstrap/Modal'
 
-
+import './CartStyles/cart.css'
 
 //Define a Login Component
 class UserCart extends Component {
@@ -246,7 +247,7 @@ class UserCart extends Component {
       return (<div data-name="Active Items" className="a-row a-spacing-mini sc-list-body sc-java-remote-feature">
 
         <div className="sc-list-overwrap" style={{ display: 'none' }} />
-        <div data-asin="B07PF1Y28C" data-encoded-offering="wLEUl5KyZNGvxl5wENyClr61uMDsU8RIMQ6pHgFxtncjSDFC1f%2BF9xxBkN5umyigoIbo6VDRmbKWppjYDhvDk%2BMimMcuDxiu8OAHDmWZKCXJENfa4Z9PIR%2B%2Fi1nE6AFNynhXGJmNlahKq01j0MLLPg%3D%3D" data-giftable={1} data-giftwrapped={0} data-isprimeasin={0} data-item-count={1} data-itemcategory="normal" data-itemid="Cf845a2ba-1356-43ab-a05d-d1a5acb6cce0" data-itemislastpantryitem={0} data-itemtype="active" data-minquantity={1} data-outofstock={0} data-price="99.99" data-quantity={5} data-subtotal="{&quot;numberOfItems&quot;:5,&quot;subtotal&quot;:{&quot;code&quot;:&quot;USD&quot;,&quot;amount&quot;:499.95},&quot;points&quot;:0}" id="sc-item-Cf845a2ba-1356-43ab-a05d-d1a5acb6cce0" className="a-row sc-list-item sc-list-item-border sc-java-remote-feature">
+        <div data-asin="B07PF1Y28C">
           <div className="sc-list-item-spinner" style={{ display: 'none' }}>
             <img src="./Shopping Cart_files/loading-large._CB485945288_(1).gif" />
           </div>
@@ -256,11 +257,11 @@ class UserCart extends Component {
             <div className="a-row a-spacing-base a-spacing-top-base">
               <div className="a-column a-span10">
                 <div className="a-fixed-left-grid"><div className="a-fixed-left-grid-inner" style={{ paddingLeft: '190px' }}>
-                  {/* <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{width: '190px', marginLeft: '-190px', float: 'left'}}>
-                      <a className="a-link-normal sc-product-link" target="_self" rel="noopener" href="https://www.amazon.com/gp/product/B07PF1Y28C/ref=ox_sc_act_image_1?smid=ATVPDKIKX0DER&psc=1">
-                        <img src="./Shopping Cart_files/71Jqb-lgGFL._AC_AA180_.jpg" alt="Echo Show 8 - HD 8" smart display with alexa - charcoal" width={180} height={180} className="sc-product-image" srcSet="https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA180_.jpg 1x, https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA360_.jpg 2x, https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA540_.jpg 3x, https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA720_.jpg 4x" />
+                <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{width: '190px', marginLeft: '-190px', float: 'left'}}>
+                      <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
+                        <img src={savedcart.image} alt="img" width={180} height={180} className="sc-product-image" />
                       </a>
-                    </div> */}
+                    </div>
                   <div className="a-fixed-left-grid-col a-col-right" style={{ paddingLeft: '0%', float: 'left' }}>
                     <ul className="a-unordered-list a-nostyle a-vertical a-spacing-mini">
                       <li><span className="a-list-item">
@@ -309,7 +310,10 @@ class UserCart extends Component {
             </div>
           </div>
         </div>
-      </div>)
+        <hr style = {{color:"blue"}}></hr>
+
+      </div>
+      )
     })
     let cartdata = this.state.cartvalues.map(cart => {
 
@@ -327,11 +331,11 @@ class UserCart extends Component {
               <div className="a-row a-spacing-base a-spacing-top-base">
                 <div className="a-column a-span10">
                   <div className="a-fixed-left-grid"><div className="a-fixed-left-grid-inner" style={{ paddingLeft: '190px' }}>
-                    {/* <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{width: '190px', marginLeft: '-190px', float: 'left'}}>
-                      <a className="a-link-normal sc-product-link" target="_self" rel="noopener" href="https://www.amazon.com/gp/product/B07PF1Y28C/ref=ox_sc_act_image_1?smid=ATVPDKIKX0DER&psc=1">
-                        <img src="./Shopping Cart_files/71Jqb-lgGFL._AC_AA180_.jpg" alt="Echo Show 8 - HD 8" smart display with alexa - charcoal" width={180} height={180} className="sc-product-image" srcSet="https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA180_.jpg 1x, https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA360_.jpg 2x, https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA540_.jpg 3x, https://m.media-amazon.com/images/I/71Jqb-lgGFL._AC_AA720_.jpg 4x" />
+                    <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{width: '190px', marginLeft: '-190px', float: 'left'}}>
+                      <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
+                        <img src={cart.image} alt="img" width={180} height={180} className="sc-product-image" />
                       </a>
-                    </div> */}
+                    </div>
                     <div className="a-fixed-left-grid-col a-col-right" style={{ paddingLeft: '0%', float: 'left' }}>
                       <ul className="a-unordered-list a-nostyle a-vertical a-spacing-mini">
                         <li><span className="a-list-item">
@@ -365,8 +369,8 @@ class UserCart extends Component {
                         <span className="sc-action-quantity" data-old-value={5} data-action="quantity">
                           <span className="sc-invisible-when-no-js">
                             <span className="a-dropdown-container">
-                              <label>Qty:</label>
-                              <select onChange={(e) => this.handleproductcount(e.target.value, cart)} defaultValue={cart.product_count} >
+                              
+                             Qty: <select onChange={(e) => this.handleproductcount(e.target.value, cart)} defaultValue={cart.product_count} >
 
                                 <option key={1} value={1}>1</option>
                                 <option key={2} value={2}>2</option>
@@ -409,6 +413,8 @@ class UserCart extends Component {
               </div>
             </div>
           </div>
+          <hr style = {{color:"blue"}}></hr>
+
         </div>
       )
     })
@@ -535,7 +541,7 @@ class UserCart extends Component {
                       <div>
                         {cartdata}
                       </div>
-                      <div data-name="Subtotals" className="a-row a-spacing-mini sc-subtotal sc-java-remote-feature">
+                      <div data-name="Subtotals" align="right" className="a-row a-spacing-mini sc-subtotal sc-java-remote-feature">
                         <span id="sc-subtotal-label-activecart" className="a-size-medium sc-number-of-items">
                           Subtotal :
                   </span>
@@ -545,7 +551,7 @@ class UserCart extends Component {
                           </span>
                         </span>
                       </div>
-                      <h3>Saved For Later Items</h3>
+                      <h2>Saved For Later Items</h2>
                       <div>
                         {savedforlater}
                       </div>
@@ -553,31 +559,9 @@ class UserCart extends Component {
                     </form>
                   </div>
 
-                  {/* cf-trigger called */}
-                  {/* MarkCF */}
-                  <div id="sc-checkout-prefetch" data-assetsprefetchurl="/gp/buy/prefetch/pipeline-assets.html" data-prefetchurl="/gp/cart/checkout-prefetch.html?ie=UTF8&checkAuthentication=1&checkDefaults=1" data-prefetchurlforauthcheck="/gp/remotepagelet/signin/checkout-perf-initiate-and-store.html" className="a-row a-hidden">
-                  </div>
-                  {/*This method defines a variable that is used to reload cart page on back button press. Refer to TT-https://tt.amazon.com/0023984373 */}
-                  <input type="hidden" name defaultValue="true" id="pageDirty" />
-                  <div id="sc-about" className="a-row a-size-small">
-                    <div id="cart-about-cart-warning" className="a-row">
-                      <p>
-                        The price and availability of items at Amazon.com are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price.
-                  <a className="a-link-normal" href="https://www.amazon.com/exec/obidos/tg/browse/-/468468/pop-up/ref=ord_cart_lm">
-                          <span className="a-offscreen">
-                            Shopping Cart
-                    </span>
-                    Learn more
-                  </a>
-                      </p>
-                    </div>
-                    <p>Do you have a gift card or promotional code? We'll ask you to enter your claim code when it's time to pay.</p>
-                  </div>
-                  <div className="a-divider a-divider-section a-spacing-medium a-spacing-top-extra-large"><div className="a-divider-inner" /></div>
-                  <div id="sc-rec-bottom" className="a-section" data-cel-widget="sc-rec-bottom">
-                    {/* Component content */}
-
-                  </div>{/* for #sc-rec-bottom */}
+                 
+               
+                  
                 </div>{/* for right */}
               </div></div>{/* for cart-left */}
               <div>

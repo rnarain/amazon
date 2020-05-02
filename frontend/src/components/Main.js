@@ -45,6 +45,7 @@ class Main extends Component {
                         <Route exact path="/checkout" component={Checkout} />
                         <Route exact path="/seller/:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
+
                         {footer}
                     </Fragment>
                 }
