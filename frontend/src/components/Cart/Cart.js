@@ -425,13 +425,13 @@ class UserCart extends Component {
         {/* 1yubniyebnhhv9mwtjkh85od62rip4csfpl76byp9n9ao4ffq0xvu */}
         <meta name="format-detection" content="telephone=no" />
         <title dir="ltr">Amazon.com Shopping Cart</title>
-        <link rel="stylesheet" href="./Shopping Cart_files/51AZ-Jz5kmL._RC_51da3H-4SUL.css,01evdoiemkL.css,01K+Ps1DeEL.css,31pdJv9iSzL.css,01W6EiNzKkL.css,11UGC+GXOPL.css,21LK7jaicML.css,11L58Qpo0GL.css,21kyTi1FabL.css,01ruG+gDPFL.css,01YhS3Cs-hL.css,21GwE3cR-yL.css,01.css" />
-        <link rel="stylesheet" href="./Shopping Cart_files/31O6eggiATL._RC_31AkTFKfE7L.css_.css" />
-        <link rel="stylesheet" href="./Shopping Cart_files/21SPCKPhX-L.css" />
-        <link rel="stylesheet" href="./Shopping Cart_files/01QLqx4PXzL.css" />
-        <link rel="stylesheet" href="./Shopping Cart_files/31ZIUoDwD8L.css" />
-        <link rel="stylesheet" href="./Shopping Cart_files/11v0Z16vL9L.css" />
-        <iframe src="./Shopping Cart_files/checkout-prefetch.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: ".s-suggestion { padding: 8px 10px; font-size: 16px; font-family: \"Amazon Ember\"; cursor: pointer; }" }} /><iframe src="./Shopping Cart_files/pipeline-assets.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: "" }} /><iframe src="./Shopping Cart_files/checkout-prefetch(1).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><iframe src="./Shopping Cart_files/checkout-prefetch(2).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" />{/* for head */}
+        {/* <link rel="stylesheet" href="./Shopping Cart_files/51AZ-Jz5kmL._RC_51da3H-4SUL.css,01evdoiemkL.css,01K+Ps1DeEL.css,31pdJv9iSzL.css,01W6EiNzKkL.css,11UGC+GXOPL.css,21LK7jaicML.css,11L58Qpo0GL.css,21kyTi1FabL.css,01ruG+gDPFL.css,01YhS3Cs-hL.css,21GwE3cR-yL.css,01.css" /> */}
+        {/* <link rel="stylesheet" href="./Shopping Cart_files/31O6eggiATL._RC_31AkTFKfE7L.css_.css" /> */}
+        {/* <link rel="stylesheet" href="./Shopping Cart_files/21SPCKPhX-L.css" /> */}
+        {/* <link rel="stylesheet" href="./Shopping Cart_files/01QLqx4PXzL.css" /> */}
+        {/* <link rel="stylesheet" href="./Shopping Cart_files/31ZIUoDwD8L.css" /> */}
+        {/* <link rel="stylesheet" href="./Shopping Cart_files/11v0Z16vL9L.css" /> */}
+        <iframe src="./Shopping Cart_files/checkout-prefetch.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: ".s-suggestion { padding: 8px 10px; font-size: 16px; font-family: \"Amazon Ember\"; cursor: pointer; }" }} /><iframe src="./Shopping Cart_files/pipeline-assets.html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><style dangerouslySetInnerHTML={{ __html: "" }} /><iframe src="./Shopping Cart_files/checkout-prefetch(1).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" /><iframe src="./Shopping Cart_files/checkout-prefetch(2).html" style={{ width: '0px', height: '0px', display: 'none', position: 'absolute' }} name="checkoutPrefetch;" />for head
         <div id="a-page">
           <div id="top" className="a-section a-spacing-none">
 

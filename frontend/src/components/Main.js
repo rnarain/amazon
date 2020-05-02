@@ -17,7 +17,8 @@ import Navbar from './LandingPage/Navbar';
 import Footer from './LandingPage/Footer';
 
 import { Redirect } from 'react-router';
-
+import SellerProfile from './Seller/SellerProfile';
+import SellerInventory from './Seller/SellerInventory';
 
 //Create a Main Component
 class Main extends Component {
@@ -46,6 +47,10 @@ class Main extends Component {
                         <Route exact path="/seller/:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
                         <Route exact path="/orders/" component={Orders}/>
+                        <Route exact path="/sellerprofile/" component={SellerProfile}/>
+                        <Route exact path="/sellerinventory/" component={SellerInventory}/>
+
+                        
                         {footer}
                     </Fragment>
                 }
