@@ -4,7 +4,9 @@
     border-color: black;
 }
 
-.container
-{
-    border: 1px solid black;
+.a-container {
+    min-width: 998px;
+    padding: 14px 48px 10px 48px;
+    margin: auto;
+    margin-top: 100px;
 }
