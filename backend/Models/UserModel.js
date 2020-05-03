@@ -54,6 +54,12 @@ var userSchema = new Schema({
         cvv : Number,
         expirydate : Date,
     }],
+    ratings: [{
+        stars: Number,
+        comment: String,
+        product_id: String,
+        product_name: String,
+    }],
     count_of_votes : {type : Number},
     total_cart_value : {type : Number}
 }

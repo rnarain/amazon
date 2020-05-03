@@ -73,7 +73,7 @@ class ProductDetail extends Component {
     }
 
     addReviewCallBackFunction = (data) => {
-        // console.log('data : ', data)
+        
         if (data.cancel === 1) {
             this.setState({ addReview: 0 })
         }
@@ -86,8 +86,10 @@ class ProductDetail extends Component {
             }), function () {
                 const data = {
                     ratings: this.state.ratings,
-                    id: this.state.product_id
+                    id: this.state.product_id,
+                    name : this.state.name
                 }
+                console.log('data : ', data)
                 axios.post(`${backendServer}/product/addReview`, data)
                     .then(response => {
                         alert('Comment Successfully Posted');
@@ -107,7 +109,7 @@ class ProductDetail extends Component {
         let avgRating = this.state.ratings.reduce((r, c) => r + c.stars, 0) / this.state.ratings.length;
         return (
 
-            <div className="amazon-body container-fluid">
+            <div className="amazon-body container-fluid" style={{minHeight: '75vh'}}>
                 <div className="profile-container card-columns">
                     <div className="row">
                         <div className="col-sm-1">

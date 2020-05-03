@@ -1,4 +1,5 @@
 const Product = require("../../Models/ProductModel");
+const User = require("../../Models/UserModel");
 const client = require("../../config/redisconfig");
 var kafka = require('../../kafka/client');
 
@@ -126,8 +127,29 @@ module.exports = {
         callBack(error);
       }
       // console.log(result);
+
+      // return callBack(null, result);
+    })
+
+    userRating = {
+      product_id : data.id,
+      product_name : data.name,
+      stars : data.ratings[data.ratings.length-1].stars,
+      comment : data.ratings[data.ratings.length-1].comment
+    }
+
+    console.log(userRating)
+
+    
+
+    User.findOneAndUpdate({ _id: data.ratings[data.ratings.length-1].user_id }, { $push: { ratings: userRating } }, { upsert: true }, (error, result) => {
+      if (error) {
+        callBack(error);
+      }
+      // console.log(result);
       return callBack(null, result);
     })
+
   },
 
   insertProducts: (data, callBack) => {
