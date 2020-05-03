@@ -6,7 +6,8 @@ const {
   saveforlater,
   updategiftorder,
   checkoutcart,
-  updategiftmsg
+  updategiftmsg,
+  deletecart
   } = require("./cart.service");
   
   const jwt = require('jsonwebtoken');
@@ -42,6 +43,27 @@ const {
       console.log("body",body)
 
       deleteproduct(body,(err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        else
+        {
+          console.log("the results are",results)
+        return res.json({
+          success: 1,
+          data: results
+        });
+        }
+      });
+    },
+
+
+    deletecart: (req, res) => {
+      const body = req.body;
+      console.log("body",body)
+
+      deletecart(body,(err, results) => {
         if (err) {
           console.log(err);
           return;
