@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import backendServer from '../../../../webConfig'
 import queryString from 'query-string'
 import {StarRating } from '../../../../helperFunctions/ratings'
+import JwPagination from 'jw-react-pagination';
+import {dynamicSort} from '../../../../helperFunctions/dynamicSort'
 
 
 
@@ -18,8 +20,10 @@ class ProductSearch extends Component {
         this.state = {
             params: null,
             products: [],
-            filteredProducts: []
+            filteredProducts: [],
+            paginatedProducts: []
         }
+        this.onChangePage = this.onChangePage.bind(this);
     }
     //Call the Will Mount to set the auth Flag to false
     componentDidMount() {
@@ -63,20 +67,41 @@ class ProductSearch extends Component {
         })
     }
 
+    sortHandler = (i)=>{
+        switch(i){
+            case 0: this.setState({
+                   filteredProducts : this.state.products.sort(dynamicSort('price' , 1)) 
+                })
+                break;
+            case 1: this.setState({
+                filteredProducts : this.state.products.sort(dynamicSort('price' , -1)) 
+             })
+                break;
+            case 2: 
+                    const avg = (arr) => arr.reduce((r,c) => r + c) / arr.length
+                    this.setState({
+                        filteredProducts :this.state.products.sort((a,b) => (a.length > 0 ? avg(a.ratings) : 0 ) - (b.length > 0 ?avg(b.ratings) : 0 ))
+                    })
+                break;
+        }
+    }
+    onChangePage(paginatedProducts) {
+        // update local state with new page of items
+        this.setState({ paginatedProducts });
+    }
+
     render() {
-        console.log(this.state);
         let products = this.state.filteredProducts.map(product => {
             let avgRating = product.ratings.reduce((r, c) => r + c.stars, 0) / product.ratings.length;
-            //debugger
-            
+            let productUrl= "/product-detail/" + product._id
             return (
-                <div className="box-part col-sm-3">
+                <div className="box-part col-sm-3" key={product._id}>
                     <div className="card-body">
                         <div className="product-image">
                             <img className="img-fluid" src={product.images.length > 0 ? product.images[0].file_name : ""} />
 
                         </div>
-                        <p className="product-heading">{product.name}</p>
+                        <a className="product-heading" href={productUrl}>{product.name}</a>
                         <div className="star-rating">
                             {<StarRating ratings={avgRating}/>}
                             <p className="product-heading">${product.price}</p>
@@ -95,14 +120,14 @@ class ProductSearch extends Component {
                                 <span id="search_concept">Sort Results</span> <span className="caret"></span>
                             </button>
                             <ul className="dropdown-menu right-menu" role="menu">
-                                <li className="li-dropdown"><button className="btn btn-link">Price : Low to High </button></li>
-                                <li className="li-dropdown"><button className="btn btn-link">Price : High to low </button></li>
-                                <li className="li-dropdown"><button className="btn btn-link">Avg. Customer Review </button></li>
+                                <li className="li-dropdown"><button className="btn btn-link" onClick={()=>this.sortHandler(0)}>Price : Low to High </button></li>
+                                <li className="li-dropdown"><button className="btn btn-link" onClick={()=>this.sortHandler(1)}>Price : High to low </button></li>
+                                <li className="li-dropdown"><button className="btn btn-link" onClick={()=>this.sortHandler(2)}>Avg. Customer Review </button></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div className=" col-sm-12  card-columns">
+                <div className="container-fluid card-columns">
                     <div className="card col-sm-2">
                         <div className="box-part-nopadding">
                             <div className="padding-inside">
@@ -132,9 +157,12 @@ class ProductSearch extends Component {
                         </div>
                     </div>
                     <div className="card col-sm-10 ">
+                        <div>
                         {products}
-                        <ul className="pagination">
-                        </ul>
+                        </div>
+                        <div className="row text-center marginbottom20">
+                        {/* <JwPagination items={this.state.filteredProducts} onChangePage={this.onChangePage} pageSize="20" /> */}
+                        </div>
                     </div>
                 </div>
             </div>

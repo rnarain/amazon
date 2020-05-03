@@ -115,9 +115,9 @@ class Navbar extends Component {
             redirectVar = <Redirect to={link}/>
         }
         return(
-            <div className="container">
+            <div className="nopadding">
                  {redirectVar} 
-            <nav className="navbar navbar-fixed-top">
+            <nav className="navbar navbar-top">
                 <div className="container-fluid">
                     <div className="navbar-header col-sm-1 nopadding">
                     <a className="navbar-brand " href="#"><img className="navbar-brand__logo-full"  src="../images/amazon-logo.png" /></a>
