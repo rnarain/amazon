@@ -1,0 +1,327 @@
+.a-container {
+    min-width: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.breadcrumbArrow {
+    color: #555555 !important;
+    font-size: 18px;
+}
+
+.breadcrumbLink {
+    color: #555555 !important;
+}
+
+#walletWebsiteContentColumn {
+    /* both specified by mocks */
+    min-width: 450px;
+    max-width: 700px;
+}
+#viewOneClickDesktopSection {
+    /* Set the same width as the MPO page. */
+    width: 950px;
+}
+
+#walletWebsiteContainer, #manageOneClickWebsiteContainer {
+    margin: 0;
+    padding: 20px 24px;
+}
+
+#manageOneClickWebsiteContentColumn, #myInvoicesPageContentColumn {
+    /* Set the same width as the MPO page. */
+    width: 950px;
+}
+
+#myInvoicesPageContainer .a-box-title:not(.a-first) .a-box-inner {
+    border-radius: 0px;
+}
+
+.a-alert-error .a-alert-container h4 {
+   color: #C40000;
+}
+
+.leftNavbarSection {
+    /* Width is specified by mocks */
+    width: 200px;
+    display: table;
+    border-collapse: collapse;
+}
+
+.leftNavbarRow {
+    display: table-row;
+}
+
+.leftNavbarColumn {
+    border-top: 1px solid;
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 14px;
+    display: table-cell;
+    border-color: #767676;
+}
+
+.leftNavbarColumn.first {
+    border-top: 0px none;
+}
+
+.linkSection {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.linkSection.first {
+    padding-top: 0px;
+}
+
+.linkSection a {
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.navBlackbelt {
+  background-color: #283442 !important;
+  background-image: none !important;
+  overflow: hidden !important;
+  height: 50px !important;
+}
+
+#rhf {
+    display: none;
+}
+
+.centeredContent {
+    margin: auto;
+    max-width: 998px;
+}
+
+.transparent {
+    background: none;
+}
+
+.cpe-mpo-back-from-add-instrument-button-mobile {
+    border-color: #f3f3f3 !important;
+    border-top-style: none !important;
+    outline: none !important;
+}
+
+.cpe-mpo-back-icon-left {
+    left: 0 !important;
+}
+
+/* SEPA DD Landing page desktop styles */
+.sepaLanding {
+    padding: 0px !important;
+    color: #373E3E;
+}
+
+.sepaLanding__body {
+    margin: 0 auto;
+    /* Max width is specified by mock */
+    max-width: 1050px;
+}
+
+.sepaLanding__headerBackground {
+    background: #F9F9F9;
+    margin: 0px !important;
+}
+
+.sepaLanding__headerSection {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.sepaLanding__title {
+    font-size: 36px;
+    line-height: 44px;
+    color: #00464F;
+}
+
+.sepaLanding__leftHeaderColumn {
+    padding-left: 90px;
+}
+
+.sepaLanding__rightHeaderColumn {
+    padding-right: 90px;
+}
+
+.sepaLanding__widgetBackground {
+    background: #F9F9F9; /* Old browsers */
+    background: -moz-linear-gradient(top,  #F9F9F9 0%, #F9F9F9 20%, #FFFFFF 20%, #FFFFFF 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#F9F9F9), color-stop(20%,#F9F9F9), color-stop(20%,#FFFFFF), color-stop(100%,#FFFFFF)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #F9F9F9 0%,#F9F9F9 20%,#FFFFFF 20%,#FFFFFF 100%); /* Chrome10+, Safari5.1+ */
+    background: -o-linear-gradient(top,  #F9F9F9 0%,#F9F9F9 20%,#FFFFFF 20%,#FFFFFF 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #F9F9F9 0%,#F9F9F9 20%,#FFFFFF 20%,#FFFFFF 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #F9F9F9 0%,#F9F9F9 20%,#FFFFFF 20%,#FFFFFF 100%); /* W3C */
+}
+
+.sepaLanding__widgetSlot {
+    padding: 30px 30px 10px 30px;
+    background: white;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-style: solid;
+    border-color: #00464F;
+    margin-bottom: -5px;
+    border-width: 5px;
+}
+
+.sepaLanding__widgetSection {
+    padding: 0 60px;
+}
+
+.sepaLanding__widgetSection .a-divider-normal {
+    display: none;
+}
+
+.sepaLanding__widgetInstruction {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #00464F;
+    background: #008296;
+    padding: 0px 30px;
+}
+
+.sepaLanding__widgetHintTitle {
+    font-size: 15px;
+    color: #FFC400;
+    letter-spacing: 0.05em;
+}
+
+.sepaLanding__widgetHintContent {
+    font-size: 15px;
+    color: #FFFFFF;
+    line-height: 20px;
+}
+
+/* SEPA DD Landing mobile page styles */
+.sepaLanding__mobileBody {
+    padding: 0px 25px;
+    margin-bottom: 0px;
+}
+
+.sepaLanding__mobileHeaderSection {
+    padding-top: 21px;
+    padding-bottom: 13px;
+}
+
+.sepaLanding__mobileTitle {
+    font-size: 21px;
+    line-height: 25px;
+    color: #00464F;
+}
+
+.sepaLanding__mobileWidgetSection {
+    padding-top: 13px;
+    padding-bottom: 0px;
+}
+
+.sepaLanding__mobileWidgetSection .a-expander-inner {
+    margin-top: -10px;
+}
+
+#sepaLanding__mobileWidgetTitle {
+    color: #008296;
+    letter-spacing: 0.05em;
+}
+
+.sepaLanding__bulletText {
+    color: white;
+}
+
+.sepaLanding__mobileWidgetHint li {
+    color: #FFC400;
+}
+
+.sepaLanding__mobileWidgetHint {
+    background: #008296;
+}
+
+.sepaLandingSuccess__body {
+    margin: 0 auto;
+    /* Max width is specified by mock */
+    max-width: 680px;
+}
+
+/* Payments Hub styles */
+.menuTabSelected {
+    color: #000;
+    font-weight: bold;
+    border-bottom: 2px solid #E67A00;
+    text-decoration: none;
+}
+
+.menuTabSelectedMobile {
+    border-bottom: 3px solid #E67A00;
+    text-decoration: none;
+}
+
+.menuTabHead {
+    padding:15px 6px 6px 6px;
+    margin: 0 18px 0 5px;
+}
+
+.menuTabHeadMobile {
+    margin: 0 2.5%!important;
+    padding-bottom: 4px;
+}
+
+.menuTextMobile {
+    color: #000;
+}
+
+.menuTextSelectedMobile {
+    color: #E67A00;
+}
+
+#paymentsHubMenuRow {
+    position: relative;
+    padding-left: 2px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+#paymentsHubMenuRowMobile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+    border-bottom: 5px solid #ddd;
+}
+
+.paymentsHubRowMobile {
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+}
+
+#paymentsHubWebsiteContainer {
+    width: 950px;
+}
+
+#paymentsHubMobileWebsiteContainer{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.paymentsHubTabContentContainer {
+    padding-top: 0;
+}
+
+.paymentsHubTabContentMobileContainer{
+    padding: 0;
+}
+
+.apx-apm-unavailable-header {
+    color: #8c6e00;
+}
+
+a.settingsTouchLink {
+    color: #000000;
+}
+
+#settings-subpage-back-breadcrumb {
+    background-color: white;
+    border-bottom: 0;
+}

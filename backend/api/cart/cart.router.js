@@ -9,7 +9,8 @@ const {
   saveforlater,
   updategiftorder,
   checkoutcart,
-  updategiftmsg
+  updategiftmsg,
+  deletecart
 } = require("./cart.controller");
 
 let checkAuth = passport.authenticate('jwt', { session: false });
@@ -21,6 +22,8 @@ let checkAuth = passport.authenticate('jwt', { session: false });
  router.post("/updategiftorder",updategiftorder);
  router.post("/checkoutcart",checkoutcart);
  router.post("/updategiftmsg",updategiftmsg);
+ router.post("/deletecart",deletecart);
+
 
  
  

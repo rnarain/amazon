@@ -56,7 +56,7 @@ module.exports = {
   searchProductWithRedis: (req, res) => {
     var queryObject = url.parse(req.url, true).query;
     console.log(queryObject);
-    searchProduct(queryObject, (err, results) => {
+    searchProductWithRedis(queryObject, (err, results) => {
       if (err) {
         console.log(err);
         return;

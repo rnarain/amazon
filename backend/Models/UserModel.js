@@ -50,9 +50,15 @@ var userSchema = new Schema({
         _id : {type : Schema.ObjectId,auto:true},
         cardtype : String,
         cardname : String,
-        cardnumber : Number,
+        cardnumber : String,
         cvv : Number,
         expirydate : Date,
+    }],
+    ratings: [{
+        stars: Number,
+        comment: String,
+        product_id: String,
+        product_name: String,
     }],
     count_of_votes : {type : Number},
     total_cart_value : {type : Number}

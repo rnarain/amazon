@@ -1,0 +1,1 @@
+(function(){var b=PaymentsPortal2.modules.define;b("components/SelectableDPMCommonListComponent",["form-component"],function(a){return a});b("components/SelectableDPMCommonListItemComponent",["components/SelectableDPMInstrumentListItemComponent"],function(a){return a})})();
