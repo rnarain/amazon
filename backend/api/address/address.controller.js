@@ -95,7 +95,7 @@ module.exports = {
 
 
   getAllAddress: (req, res) => {
-    console.log("GetAllAddress ", req);
+    // console.log("GetAllAddress ", req);
     const id = req.params.id;
     getAllAddress(id,(err, results) => {
       if (err) {

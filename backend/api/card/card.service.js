@@ -37,13 +37,23 @@ module.exports = {
       cvv : data.cvv,
       expirydate : data.expirydate
     }
-    User.updateOne({ _id : data.id }, { $push : { cards : newData }  }, { upsert: false }, (error, results) => {
+    User.findOneAndUpdate({ _id : data.id , 'cards.cardnumber' :  { $ne: data.cardnumber } },
+                          { $addToSet : { cards : newData } }, {new: true}, (error, results) => {
       if (error) {
         callBack(error);
       }
-      return callBack(null, results);
-    }
-    );
+      if(!results){
+        return callBack(null, {card : null});
+      }
+      var insertedCard;
+      for (var idx =0 ; idx < results.cards.length; idx++) {
+        var card = results.cards[idx];
+        if (card.cardnumber === data.cardnumber) {
+          insertedCard  = card;
+        }
+      }
+      return callBack(null,{card : insertedCard});
+    });
   },
 
   updateCard :(data,callBack)=>{

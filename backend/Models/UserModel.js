@@ -50,7 +50,7 @@ var userSchema = new Schema({
         _id : {type : Schema.ObjectId,auto:true},
         cardtype : String,
         cardname : String,
-        cardnumber : Number,
+        cardnumber : String,
         cvv : Number,
         expirydate : Date,
     }],

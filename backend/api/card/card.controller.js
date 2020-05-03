@@ -44,7 +44,6 @@ module.exports = {
 
   addCard : (req, res) => {
     const body = req.body;
-    console.log("here");
     addCard(body, (err, results) => {
       if (err) {
         console.log(err);
@@ -96,7 +95,7 @@ module.exports = {
 
 
   getAllCards: (req, res) => {
-    console.log("GetAllCards ", req);
+    // console.log("GetAllCards ", req);
     const id = req.params.id;
     getAllCards(id,(err, results) => {
       if (err) {
