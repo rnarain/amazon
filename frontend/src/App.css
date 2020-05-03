@@ -1,7 +1,7 @@
 body {
   font-family: "Ubuntu" !important;
   margin: 0px 0px!important;
-  min-height: 650px !important;
+  min-height: 750px !important;
 }
 
 a{
@@ -590,6 +590,9 @@ img{ max-width:100%;}
 .white-back{
   background-color: white;
 }
+ .white{
+ color:white ;
+font-size:14px}
 
 .sort-select{
     padding: 0px 8px;
