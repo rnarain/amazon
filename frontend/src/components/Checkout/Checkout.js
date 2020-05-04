@@ -21,7 +21,7 @@ import './AmazonCheckoutFiles/loading-1x._CB485947033_.gif';
 import './AmazonCheckoutFiles/loading-4x._CB485930722_.gif';
 import './AmazonCheckoutFiles/loading-4x._V391853216_.gif';
 import './AmazonCheckoutFiles/secured-ssl._CB485936932_.png';
-import backendServer from '../../webConfig'
+import {backendServer} from '../../webConfig'
 import AddPaymentMethod from './AddPaymentMethod';
 import AddAddresMethod from './AddAddressMethod';
 import axios from 'axios';
