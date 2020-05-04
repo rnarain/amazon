@@ -1,7 +1,8 @@
-/*body {
+body {
   font-family: "Ubuntu" !important;
-
-}*/
+  margin: 0px 0px!important;
+  min-height: 750px !important;
+}
 
 a{
   color :#333
@@ -19,8 +20,8 @@ ul{
  }*/
 
 .amazon-body{
-  margin-top:110px;
   min-height:425px;
+  margin: 0px 0px !important;
 }
 
 
@@ -114,6 +115,7 @@ margin:10px 0px;
   line-height: 50px;
   padding: 5px 10px;
   font-weight: 520;
+  margin-bottom: 0px !important;
 
 }
 
@@ -258,9 +260,12 @@ li{
     margin-top:20px;
 }
 
+.marginbottom20{
+  margin-bottom:20px;
+}
+
 .marginUpBot20{
   margin:20px 0px !important;
-
 }
 
 .edit-button{
@@ -585,6 +590,9 @@ img{ max-width:100%;}
 .white-back{
   background-color: white;
 }
+ .white{
+ color:white ;
+font-size:14px}
 
 .sort-select{
     padding: 0px 8px;
@@ -675,7 +683,6 @@ font-weight:550
 .sorting-bar{
   border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    box-shadow: 0 0 10px #ddd;
     line-height:40px;
     position: relative;
 }

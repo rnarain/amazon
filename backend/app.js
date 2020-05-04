@@ -81,6 +81,9 @@ var customerRouter = require('./api/customer/customer.router');
 var signupRouter = require('./api/signup/signup.router');
 var ordersRouter = require('./api/orders/orders.router');
 var sellerinventoryRouter = require('./api/sellerinventory/sellerinventory.router');
+var userRouter = require('./api/user/user.router');
+var checkoutRouter = require('./api/checkout/checkout.router');
+
 
 
 app.use('/student', studentRouter);
@@ -94,7 +97,10 @@ app.use('/cart', cartRouter);
 app.use('/seller', sellerRouter);
 app.use('/customer', customerRouter);
 app.use('/orders', ordersRouter);
+app.use('/user', userRouter);
+
 app.use('/sellerinventory',sellerinventoryRouter);
+app.use('/checkout', checkoutRouter);
 
 //start your server on port 3001
 module.exports = app.listen(3001);

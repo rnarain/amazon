@@ -1,2 +1,3 @@
 const backendServer = "http://localhost:3001";
-export default backendServer;
+const frontendServer = "http://localhost:3000";
+export {backendServer, frontendServer};

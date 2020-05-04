@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import backendServer from '../../webConfig'
+import {backendServer} from '../../webConfig'
 
 var renderedOutput;
 class SellerPage extends Component {

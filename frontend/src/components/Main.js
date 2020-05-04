@@ -10,6 +10,9 @@ import Checkout from './Checkout/Checkout';
 import CustomerProfile from './Customer/Profile/Profile';
 import SignUp from './Signup/Signup';
 import Orders from './Customer/Orders/Orders';
+import Wallet from './Payment/Wallet';
+import Address from './Address/Address';
+
 
 
 import UserCart from './Cart/Cart';
@@ -26,12 +29,14 @@ class Main extends Component {
         let navRoute = <Navbar />
         let footer = <Footer />
 
+        // if (/checkout/.test(window.location.href)) {
+        //   navRoute = <div/>
+        // }
         // if (localStorage.getItem('id')) {
         //     navRoute = <Navbar />
         //     }
         // else{
         // }
-
         return (
             <div>
                 {localStorage.getItem('id') &&
@@ -41,7 +46,7 @@ class Main extends Component {
                       
                         <Route exact path="/" component={Dashboard} />
                         <Route exact path="/product-search" component={ProductSearch} />
-                        <Route exact path="/product-detail" component={ProductDetail} />
+                        <Route exact path="/product-detail/:id" component={ProductDetail} />
                         <Route exact path="/carthome" component={UserCart}/>
                         <Route exact path="/checkout/:totalcartvalue" component={Checkout} />
                         <Route exact path="/seller/:name" component={SellerPage} />
@@ -51,6 +56,16 @@ class Main extends Component {
                         <Route exact path="/orderdetails/" component={OrderDetailsPage}/>
 
                         
+                        <Route exact path="/checkout" component={Checkout} />
+                        {/* <Route exact path="/seller/:name" component={SellerPage} />
+                        <Route exact path="/customer/profile" component={CustomerProfile} />
+                        <Route exact path="/orders/" component={Orders}/>
+                        <Route exact path="/seller" component={SellerPage} /> */}
+                        <Route exact path="/wallet" component={Wallet} />
+                        <Route exact path="/address" component={Address} />
+
+
+
                         {footer}
                     </Fragment>
                 }
