@@ -12,6 +12,17 @@ import SignUp from './Signup/Signup';
 import Orders from './Customer/Orders/Orders';
 import Wallet from './Payment/Wallet';
 import Address from './Address/Address';
+import AdminCategories from './Admin/Category/ListCategories';
+import AdminProducts from './Admin/Category/ListProducts';
+import ListSellers from './Admin/Sellers/ListSellers';
+import ListProductsBySellerName from './Admin/Sellers/ListProductsBySellerName';
+import AdminDashboard from './Admin/Dashboard/Dashboard';
+
+
+
+
+
+
 
 
 
@@ -22,6 +33,7 @@ import Footer from './LandingPage/Footer';
 import { Redirect } from 'react-router';
 import SellerInventory from './Seller/SellerInventory';
 import OrderDetailsPage from './Customer/OrderDetailsPage/OrderDetailsPage';
+import SellerProfile from './Seller/Profile/SellerProfile';
 
 //Create a Main Component
 class Main extends Component {
@@ -49,21 +61,26 @@ class Main extends Component {
                         <Route exact path="/product-detail/:id" component={ProductDetail} />
                         <Route exact path="/carthome" component={UserCart}/>
                         <Route exact path="/checkout/:totalcartvalue" component={Checkout} />
-                        <Route exact path="/seller/:name" component={SellerPage} />
+                        <Route exact path="/seller/profile" component={SellerProfile} />
+                        <Route exact path="/seller/name=:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
                         <Route exact path="/orders/" component={Orders}/>
                         <Route exact path="/sellerinventory/" component={SellerInventory}/>
                         <Route exact path="/orderdetails/" component={OrderDetailsPage}/>
 
-                        
+                       
                         <Route exact path="/checkout" component={Checkout} />
-                        {/* <Route exact path="/seller/:name" component={SellerPage} />
-                        <Route exact path="/customer/profile" component={CustomerProfile} />
+                        {/*
                         <Route exact path="/orders/" component={Orders}/>
                         <Route exact path="/seller" component={SellerPage} /> */}
                         <Route exact path="/wallet" component={Wallet} />
                         <Route exact path="/address" component={Address} />
 
+                        <Route path="/admin-category" component={AdminCategories}/>
+                        <Route path="/admin-product/:name" component={AdminProducts}/>
+                        <Route path="/list-sellers" component={ListSellers}/>
+                        <Route path="/list-seller-products/:name" component={ListProductsBySellerName}/>
+                        <Route path="/admin-dashboard" component={AdminDashboard}/>
 
 
                         {footer}

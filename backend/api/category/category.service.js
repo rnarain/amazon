@@ -1,4 +1,6 @@
 const Category = require("../../Models/CategoryModel");
+const Product = require("../../Models/ProductModel");
+
 
 module.exports = {
 
@@ -7,21 +9,13 @@ module.exports = {
       if (error) {
         callBack(error);
       }
-      console.log(result);
       return callBack(null, result);
     });
   },
 
-  addCateogry: (data, callBack) => {
-    var newCategory = new Cateogry({
-      category: data.name
-    })
-    Cateogry.save((error, results) => {
-      if (error) {
-        callBack(error);
-      }
-      return callBack(null, results);
-    }
-    );
+
+  deleteCategory: (data, callBack) => {
+    console.log(data);
+   
   },
 }

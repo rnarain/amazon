@@ -1,7 +1,10 @@
 const {
   getAllCategories,
-  addCategory,
 } = require("./category.service");
+const Category = require("../../Models/CategoryModel");
+const Product = require("../../Models/ProductModel");
+
+
 
 const jwt = require('jsonwebtoken');
 const { secret } = require('../../config/configValues');
@@ -21,26 +24,49 @@ module.exports = {
       });
     });
   },
-
-
-
-
-
-
   addCategory: (req, res) => {
-    const body = req.body;
-    addCategory(body, (err, results) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
+    var newCategory = new Category({
+      category: req.body.category
+    })
+      newCategory.save((error , results) => {
+        if (error) {
+          return res.status(400).json({
+            success: 0,
+            data: "Category already exists"
+          });
+        }
+        return  res.status(200).json({
+          success: 1,
+          data: results
+        });
+      });
+  },
+  deleteCategory: (req, res) => {
+    console.log("ya");
+    Product.find({category :  req.body.category} , (error, product) =>{
+      console.log(product)
+      if(product){
+        return res.status(200).json({
           success: 0,
-          message: "Database connection errror"
+          data: "There are products associated with this category"
         });
       }
-      return res.status(200).json({
-        success: 1,
-        data: results
-      });
+      else{
+        Category.deleteOne({category : req.body.category},(error, results) => {
+          if (error) {
+            return res.status(200).json({
+              success: 0,
+              data: "Couldnot delete category"
+            });
+          }
+           return res.status(200).json({
+            success: 1,
+            data: results
+          });
+        }
+        );
+      }
     });
+    
   },
 }
