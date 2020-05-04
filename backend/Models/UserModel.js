@@ -6,7 +6,7 @@ var userSchema = new Schema({
     email : {type: String, required: true},
     name : {type: String, required: true}, //To be unique for seller
     password : {type: String, required: true},
-    userType: {type: String},
+    userType: {type: String , enum : ['Customer','Seller','Admin']},
     address: {type: String},
     token:{type:String},
     cart : 
@@ -50,7 +50,7 @@ var userSchema = new Schema({
         _id : {type : Schema.ObjectId,auto:true},
         cardtype : String,
         cardname : String,
-        cardnumber : Number,
+        cardnumber : String,
         cvv : Number,
         expirydate : Date,
     }],
