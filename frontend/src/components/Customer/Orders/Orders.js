@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 //import '../../App.css';
 import axios from 'axios';
 import { Redirect, withRouter, Route } from 'react-router';
+import {
+  Link
+} from 'react-router-dom';
 //import backendServer from '../../webConfig'
 //import importScripts from 'import-scripts'
 //import logo from './Amazon Sign-In_files/amazonlogo.png';
+import moment from 'moment/moment';
+
 
 import './Your Orders_files/21taIyvn9cL._RC_71VqKg9169L.css,21TJB5pc5TL.css,31vGzsqCErL.css,21lRUdwotiL.css,41tc24mJIGL.css,11G4HxMtMSL.css,31OvHRW+XiL.css,01XHMOHpK1L.css_.css';
 //import './Your Orders_files/51AZ-Jz5kmL._RC_51da3H-4SUL.css,01evdoiemkL.css,01K+Ps1DeEL.css,31pdJv9iSzL.css,01W6EiNzKkL.css,11UGC+GXOPL.css,21LK7jaicML.css,11L58Qpo0GL.css,21kyTi1FabL.css,01ruG+gDPFL.css,01YhS3Cs-hL.css,21GwE3cR-yL.css,019SHZnt8RL.css,01wAWQRgXzL.css,21bWcRJYNIL.css';
@@ -28,7 +33,8 @@ class Login extends Component {
       type: 'Customer',
       authFlag: false,
       redirectToHome: false,
-      showLoginError: false
+      showLoginError: false,
+      orderList: []
     }
     //Bind the handlers to this className
     this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -40,24 +46,28 @@ class Login extends Component {
   componentWillMount() {
     console.log('test');
     var data = {
-      userid : localStorage.getItem('id')
+      userid: localStorage.getItem('id')
     }
     axios.defaults.withCredentials = true;
     //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
     axios.post('http://localhost:3001/' + 'orders/getOrders', data)
-    .then(response => {
-      if(response){
-          console.log('response',response);
-      }else{
-        console.log('response',response);
+      .then(response => {
+        if (response) {
+          console.log('response', response.data);
+          this.setState({
+            orderList: response.data
+          })
+        } else {
+          // No orders found
+          console.log('1', response);
+        }
       }
-    }
-    ).catch(ex => {
-      console.log('error',ex);
+      ).catch(ex => {
+        console.log('error', ex);
         this.setState({
-            showLoginError: true
+          showLoginError: true
         })
-    });
+      });
 
     this.setState({
       authFlag: false
@@ -149,6 +159,199 @@ class Login extends Component {
         redirectVar = <Redirect to="/company/postings" />
     }*/
 
+    let orderDetailsList = this.state.orderList.map(eachOrder => {
+      var formattedOrderDate = moment(eachOrder.orderdate).format('MMMM Do YYYY');
+
+
+      return (
+        <Fragment>
+          <div className="a-box-group a-spacing-base order">
+            <div className="a-box a-color-offset-background order-info"><div className="a-box-inner">
+              <div className="a-fixed-right-grid"><div className="a-fixed-right-grid-inner" style={{ paddingRight: '185px' }}>
+                <div className="a-fixed-right-grid-col a-col-left" style={{ paddingRight: '0%', float: 'left' }}>
+                  <div className="a-row">
+                    <div className="a-column a-span3">
+                      <div className="a-row a-size-mini">
+                        <span className="a-color-secondary label">
+                          Order placed
+                            </span>
+                      </div>
+                      <div className="a-row a-size-base">
+                        <span className="a-color-secondary value">
+                          {formattedOrderDate}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="a-column a-span2">
+                      <div className="a-row a-size-mini">
+                        <span className="a-color-secondary label">
+                          Total
+                            </span>
+                      </div>
+                      <div className="a-row a-size-base">
+                        <span className="a-color-secondary value">
+                          ${eachOrder.totalcost}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="a-column a-span7 recipient a-span-last">
+                      <div className="a-row a-size-mini">
+
+                      </div>
+                      <div className="a-row a-size-base">
+                        <span className="a-color-secondary">
+                          {/*<span className="a-declarative" data-action="a-popover" data-a-popover="{&quot;width&quot;:&quot;250&quot;,&quot;inlineContent&quot;:&quot;\u003cdiv class=\&quot;a-row recipient-address\&quot;>\u003cdiv class=\&quot;displayAddressDiv\&quot;>\n\u003cul class=\&quot;displayAddressUL\&quot;>\n\u003cli class=\&quot;displayAddressLI displayAddressFullName\&quot;>Rahul Nagdev\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressAddressLine1\&quot;>754 THE ALAMEDA APT 2110\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressCityStateOrRegionPostalCode\&quot;>SAN JOSE, CA 95126-3168\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressCountryName\&quot;>United States\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressPhoneNumber\&quot;>Phone: \u003cspan dir=\&quot;ltr\&quot;> +14086460806\u003c/span>\u003c/li>\n\u003c/ul>\n\u003c/div>\n\n\u003c/div>&quot;,&quot;closeButton&quot;:&quot;false&quot;,&quot;closeButtonLabel&quot;:&quot;Close recipient address&quot;,&quot;position&quot;:&quot;triggerBottom&quot;,&quot;dataStrategy&quot;:&quot;inline&quot;,&quot;name&quot;:&quot;recipient&quot;,&quot;popoverLabel&quot;:&quot;Recipient address&quot;}">
+                            <a aria-label="Link to Shipping Address" href="javascript:void(0)" className="a-popover-trigger a-declarative value"><span className="trigger-text">Rahul Nagdev</span><i className="a-icon a-icon-popover" /></a>
+                          </span>*/}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="a-column a-span2">
+                    </div>
+                  </div>
+                </div>
+                <div className="a-fixed-right-grid-col actions a-col-right" style={{ width: '185px', marginRight: '-185px', float: 'left' }}>
+                  <div className="a-row a-size-mini">
+                    <span className="a-color-secondary label">
+                      Order #
+                        </span>
+                    <span className="a-color-secondary value">
+                      <bdi dir="ltr">{eachOrder.orderid}</bdi>
+                    </span>
+                  </div>
+                  <div className="a-row a-size-base">
+                    <ul className="a-unordered-list a-nostyle a-vertical">
+
+                      <Link
+                        className="a-link-normal"
+                        title="Order Details"
+                        to={{
+                          pathname: "/orderdetails",
+                          orderData: { eachOrder }
+                        }}
+                      >Order Details</Link>
+
+                      <i className="a-icon a-icon-text-separator" role="img" />
+
+                    </ul>
+                  </div>
+                </div>
+              </div></div>
+            </div></div>
+
+
+            {eachOrder.productDetailList.map((eachProduct, index) => {
+              return (
+                <Fragment>
+                  <div className="a-box shipment shipment-is-delivered">
+                    <div className="a-box-inner">
+                      <div className="a-row shipment-top-row js-shipment-info-container">
+                        <div style={{ marginRight: '220px', paddingRight: '20px' }}>
+                          <div className="a-row">
+                            <span className="a-size-medium a-color-base a-text-bold">
+                              Delivered Saturday
+                      </span>
+                          </div>
+                          <div className="a-row">
+                            <span data-isstatuswithwarning={0} data-yodeliveryestimate="Delivered Saturday" data-yoshortstatuscode="DELIVERED" data-yostatusstring className="js-shipment-info aok-hidden">
+                            </span>
+                          </div>
+                        </div>
+                        <div className="actions" style={{ width: '220px' }}>
+                          <div className="a-row">
+                            <div className="a-button-stack">
+                              <span className="a-declarative" data-action="set-shipment-info-cookies" data-set-shipment-info-cookies="{}">
+                                <span className="a-button a-button-base track-package-button" id="a-autoid-3"><span className="a-button-inner"><a href="https://www.amazon.com/progress-tracker/package/ref=ppx_yo_dt_b_track_package?_encoding=UTF8&itemId=lhpilqksomqsqn&orderId=114-9827306-5149810&packageIndex=0&shipmentId=D4tPS0vgt&vt=YOUR_ORDERS" className="a-button-text" role="button" id="a-autoid-3-announce">
+                                  Track package
+                              </a></span></span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="a-fixed-right-grid a-spacing-top-medium"><div className="a-fixed-right-grid-inner a-grid-vertical-align a-grid-top">
+                        <div className="a-fixed-right-grid-col a-col-left" style={{ paddingRight: '3.2%', float: 'left' }}>
+                          <div className="a-row">
+                            <div className="a-fixed-left-grid a-spacing-none"><div className="a-fixed-left-grid-inner" style={{ paddingLeft: '100px' }}>
+                              <div className="a-text-center a-fixed-left-grid-col a-col-left" style={{ width: '100px', marginLeft: '-100px', float: 'left' }}>
+                                <div className="item-view-left-col-inner">
+                                  <a className="a-link-normal" href="https://www.amazon.com/gp/product/B0090YJBYS/ref=ppx_yo_dt_b_asin_image_o00_s00?ie=UTF8&psc=1">
+                                    <img alt="" src="./Your Orders_files/41L4gtTop+L._SY180_.jpg" aria-hidden="true" onload="if (typeof uet == 'function') { uet('cf'); uet('af'); }" className="yo-critical-feature" height={90} width={90} title={eachProduct.name} data-a-hires="https://images-na.ssl-images-amazon.com/images/I/41L4gtTop%2BL._SY180_.jpg" />
+                                  </a>
+                                </div>
+                              </div>
+                              <div className="a-fixed-left-grid-col a-col-right" style={{ paddingLeft: '1.5%', float: 'left' }}>
+                                <div className="a-row">
+                                  <a className="a-link-normal" href={"/product-detail/" + eachProduct._id}>
+                                    {eachProduct.name}
+                                  </a>
+                                </div>
+                                <div className="a-row">
+                                  <span className="a-size-small a-color-secondary">
+                                    Sold by:
+                                    Amazon.com Services LLC
+                                </span>
+                                </div>
+                                <div className="a-row">
+                                  <span className="a-size-small">
+                                    <div className="a-row a-size-small">Return eligible through May 31, 2020</div>
+                                  </span>
+                                </div>
+                                <div className="a-row">
+                                  <span className="a-color-secondary a-text-bold">
+                                  </span>
+                                  <span className="a-color-secondary">
+                                  </span>
+                                </div>
+                                <div className="a-row">
+                                  <div className="a-row a-spacing-top-mini">
+                                    <span className="a-declarative" data-action="a-modal" data-a-modal="{&quot;dataStrategy&quot;:&quot;ajax&quot;,&quot;url&quot;:&quot;/gp/your-account/order-history/ajax/reorder_modal.html/ref=ppx_yo_dt_b_bia_item_o00_s00?ie=UTF8&addCfMarker=1&asin=B0090YJBYS&deviceType=desktop&forceShowOutOfStockWidget=0&glProductGroup=0&ibaOrderMerchantId=&ibaOrderMerchantName=&isAmazonFulfilled=1&isApp=0&isIbaOrder=&isItemCancelled=0&isRental=&isVas=0&merchantHasProfile=0&merchantId=ATVPDKIKX0DER&orderId=114-9827306-5149810&previouslyPurchasedPrice=5.99&refTagPageType=YourOrders&refTagPrefix=ppx_yo_dt_b_&refTagSuffix=_o00_s00&relatedRequestId=ER8TFE2ZZEKVPTCQC8P4&showBuyingMore=1&title=HP%20Printer%20Paper%20Office%2020lb%2C%208.5x%2011%2C%201%20Ream%2C%20500%20Sheets%2C%20Made%20in%20USA%20From%20Forest%20Stewardship%20Council%20%28FSC%29%20Certified%20Resources%2C%2092%20Bright%2C%20Acid%20Free&quot;,&quot;name&quot;:&quot;reorderModal114-9827306-5149810&quot;,&quot;activate&quot;:&quot;onclick&quot;,&quot;footer&quot;:&quot;\n\u003cdiv class=\&quot;a-row reorder-modal-footer\&quot;>\n    \u003cspan class=\&quot;a-declarative\&quot; data-action=\&quot;reorder-modal-cancel\&quot; data-reorder-modal-cancel=\&quot;{}\&quot; id=\&quot;reorder-modal-cancel\&quot;>\n        \u003cspan class=\&quot;a-button a-button-base\&quot;>\u003cspan class=\&quot;a-button-inner\&quot;>\u003cinput name=\&quot;reorderCancelButton\&quot; class=\&quot;a-button-input\&quot; type=\&quot;submit\&quot;>\u003cspan class=\&quot;a-button-text\&quot; aria-hidden=\&quot;true\&quot;>\n            Cancel\n        \u003c/span>\u003c/span>\u003c/span>\n    \u003c/span>\n\u003c/div>\n&quot;,&quot;header&quot;:&quot;Buy it again&quot;}">
+                                      <span className="a-button a-spacing-mini a-button-primary a-button-icon reorder-modal-trigger-button" id="a-autoid-4"><span className="a-button-inner"><input aria-label="Buy it again" className="a-button-input" type="submit" aria-labelledby="a-autoid-4-announce" /><span className="a-button-text" aria-hidden="true" id="a-autoid-4-announce">
+                                        <i className="reorder-modal-trigger-icon" />Buy it again
+                                        </span></span></span>
+                                    </span>
+                                    <span className="a-button a-spacing-mini a-button-base" id="a-autoid-5"><span className="a-button-inner"><a href="https://www.amazon.com/your-orders/pop/ref=ppx_yo_dt_b_pop?_encoding=UTF8&gen=canonical&lineItemId=lhpilqksomqsqny&orderId=114-9827306-5149810&packageId=1&returnSummaryId=&returnUnitIndices=&shipmentId=D4tPS0vgt" className="a-button-text" role="button" id="a-autoid-5-announce">
+                                      View your item
+                                      </a></span></span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div></div>
+                          </div>
+                        </div>
+                        <div className="a-fixed-right-grid-col a-col-right" style={{ width: '220px', marginRight: '-220px', float: 'left' }}>
+                          <div className="a-row">
+                            <div className="a-button-stack">
+                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-6"><span className="a-button-inner"><a id="Return-or-replace-items_2" href="https://www.amazon.com/spr/returns/cart?_encoding=UTF8&orderId=114-9827306-5149810&ref_=ppx_yo_dt_b_return_replace_o00_s00" className="a-button-text" role="button">
+                                Return or replace items
+                              </a></span></span>
+                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-7"><span className="a-button-inner"><a id="Share-gift-receipt_2" href="https://www.amazon.com/gcx/-/ty/gr/114-9827306-5149810/D4tPS0vgt/ref=ppx_yo_dt_b_gift_receipt_o00_s00" className="a-button-text" role="button">
+                                Share gift receipt
+                              </a></span></span>
+                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-8"><span className="a-button-inner"><a id="Write-a-product-review_2" href="https://www.amazon.com/review/review-your-purchases/ref=ppx_yo_dt_b_rev_prod_o00_s00?_encoding=UTF8&asins=B0090YJBYS&channel=YAcc-wr" className="a-button-text" role="button">
+                                Write a product review
+                              </a></span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </Fragment>
+              )
+            })}
+
+
+
+          </div>
+
+        </Fragment>
+      )
+    })
+
     if (this.state.redirectToHome) {
       redirectVar = <Redirect push to="/somewhere/else" />
     }
@@ -161,9 +364,9 @@ class Login extends Component {
           <title>Your Orders</title>
           <style dangerouslySetInnerHTML={{ __html: ".s-suggestion { padding: 8px 10px; font-size: 16px; font-family: \"Amazon Ember\"; cursor: pointer; }" }} /><style dangerouslySetInnerHTML={{ __html: "" }} />
           <div id="a-page">
-            
+
             <img src="./Your Orders_files/nav-sprite-global_bluebeacon-1x_optimized_layout1._CB468670774_.png" style={{ display: 'none' }} alt="" />
-           
+
             <style mark="aboveNavInjectionCSS" type="text/css" dangerouslySetInnerHTML={{ __html: "\n      div#navSwmHoliday.nav-focus {border: none;margin: 0;}\n    " }} />
             <noscript>
               &lt;style type="text/css"&gt;&lt;!--
@@ -479,7 +682,7 @@ class Login extends Component {
                       </span></li>
                     </ul>
                   </div>
-                  
+
                 </div>
                 <div id="ordersContainer">
                   <div id="attn-required-alert" className="a-box a-alert a-alert-error banner-hidden-by-default a-spacing-large a-spacing-top-large" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><h4 className="a-alert-heading">Your attention is required to continue processing one or more orders on this page.</h4><i className="a-icon a-icon-alert" /><div className="a-alert-content">
@@ -488,174 +691,7 @@ class Login extends Component {
                   <div id="teen-attn-required-alert" className="a-box a-alert a-alert-info banner-hidden-by-default a-spacing-large a-spacing-top-large"><div className="a-box-inner a-alert-container"><h4 className="a-alert-heading">You have at least one order pending approval</h4><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                     Unapproved orders expire after 48 hours
               </div></div></div>
-                  <div className="a-box-group a-spacing-base order">
-                    <div className="a-box a-color-offset-background order-info"><div className="a-box-inner">
-                      <div className="a-fixed-right-grid"><div className="a-fixed-right-grid-inner" style={{ paddingRight: '185px' }}>
-                        <div className="a-fixed-right-grid-col a-col-left" style={{ paddingRight: '0%', float: 'left' }}>
-                          <div className="a-row">
-                            <div className="a-column a-span3">
-                              <div className="a-row a-size-mini">
-                                <span className="a-color-secondary label">
-                                  Order placed
-                            </span>
-                              </div>
-                              <div className="a-row a-size-base">
-                                <span className="a-color-secondary value">
-                                  April 22, 2020
-                            </span>
-                              </div>
-                            </div>
-                            <div className="a-column a-span2">
-                              <div className="a-row a-size-mini">
-                                <span className="a-color-secondary label">
-                                  Total
-                            </span>
-                              </div>
-                              <div className="a-row a-size-base">
-                                <span className="a-color-secondary value">
-                                  $6.54
-                            </span>
-                              </div>
-                            </div>
-                            <div className="a-column a-span7 recipient a-span-last">
-                              <div className="a-row a-size-mini">
-                                <span className="a-color-secondary label">
-                                  Ship to
-                            </span>
-                              </div>
-                              <div className="a-row a-size-base">
-                                <span className="a-color-secondary">
-                                  <span className="a-declarative" data-action="a-popover" data-a-popover="{&quot;width&quot;:&quot;250&quot;,&quot;inlineContent&quot;:&quot;\u003cdiv class=\&quot;a-row recipient-address\&quot;>\u003cdiv class=\&quot;displayAddressDiv\&quot;>\n\u003cul class=\&quot;displayAddressUL\&quot;>\n\u003cli class=\&quot;displayAddressLI displayAddressFullName\&quot;>Rahul Nagdev\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressAddressLine1\&quot;>754 THE ALAMEDA APT 2110\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressCityStateOrRegionPostalCode\&quot;>SAN JOSE, CA 95126-3168\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressCountryName\&quot;>United States\u003c/li>\n\u003cli class=\&quot;displayAddressLI displayAddressPhoneNumber\&quot;>Phone: \u003cspan dir=\&quot;ltr\&quot;> +14086460806\u003c/span>\u003c/li>\n\u003c/ul>\n\u003c/div>\n\n\u003c/div>&quot;,&quot;closeButton&quot;:&quot;false&quot;,&quot;closeButtonLabel&quot;:&quot;Close recipient address&quot;,&quot;position&quot;:&quot;triggerBottom&quot;,&quot;dataStrategy&quot;:&quot;inline&quot;,&quot;name&quot;:&quot;recipient&quot;,&quot;popoverLabel&quot;:&quot;Recipient address&quot;}">
-                                    <a aria-label="Link to Shipping Address" href="javascript:void(0)" className="a-popover-trigger a-declarative value"><span className="trigger-text">Rahul Nagdev</span><i className="a-icon a-icon-popover" /></a>
-                                  </span>
-                                </span>
-                              </div>
-                            </div>
-                            <div className="a-column a-span2">
-                            </div>
-                          </div>
-                        </div>
-                        <div className="a-fixed-right-grid-col actions a-col-right" style={{ width: '185px', marginRight: '-185px', float: 'left' }}>
-                          <div className="a-row a-size-mini">
-                            <span className="a-color-secondary label">
-                              Order #
-                        </span>
-                            <span className="a-color-secondary value">
-                              <bdi dir="ltr">114-9827306-5149810</bdi>
-                            </span>
-                          </div>
-                          <div className="a-row a-size-base">
-                            <ul className="a-unordered-list a-nostyle a-vertical">
-                              <a className="a-link-normal" href="https://www.amazon.com/gp/your-account/order-details/ref=ppx_yo_dt_b_order_details_o00?ie=UTF8&orderID=114-9827306-5149810">
-                                Order Details
-                          </a>
-                              <i className="a-icon a-icon-text-separator" role="img" />
-                              <a className="a-link-normal" href="https://www.amazon.com/gp/css/summary/print.html/ref=ppx_yo_dt_b_invoice_o00?ie=UTF8&orderID=114-9827306-5149810">Invoice</a>
-                            </ul>
-                          </div>
-                        </div>
-                      </div></div>
-                    </div></div>
-                    <div className="a-box shipment shipment-is-delivered"><div className="a-box-inner">
-                      <div className="a-row shipment-top-row js-shipment-info-container">
-                        <div style={{ marginRight: '220px', paddingRight: '20px' }}>
-                          <div className="a-row">
-                            <span className="a-size-medium a-color-base a-text-bold">
-                              Delivered Saturday
-                      </span>
-                          </div>
-                          <div className="a-row">
-                            <span data-isstatuswithwarning={0} data-yodeliveryestimate="Delivered Saturday" data-yoshortstatuscode="DELIVERED" data-yostatusstring className="js-shipment-info aok-hidden">
-                            </span>
-                          </div>
-                        </div>
-                        <div className="actions" style={{ width: '220px' }}>
-                          <div className="a-row">
-                            <div className="a-button-stack">
-                              <span className="a-declarative" data-action="set-shipment-info-cookies" data-set-shipment-info-cookies="{}">
-                                <span className="a-button a-button-base track-package-button" id="a-autoid-3"><span className="a-button-inner"><a href="https://www.amazon.com/progress-tracker/package/ref=ppx_yo_dt_b_track_package?_encoding=UTF8&itemId=lhpilqksomqsqn&orderId=114-9827306-5149810&packageIndex=0&shipmentId=D4tPS0vgt&vt=YOUR_ORDERS" className="a-button-text" role="button" id="a-autoid-3-announce">
-                                  Track package
-                              </a></span></span>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="a-fixed-right-grid a-spacing-top-medium"><div className="a-fixed-right-grid-inner a-grid-vertical-align a-grid-top">
-                        <div className="a-fixed-right-grid-col a-col-left" style={{ paddingRight: '3.2%', float: 'left' }}>
-                          <div className="a-row">
-                            <div className="a-fixed-left-grid a-spacing-none"><div className="a-fixed-left-grid-inner" style={{ paddingLeft: '100px' }}>
-                              <div className="a-text-center a-fixed-left-grid-col a-col-left" style={{ width: '100px', marginLeft: '-100px', float: 'left' }}>
-                                <div className="item-view-left-col-inner">
-                                  <a className="a-link-normal" href="https://www.amazon.com/gp/product/B0090YJBYS/ref=ppx_yo_dt_b_asin_image_o00_s00?ie=UTF8&psc=1">
-                                    <img alt="" src="./Your Orders_files/41L4gtTop+L._SY180_.jpg" aria-hidden="true" onload="if (typeof uet == 'function') { uet('cf'); uet('af'); }" className="yo-critical-feature" height={90} width={90} title="HP Printer Paper Office 20lb, 8.5x 11, 1 Ream, 500 Sheets, Made in USA From Forest Stewardship Council (FSC) Certified Resources, 92 Bright, Acid Free" data-a-hires="https://images-na.ssl-images-amazon.com/images/I/41L4gtTop%2BL._SY180_.jpg" />
-                                  </a>
-                                </div>
-                              </div>
-                              <div className="a-fixed-left-grid-col a-col-right" style={{ paddingLeft: '1.5%', float: 'left' }}>
-                                <div className="a-row">
-                                  <a className="a-link-normal" href="https://www.amazon.com/gp/product/B0090YJBYS/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1">
-                                    HP Printer Paper Office 20lb, 8.5x 11, 1 Ream, 500 Sheets, Made in USA From Forest Stewardship Council (FSC) Certified Resources, 92 Bright, Acid Free
-                                </a>
-                                </div>
-                                <div className="a-row">
-                                  <span className="a-size-small a-color-secondary">
-                                    Sold by:
-                                    Amazon.com Services LLC
-                                </span>
-                                </div>
-                                <div className="a-row">
-                                  <span className="a-size-small">
-                                    <div className="a-row a-size-small">Return eligible through May 31, 2020</div>
-                                  </span>
-                                </div>
-                                <div className="a-row">
-                                  <span className="a-color-secondary a-text-bold">
-                                  </span>
-                                  <span className="a-color-secondary">
-                                  </span>
-                                </div>
-                                <div className="a-row">
-                                  <div className="a-row a-spacing-top-mini">
-                                    <span className="a-declarative" data-action="a-modal" data-a-modal="{&quot;dataStrategy&quot;:&quot;ajax&quot;,&quot;url&quot;:&quot;/gp/your-account/order-history/ajax/reorder_modal.html/ref=ppx_yo_dt_b_bia_item_o00_s00?ie=UTF8&addCfMarker=1&asin=B0090YJBYS&deviceType=desktop&forceShowOutOfStockWidget=0&glProductGroup=0&ibaOrderMerchantId=&ibaOrderMerchantName=&isAmazonFulfilled=1&isApp=0&isIbaOrder=&isItemCancelled=0&isRental=&isVas=0&merchantHasProfile=0&merchantId=ATVPDKIKX0DER&orderId=114-9827306-5149810&previouslyPurchasedPrice=5.99&refTagPageType=YourOrders&refTagPrefix=ppx_yo_dt_b_&refTagSuffix=_o00_s00&relatedRequestId=ER8TFE2ZZEKVPTCQC8P4&showBuyingMore=1&title=HP%20Printer%20Paper%20Office%2020lb%2C%208.5x%2011%2C%201%20Ream%2C%20500%20Sheets%2C%20Made%20in%20USA%20From%20Forest%20Stewardship%20Council%20%28FSC%29%20Certified%20Resources%2C%2092%20Bright%2C%20Acid%20Free&quot;,&quot;name&quot;:&quot;reorderModal114-9827306-5149810&quot;,&quot;activate&quot;:&quot;onclick&quot;,&quot;footer&quot;:&quot;\n\u003cdiv class=\&quot;a-row reorder-modal-footer\&quot;>\n    \u003cspan class=\&quot;a-declarative\&quot; data-action=\&quot;reorder-modal-cancel\&quot; data-reorder-modal-cancel=\&quot;{}\&quot; id=\&quot;reorder-modal-cancel\&quot;>\n        \u003cspan class=\&quot;a-button a-button-base\&quot;>\u003cspan class=\&quot;a-button-inner\&quot;>\u003cinput name=\&quot;reorderCancelButton\&quot; class=\&quot;a-button-input\&quot; type=\&quot;submit\&quot;>\u003cspan class=\&quot;a-button-text\&quot; aria-hidden=\&quot;true\&quot;>\n            Cancel\n        \u003c/span>\u003c/span>\u003c/span>\n    \u003c/span>\n\u003c/div>\n&quot;,&quot;header&quot;:&quot;Buy it again&quot;}">
-                                      <span className="a-button a-spacing-mini a-button-primary a-button-icon reorder-modal-trigger-button" id="a-autoid-4"><span className="a-button-inner"><input aria-label="Buy it again" className="a-button-input" type="submit" aria-labelledby="a-autoid-4-announce" /><span className="a-button-text" aria-hidden="true" id="a-autoid-4-announce">
-                                        <i className="reorder-modal-trigger-icon" />Buy it again
-                                        </span></span></span>
-                                    </span>
-                                    <span className="a-button a-spacing-mini a-button-base" id="a-autoid-5"><span className="a-button-inner"><a href="https://www.amazon.com/your-orders/pop/ref=ppx_yo_dt_b_pop?_encoding=UTF8&gen=canonical&lineItemId=lhpilqksomqsqny&orderId=114-9827306-5149810&packageId=1&returnSummaryId=&returnUnitIndices=&shipmentId=D4tPS0vgt" className="a-button-text" role="button" id="a-autoid-5-announce">
-                                      View your item
-                                      </a></span></span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div></div>
-                          </div>
-                        </div>
-                        <div className="a-fixed-right-grid-col a-col-right" style={{ width: '220px', marginRight: '-220px', float: 'left' }}>
-                          <div className="a-row">
-                            <div className="a-button-stack">
-                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-6"><span className="a-button-inner"><a id="Return-or-replace-items_2" href="https://www.amazon.com/spr/returns/cart?_encoding=UTF8&orderId=114-9827306-5149810&ref_=ppx_yo_dt_b_return_replace_o00_s00" className="a-button-text" role="button">
-                                Return or replace items
-                              </a></span></span>
-                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-7"><span className="a-button-inner"><a id="Share-gift-receipt_2" href="https://www.amazon.com/gcx/-/ty/gr/114-9827306-5149810/D4tPS0vgt/ref=ppx_yo_dt_b_gift_receipt_o00_s00" className="a-button-text" role="button">
-                                Share gift receipt
-                              </a></span></span>
-                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-8"><span className="a-button-inner"><a id="Write-a-product-review_2" href="https://www.amazon.com/review/review-your-purchases/ref=ppx_yo_dt_b_rev_prod_o00_s00?_encoding=UTF8&asins=B0090YJBYS&channel=YAcc-wr" className="a-button-text" role="button">
-                                Write a product review
-                              </a></span></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div></div>
-                    </div></div>
-                    <div className="a-box"><div className="a-box-inner">
-                      <span className="a-declarative" data-action="a-modal" data-a-modal="{&quot;width&quot;:600,&quot;name&quot;:&quot;archive-order-modal&quot;,&quot;url&quot;:&quot;/gp/css/order-history/archive/archiveModal.html?orderId=114-9827306-5149810&shellOrderId=&quot;,&quot;header&quot;:&quot;Archive this order&quot;}">
-                        <a className="a-spacing-none a-link-normal" href="https://www.amazon.com/gp/css/order-history/archive/ref=ppx_yo_dt_b_archive_order_o00_s00?ie=UTF8&archiveRequest=1&orderIds=114-9827306-5149810&token=143-1425019-1710013">
-                          Archive order
-                  </a>
-                      </span>
-                    </div></div>
-                  </div>
+                  {orderDetailsList}
                   <div className="a-row">
                     <div className="a-text-center pagination-full"><ul className="a-pagination"><li className="a-disabled">←<span className="a-letter-space" /><span className="a-letter-space" />Previous</li>
                       <li className="a-selected"><a href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_1?ie=UTF8&orderFilter=months-6&search=&startIndex=0">1</a></li>
@@ -672,6 +708,7 @@ class Login extends Component {
             <div id="yourOrdersBottom">
               <style type="text/css" dangerouslySetInnerHTML={{ __html: "\n\n\n\n#csr-hcb-wrapper {\n  display: none;\n}\n\n.bia-item .bia-action-button {\n  display: inline-block;\n  height: 22px;\n  margin-top: 3px;\n  padding: 0px;\n  overflow: hidden;\n  text-align: center;\n  vertical-align: middle;\n  text-decoration: none;\n  color: #111;\n  font-family: Arial,sans-serif;\n  font-size: 11px;\n  font-style: normal;\n  font-weight: normal;\n  line-height: 19px;\n  cursor: pointer;\n  outline: 0;\n  border: 1px solid;\n  -webkit-border-radius: 3px 3px 3px 3px;\n  -moz-border-radius: 3px 3px 3px 3px;\n  border-radius: 3px 3px 3px 3px;\n  border-radius: 0\\9;\n  border-color: #bcc1c8 #bababa #adb2bb;\n  background: #eff0f3;\n  background: -moz-linear-gradient(top, #f7f8fa, #e7e9ec);\n  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f8fa), color-stop(100%, #e7e9ec));\n  background: -webkit-linear-gradient(top, #f7f8fa, #e7e9ec);\n  background: -o-linear-gradient(top, #f7f8fa, #e7e9ec);\n  background: -ms-linear-gradient(top, #f7f8fa, #e7e9ec);\n  background: linear-gradient(top, #f7f8fa, #e7e9ec);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f8fa', endColorstr='#e7e9ec',GradientType=0);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 0 #fff;\n  -moz-box-shadow: inset 0 1px 0 0 #fff;\n  box-shadow: inset 0 1px 0 0 #fff;\n  box-sizing: border-box;\n}\n\n/*related to defect found in YSH page in www.amazon.fr\n  font family was overriden causing button overflow on\n  that particular page.\n  Related SIM: https://issues.amazon.com/issues/P13N-CONSUMABLES-3104\n*/\n#bia-hcb-widget .a-button-text {\n    font-family: Arial,sans-serif !important;\n}\n\n/*This class was added to remove star ratings from\n   Shared Component's templates. Star ratings are\n   currently not configurable. This will work as an\n   immediate solution.\n   TODO: Work with shared components to make star\n   ratings configurable in their Shared View Templates\n*/\n#bia_content .a-icon-row {\n    display: none;\n}\n\n#bia-hcb-widget .a-icon-row {\n      display: none;\n}\n\n#bia_content {\n    width: 266px;\n}\n\n.nav-flyout-sidePanel {\n    width: 266px !important;\n}\n.aui-atc-button {\n    margin-top: 3px;\n    overflow: hidden;\n    color: #111;\n    font-family: Arial,sans-serif;\n    font-size: 11px;\n    font-style: normal;\n    font-weight: normal;\n}\n.bia-item .bia-action-button:hover {\n  border-color: #aeb4bd #adadad #9fa5af;\n  background: #e0e3e8;\n  background: -moz-linear-gradient(top, #e7eaf0, #d9dce1);\n  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e7eaf0), color-stop(100%, #d9dce1));\n  background: -webkit-linear-gradient(top, #e7eaf0, #d9dce1);\n  background: -o-linear-gradient(top, #e7eaf0, #d9dce1);\n  background: -ms-linear-gradient(top, #e7eaf0, #d9dce1);\n  background: linear-gradient(top, #e7eaf0, #d9dce1);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e7eaf0', endColorstr='#d9dce1',GradientType=0);\n  *zoom: 1;\n  -webkit-box-shadow: 0 1px 3px rgba(255, 255, 255, 0.6) inset;\n  -moz-box-shadow: 0 1px 3px rgba(255, 255, 255, 0.6) inset;\n  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.6) inset;\n}\n\n.bia-item .bia-action-button:active {\n  background-color: #dcdfe3;\n  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;\n  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;\n}\n\n.bia-item .bia-action-button-disabled {\n  background: #f7f8fa;\n  color: #b7b7b7;\n  border-color: #e0e0e0;\n  box-shadow: none;\n  cursor: default;\n}\n\n.bia-item .bia-action-button-disabled:hover {\n  background: #f7f8fa;\n  color: #b7b7b7;\n  border-color: #e0e0e0;\n  box-shadow: none;\n  cursor: default;\n}\n\n.bia-action-button-inner {\n  border-bottom-color: #111111;\n  border-bottom-style: none;\n  border-bottom-width: 0px;\n  border-image-outset: 0px;\n  border-image-repeat: stretch;\n  border-image-slice: 100%;\n  border-image-width: 1;\n  border-left-color: #111111;\n  border-left-style: none;\n  border-left-width: 0px;\n  border-right-color: #111111;\n  border-right-style: none;\n  border-right-width: 0px;\n  border-top-color: #111111;\n  border-top-style: none;\n  border-top-width: 0px;\n  box-sizing: border-box;\n  display: block;\n  height: 20px;\n  line-height: 19px;\n  overflow: hidden;\n  position: relative;\n  padding: 0;\n  vertical-align: baseline;\n}\n\n.bia-action-inner {\n  border: 0;\n  display: inline;\n  font-size: 11px;\n  height: auto;\n  line-height: 19px;\n  padding: 0px 4px 0px 4px;\n  text-align: center;\n  width: auto;\n  white-space: nowrap;\n}\n\n.csr-content {\n  font-family: Arial, Verdana, Helvetica, sans-serif;\n  width: 220px;\n  line-height: 19px;\n}\n\n.bia-header {\n  font-size: 16px;\n  color: #E47911;\n  padding-bottom: 10px;\n}\n\n.bia-header-widget {\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.b2b-nav-header {\n  white-space: nowrap;\n  overflow: hidden;\n  margin-bottom: 18px;\n}\n\n.bia-space-right {\n  padding-right: 18px;\n  white-space: normal;\n  float: left;\n}\n\n.b2b-see-more-link a {\n  display: inline;\n  float: left;\n  margin-top: 3px;\n  margin-left: 3px;\n}\n\n.hcb-see-more-link a {\n  color: #333;\n  font-size: 13px;\n  text-decoration: none;\n  font-family: Arial, Verdana, Helvetica, sans-serif;\n}\n\n.bia-hcb-body {\n  overflow: hidden;\n}\n\n.bia-item {\n  width: 220px;\n  display: inline-block;\n  margin-bottom: 20px;\n}\n\n.bia-item-image {\n  float: left;\n  margin-right: 15px;\n  width: 75px;\n  height: 75px;\n}\n\n.bia-image {\n  max-height: 75px;\n  max-width: 75px;\n  border: 0;\n}\n\n.bia-item-data {\n  float: left;\n  width: 130px;\n}\n\n.bia-title {\n  line-height: 19px;\n  font-size: 13px;\n  max-height: 60px;\n  overflow: hidden;\n}\n\n.bia-link:link {\n  text-decoration: none;\n  font-family: Arial, Verdana, Helvetica, sans-serif;\n}\n\n.bia-link:visited {\n  text-decoration: none;\n  color: #004B91;\n}\n\n.bia-price-nav {\n  margin-top: -4px;\n  color: #800;\n  font-size: 12px;\n  vertical-align: bottom;\n}\n\n.bia-price-yorr {\n    margin-top: -8px;\n    color: #800;\n    font-size: 12px;\n    vertical-align: bottom;\n}\n\n.bia-price {\n  color: #800;\n  font-size: 12px;\n  vertical-align: bottom;\n}\n\n.bia-vpc-t1{\n  color: #008a00;\n  font-size: 12px;\n  font-weight: bold;\n}\n\n.bia-vpc-t2{\n  color: #008a00;\n  font-size: 12px;\n}\n\n.bia-vpc-t3{\n  font-size: 12px;\n  line-height: 20px;\n}\n\n.bia-vpc-t3-badge{\n  color: #ffffff;\n  background-color: #e47911;\n  font-weight: normal;\n\n}\n\n.bia-vpc-t3-badge::before{\n  border-bottom: 10px solid #e47911;\n}\n\n.bia-vpc-t3-badge:after{\n  border-top: 10px solid #e47911;\n}\n\n.bia-ppu {\n  color: #800;\n  font-size: 10px;\n}\n\n.bia-prime-badge {\n  border: 0;\n  vertical-align: middle;\n}\n\n.bia-cart-action {\n  display: none;\n}\n\n.bia-cart-msg {\n  display: block;\n  font-family: Arial, Verdana, Helvetica, sans-serif;\n  line-height: 19px;\n}\n\n.bia-cart-icon {\n  background-image:\n      url(\"https://images-na.ssl-images-amazon.com/images/G/01/Recommendations/MissionExperience/BIA/bia-atc-confirm-icon._CB485946458_.png\");\n  display: inline-block;\n  width: 14px;\n  height: 13px;\n  top: 3px;\n  line-height: 19px;\n  position: relative;\n  vertical-align: top;\n}\n\n.bia-cart-success {\n  color: #090!important;\n  display: inline-block;\n  margin: 0;\n  font-size: 13px;\n  font-style: normal;\n  font-weight: bold;\n  font-family: Arial, Verdana, Helvetica, sans-serif;\n}\n\n.bia-cart-title {\n  margin-bottom: 3px;\n}\n\n.bia-cart-form {\n  margin: 0px;\n}\n\n.bia-inline-cart-form {\n  margin: 0px;\n}\n\n.bia-cart-submit {\n  cursor: inherit;\n  left: 0;\n  top: 0;\n  line-height: 19px;\n  height: 100%;\n  width: 100%;\n  padding: 1px 6px 1px 6px;\n  position: absolute;\n  opacity: 0.01;\n  overflow: visible;\n  filter: alpha(opacity=1);\n  z-index: 20;\n}\n\n.bia-link-caret {\n  color: #e47911;\n}\n\n" }} />
               <div style={{ display: 'none' }}>
+
                 <div id="nav-prime-menu" className="nav-empty nav-flyout-content nav-ajax-prime-menu">
                   <div className="nav_dynamic" />
                   <div className="nav-ajax-message" />
@@ -692,7 +729,7 @@ class Login extends Component {
                   </div>
                 </div>
               </div>
-              
+
               <div id="sis_pixel_r2" aria-hidden="true" style={{ height: '1px', position: 'absolute', left: '-1000000px', top: '-1000000px' }}><iframe id="DAsis" src="./Your Orders_files/iu3.html" width={1} height={1} frameBorder={0} marginWidth={0} marginHeight={0} scrolling="no" /></div>
             </div>
           </div>

@@ -9,6 +9,7 @@
     "import-scripts": "^1.0.0",
     "jw-react-pagination": "^1.1.0",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.25.1",
     "primereact": "^4.2.0",
     "query-string": "^6.12.1",
     "react": "^16.9.0",
