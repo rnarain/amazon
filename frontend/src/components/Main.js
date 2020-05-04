@@ -22,6 +22,7 @@ import Footer from './LandingPage/Footer';
 import { Redirect } from 'react-router';
 import SellerInventory from './Seller/SellerInventory';
 import OrderDetailsPage from './Customer/OrderDetailsPage/OrderDetailsPage';
+import SellerProfile from './Seller/Profile/SellerProfile';
 
 //Create a Main Component
 class Main extends Component {
@@ -49,23 +50,21 @@ class Main extends Component {
                         <Route exact path="/product-detail/:id" component={ProductDetail} />
                         <Route exact path="/carthome" component={UserCart}/>
                         <Route exact path="/checkout/:totalcartvalue" component={Checkout} />
-                        <Route exact path="/seller/:name" component={SellerPage} />
+                        <Route exact path="/seller/profile" component={SellerProfile} />
+                        <Route exact path="/seller/name=:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
                         <Route exact path="/orders/" component={Orders}/>
                         <Route exact path="/sellerinventory/" component={SellerInventory}/>
                         <Route exact path="/orderdetails/" component={OrderDetailsPage}/>
 
-                        
+                       
                         <Route exact path="/checkout" component={Checkout} />
-                        {/* <Route exact path="/seller/:name" component={SellerPage} />
-                        <Route exact path="/customer/profile" component={CustomerProfile} />
+                        {/*
                         <Route exact path="/orders/" component={Orders}/>
                         <Route exact path="/seller" component={SellerPage} /> */}
                         <Route exact path="/wallet" component={Wallet} />
                         <Route exact path="/address" component={Address} />
-
-
-
+                        
                         {footer}
                     </Fragment>
                 }

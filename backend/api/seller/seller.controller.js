@@ -1,5 +1,6 @@
 const {
-    getSellerDetails, getSellerProducts
+    getSellerDetails, getSellerProducts,
+    updateProfile
   } = require("./seller.service");
   
   const jwt = require('jsonwebtoken');
@@ -36,7 +37,21 @@ const {
           data: results
         });
       });
-    }
+    },
+
+    updateProfile: (req, res) => {
+      var body = req.body
+      updateProfile(body, (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        return res.json({
+          success: 1,
+          data: results
+        });
+      });
+    },
 
 
   
