@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import backendServer from "../../../webConfig";
 import { connect } from 'react-redux';
-import backendServer from '../../../../webConfig'
+import { backendServer } from '../../../../webConfig'
 import queryString from 'query-string'
-import {StarRating } from '../../../../helperFunctions/ratings'
+import { StarRating } from '../../../../helperFunctions/ratings'
 
 
 
@@ -68,7 +68,7 @@ class ProductSearch extends Component {
         let products = this.state.filteredProducts.map(product => {
             let avgRating = product.ratings.reduce((r, c) => r + c.stars, 0) / product.ratings.length;
             //debugger
-            
+
             return (
                 <div className="box-part col-sm-3">
                     <div className="card-body">
@@ -78,7 +78,7 @@ class ProductSearch extends Component {
                         </div>
                         <p className="product-heading">{product.name}</p>
                         <div className="star-rating">
-                            {<StarRating ratings={avgRating}/>}
+                            {<StarRating ratings={avgRating} />}
                             <p className="product-heading">${product.price}</p>
                         </div>
                     </div>
@@ -110,11 +110,11 @@ class ProductSearch extends Component {
                                     <div className="margin20">
                                         <h4>Ratings</h4>
                                         <ul>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(5)}>{<StarRating ratings={5}/>} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(4)}>{<StarRating ratings={4}/>} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(3)}>{<StarRating ratings={3}/>} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(2)}>{<StarRating ratings={2}/>} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(1)}>{<StarRating ratings={1}/>} </div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(5)}>{<StarRating ratings={5} />} </div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(4)}>{<StarRating ratings={4} />} </div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(3)}>{<StarRating ratings={3} />} </div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(2)}>{<StarRating ratings={2} />} </div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(1)}>{<StarRating ratings={1} />} </div></li>
                                         </ul>
                                     </div>
                                     <div className="margin20">

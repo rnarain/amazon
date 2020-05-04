@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
 import { Redirect } from 'react-router';
-import backendServer from '../../webConfig'
+import {backendServer} from '../../webConfig'
 //import importScripts from 'import-scripts'
 import logo from './Amazon Registration_files/amazonlogo.png';
 

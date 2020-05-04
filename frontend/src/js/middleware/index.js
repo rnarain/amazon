@@ -1,7 +1,7 @@
 import {GET_STUDENT_DATA, CHANGE_NAME , CHANGE_PROFILE_PIC,CHANGE_OBJECTIVE ,CHANGE_CONTACT_INFORMATION ,CHANGE_EDUCATION,CHANGE_EXPERIENCE,
   CHANGE_SKILLS , DELETE_EXPERIENCE , DELETE_EDUCATION } from "../constants/action-types";
 import axios from 'axios';
-import backendServer from '../../webConfig'
+import {backendServer} from '../../webConfig'
 
 
 export  function handshakeMiddleWare({ dispatch }) {

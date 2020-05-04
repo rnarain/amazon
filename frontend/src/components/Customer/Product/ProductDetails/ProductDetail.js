@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import backendServer from '../../../../webConfig'
+import {backendServer} from '../../../../webConfig'
 import axios from 'axios';
 import { StarRating } from '../../../../helperFunctions/ratings';
 import ReviewPopUp from './ReviewPopUp';
@@ -28,7 +28,7 @@ class ProductDetail extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${backendServer}/product/getProductDetails`, { params: { _id: '5e967879668b061d392f4b7d' } })
+        axios.get(`${backendServer}/product/getProductDetails`, { params: { _id: this.props.match.params.id } })
             .then(response => {
                 var response_data = response.data.data
                 console.log('YEAAHHH', response_data.images)

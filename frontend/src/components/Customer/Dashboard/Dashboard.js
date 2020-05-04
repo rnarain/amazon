@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import backendServer from "../../../webConfig";
 import { connect } from 'react-redux';
-import backendServer from '../../../webConfig'
+import {backendServer} from '../../../webConfig'
 
 
 

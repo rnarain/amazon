@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
 import axios from 'axios';
-import backendServer from '../../webConfig'
+import {backendServer} from '../../webConfig'
 
 //create the Navbar Component
 class Navbar extends Component {
