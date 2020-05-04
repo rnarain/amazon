@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import backendServer from '../../../webConfig'
+import {backendServer} from '../../../webConfig'
 
 //create the Navbar Component
 class ListSellers extends Component {
