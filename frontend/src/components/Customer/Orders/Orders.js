@@ -422,13 +422,7 @@ class Login extends Component {
                 </span>
                     </span></li>
                   </ul>
-                </div>
-                <div id="yourOrdersBannersContainer">
-                  <div id="partial-order-fail-alert" className="a-box a-alert a-alert-warning banner-hidden-by-default a-spacing-large"><div className="a-box-inner a-alert-container"><h4 className="a-alert-heading">There's a problem displaying some of your orders right now.</h4><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                    If you don't see the order you're looking for, try refreshing this page, or click "View order details" for that order.
-              </div></div></div>
-                </div>
-                <div className="a-row">
+                </div> <div className="a-row">
                   <div className="a-column a-span6">
                     <h1 className="a-spacing-medium">
                       Your Orders
@@ -488,12 +482,8 @@ class Login extends Component {
 
                 </div>
                 <div id="ordersContainer">
-                  <div id="attn-required-alert" className="a-box a-alert a-alert-error banner-hidden-by-default a-spacing-large a-spacing-top-large" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><h4 className="a-alert-heading">Your attention is required to continue processing one or more orders on this page.</h4><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                    Please <a className="a-link-normal" href="https://www.amazon.com/gp/css/order-history?ref_=nav_AccountFlyout_orders#attn-required-order">see below</a> to address the issue.
-              </div></div></div>
-                  <div id="teen-attn-required-alert" className="a-box a-alert a-alert-info banner-hidden-by-default a-spacing-large a-spacing-top-large"><div className="a-box-inner a-alert-container"><h4 className="a-alert-heading">You have at least one order pending approval</h4><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                    Unapproved orders expire after 48 hours
-              </div></div></div>
+                  
+                    
                   {orderDetailsList}
                   <div className="a-row">
                     <div className="a-text-center pagination-full"><ul className="a-pagination"><li className="a-disabled">←<span className="a-letter-space" /><span className="a-letter-space" />Previous</li>
