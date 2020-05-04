@@ -14,13 +14,17 @@ ul{
    list-style-type: none !important;
  }
 
- /*h1, h2, h3, h4 {
+a.active , a.visited ,  a:link{
+   background-color: transparent !important;
+ }
+
+ h1, h2, h3, h4 {
   font-family: "Ubuntu" !important;
 
- }*/
+ }
 
 .amazon-body{
-  min-height:425px;
+  min-height:600px;
   margin: 0px 0px !important;
 }
 
@@ -131,9 +135,10 @@ li{
 .box-part{
   border-radius:0;
   padding:20px 20px;
-  margin:0px 0px;
-  height:320px
-  /* box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); */
+  margin:10px 10px;
+  height:250px;
+  box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); 
+  overflow: auto;
 
 }
 
@@ -166,6 +171,19 @@ li{
   transition: all .2s;
   border-color: #337ab7;
 }
+.btn-outline-success {
+  background-color: transparent;
+  color: green !important;
+  transition: all .2s;
+  border-color: green;
+}
+
+.btn-outline-danger {
+  background-color: transparent;
+  color: inherit;
+  transition: all .2s;
+  border-color: red;
+}
 
 .btn-outline-colored {
   color: #fff !important;
@@ -188,6 +206,9 @@ li{
   border-right: 1px solid #e0e0e0;
 }
 
+.border-right{
+  border-right: 1px solid #e0e0e0;
+}
 .greyText{
   color :  rgba(0,0,0,.56);
 }
@@ -261,11 +282,18 @@ li{
 }
 
 .marginbottom20{
-  margin-bottom:20px;
+  margin-bottom:20px ;
 }
 
+.marginUpBot10{
+  margin:10px 0px !important;
+}
 .marginUpBot20{
   margin:20px 0px !important;
+}
+
+.marginLeft10{
+  margin-left:10px !important;
 }
 
 .edit-button{
@@ -704,4 +732,11 @@ left:65%
 .right-menu li{
   font-size:12px;
   line-height: 1;
+}
+
+.big-heading{
+  font-size:100px;
+  font-weight: 600;
+  color:orange;
+  margin-top:60px
 }

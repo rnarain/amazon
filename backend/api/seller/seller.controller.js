@@ -1,5 +1,5 @@
 const {
-    getSellerDetails, getSellerProducts,
+    getSellerDetails, getSellerProducts , getAllSellers,
     updateProfile
   } = require("./seller.service");
   
@@ -13,6 +13,19 @@ const {
       var queryObject = req.query;
       console.log('IN controller ', queryObject);
       getSellerDetails(queryObject, (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        return res.json({
+          success: 1,
+          data: results
+        });
+      });
+    },
+
+    getAllSellers: (req, res) => {
+      getAllSellers((err, results) => {
         if (err) {
           console.log(err);
           return;

@@ -1,7 +1,7 @@
 const {
   searchProduct, getProductDetails,
   addReview, insertProducts,
-  searchProductWithKafka, searchProductWithRedis
+  searchProductWithKafka, searchProductWithRedis , getProductsByCategoryName
 } = require("./product.service");
 
 const jwt = require('jsonwebtoken');
@@ -70,7 +70,6 @@ module.exports = {
 
   searchProductWithKafka: (req, res) => {
     var queryObject = url.parse(req.url, true).query;
-    console.log(queryObject);
     searchProductWithKafka(queryObject, (err, results) => {
       if (err) {
         console.log(err);
@@ -85,6 +84,34 @@ module.exports = {
   getProductDetails: (req, res) => {
     body = req.query
     getProductDetails(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
+
+  getProductsByCategoryName: (req, res) => {
+    const name = req.params.name;
+    getProductsByCategoryName(name, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
+
+  getProductsByCategoryName: (req, res) => {
+    const name = req.params.name;
+    getProductsByCategoryName(name, (err, results) => {
       if (err) {
         console.log(err);
         return;

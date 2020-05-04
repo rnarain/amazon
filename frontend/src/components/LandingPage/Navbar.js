@@ -31,25 +31,33 @@ class Navbar extends Component {
         axios.get(`${backendServer}/user/getUserDetails/${localStorage.getItem('id')}`)
             .then(response => {
                 let data = response.data.data;
+                if(localStorage.getItem('type')==='Customer'){
+                    this.setState({
+                        addresses: data.addresses,
+                        cards: data.cards,
+                        cart: data.cart,
+                    })
+                }
                 this.setState({
-                    addresses: data.addresses,
-                    cards: data.cards,
-                    cart: data.cart,
-                    name: data.name,
+                   name: data.name
                 })
+               
             }
             ).catch(ex => {
                 alert(ex);
             });
-            axios.get(`${backendServer}/category/getAllCategories`)
-        .then(response => {
-                this.setState({
-                    categories : response.data.data
-                })
+            if(localStorage.getItem('type')==='Customer'){
+                axios.get(`${backendServer}/category/getAllCategories`)
+                .then(response => {
+                        this.setState({
+                            categories : response.data.data
+                        })
+                    }
+                ).catch( ex =>{
+                   alert(ex);
+                });
             }
-        ).catch( ex =>{
-           alert(ex);
-        });
+            
     }
 
     componeneDidUpdate() {
@@ -84,12 +92,11 @@ class Navbar extends Component {
     render() {
         let navLinks = null;
         let navLinkBottom = null;
-        if (localStorage.getItem('type') == 'Customer') {
-            let profileLink = "/company/profile/" + localStorage.getItem('id');
+        if (localStorage.getItem('type') === 'Customer') {
             navLinks = (
                 <ul className="nav navbar-nav navbar-right">
                     <li><Link to="/product-search">{this.state.name}</Link></li>
-                    <li><Link to="/orders">Orders</Link></li>
+                    <li><a onClick={this.handleLogout}>Logout</a></li>
                     <li><Link to="/carthome"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">{this.state.cart.length}</span></Link></li>
                 </ul>
             );
@@ -103,7 +110,7 @@ class Navbar extends Component {
                     <ul className="nav navbar-nav xshop">
                         <li><Link to="/company/postings">Your Reviews</Link></li>
                         <li><Link to="">New Releases</Link></li>
-                        <li><Link to="/company/messages">Link 1</Link></li>
+                        <li><Link to="/orders">Orders</Link></li>
                         <li><Link to="/company/students">Link 2</Link></li>
                         <li><Link to="/company/events">Link 3</Link></li>
 
@@ -113,7 +120,27 @@ class Navbar extends Component {
                 </div>
             );
         }
-        else {
+        else if(localStorage.getItem('type')==='Admin'){
+            navLinks = (
+                <ul className="nav navbar-nav navbar-right">
+                    <li><Link to="/product-search">{this.state.name}</Link></li>
+                    <li><a onClick={this.handleLogout}>Logout</a></li>
+                </ul>
+            );
+
+            navLinkBottom = (
+                <div className="container-fluid">
+                <div className="col-sm-offset-2 col-sm-7">
+                    <ul className="nav navbar-nav xshop">
+                        <li><Link to="/admin-dashboard">Dashboard</Link></li>
+                        <li><Link to="/admin-category">categories</Link></li>
+                        <li><Link to="/list-sellers">Sellers</Link></li>
+                        <li><Link to="#">Orders</Link></li>
+                    </ul>
+                </div>
+                <div className="col-sm-3">&nbsp;</div>
+                </div>
+            )
 
         }
 

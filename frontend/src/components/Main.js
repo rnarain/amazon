@@ -12,6 +12,17 @@ import SignUp from './Signup/Signup';
 import Orders from './Customer/Orders/Orders';
 import Wallet from './Payment/Wallet';
 import Address from './Address/Address';
+import AdminCategories from './Admin/Category/ListCategories';
+import AdminProducts from './Admin/Category/ListProducts';
+import ListSellers from './Admin/Sellers/ListSellers';
+import ListProductsBySellerName from './Admin/Sellers/ListProductsBySellerName';
+import AdminDashboard from './Admin/Dashboard/Dashboard';
+
+
+
+
+
+
 
 
 
@@ -64,7 +75,14 @@ class Main extends Component {
                         <Route exact path="/seller" component={SellerPage} /> */}
                         <Route exact path="/wallet" component={Wallet} />
                         <Route exact path="/address" component={Address} />
-                        
+
+                        <Route path="/admin-category" component={AdminCategories}/>
+                        <Route path="/admin-product/:name" component={AdminProducts}/>
+                        <Route path="/list-sellers" component={ListSellers}/>
+                        <Route path="/list-seller-products/:name" component={ListProductsBySellerName}/>
+                        <Route path="/admin-dashboard" component={AdminDashboard}/>
+
+
                         {footer}
                     </Fragment>
                 }
