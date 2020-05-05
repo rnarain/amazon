@@ -27,15 +27,13 @@ const jwt_decode = require('jwt-decode');
 
 const customStyles = {
   ul: {
-      display:'block',
+      
       backgroundColor: 'red'
   },
   li: {
-       display:'block',
       border: '1px solid green'
   },
   a: {
-      display:'block',
       color: 'blue'
   }
 };
@@ -460,13 +458,12 @@ showTrackingDetails = (e) => {
                       </span>
                           </div>
                           <div className="a-row">
-                            <span data-isstatuswithwarning={0} data-yodeliveryestimate={eachProduct.deliverystatus}data-yoshortstatuscode="DELIVERED" data-yostatusstring className="js-shipment-info aok-hidden">
-                            </span>
+                         
                           </div>
                         </div>
                         <div className="actions" style={{ width: '220px' }}>
                           <div className="a-row">
-                          {eachProduct.deliverystatus != 'Cancelled' &&
+                          {eachProduct.deliverystatus != 'Delivered'  && eachProduct.deliverystatus != 'Cancelled' &&
                             <div className="a-button-stack">
                               <span className="a-declarative" data-action="set-shipment-info-cookies" data-set-shipment-info-cookies="{}">
                                 <span className="a-button a-button-base track-package-button" id="a-autoid-3"><span className="a-button-inner">
@@ -692,7 +689,6 @@ showTrackingDetails = (e) => {
                   </div>
 
                 </div>
-                <JwPagination pageSize="5" items={this.state.orderList} onChangePage={this.onChangePage} styles={customStyles}/>
                 
                 <div id="ordersContainer">
 
@@ -700,7 +696,7 @@ showTrackingDetails = (e) => {
                   {orderDetailsList}
                   
                   <div style={{ display: 'block' }}>
-                  <JwPagination pageSize="5" items={this.state.orderList} onChangePage={this.onChangePage} styles={customStyles}/>
+                  <JwPagination pageSize="5" items={this.state.orderList} onChangePage={this.onChangePage} />
                   </div>
 
                 
