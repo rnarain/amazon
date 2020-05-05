@@ -69,7 +69,7 @@ class SellerPage extends Component {
 
                         <br />
 
-                        <div className="col-md-5"></div>
+                        {/* <div className="col-md-5"></div> */}
                         <img src={frontendServer + "/images/" + this.state.profile_pic} style={{ display: 'inline-block', width: '100px', height:'auto', float: 'left' }} />
                         <div style={{ display: 'block', fontFamily: 'Amazon Ember' }}>
                             <h2> {this.state.name}  <br /> </h2>
