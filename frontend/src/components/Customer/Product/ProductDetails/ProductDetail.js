@@ -39,10 +39,10 @@ class ProductDetail extends Component {
                     seller_id: response_data.seller_id,
                     seller_name: response_data.seller_name,
                     view_count: response_data.view_count,
-                    images: response_data.images,
+                    images: response_data.images.length > 0 ? response_data.images : this.state.images.concat({file_name : "/images/no-image.jpg"}),
                     ratings: response_data.ratings,
                     price: response_data.price,
-                    selected_image: response_data.images[0].file_name
+                    selected_image: response_data.images.length > 0 ? response_data.images[0].file_name : "/images/no-image.jpg"
                 })
             });
 
@@ -50,7 +50,7 @@ class ProductDetail extends Component {
 
     showImages = (e) => {
         renderedOutput = this.state.images.map(item =>
-
+            
             <div class="images_preview" style={{ marginBottom: '15px' }}>
                 <img src={item.file_name} style={{ width: '80px' }} alt="im" onClick={(e) => { this.setState({ selected_image: item.file_name }) }} />
                 {/* <div className="row"> " " </div> */}

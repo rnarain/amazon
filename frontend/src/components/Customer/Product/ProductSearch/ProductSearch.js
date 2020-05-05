@@ -4,9 +4,10 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { backendServer } from '../../../../webConfig'
 import queryString from 'query-string'
-import {StarRating } from '../../../../helperFunctions/ratings'
+import {getRatings } from '../../../../helperFunctions/ratingsStatic'
 import JwPagination from 'jw-react-pagination';
 import {dynamicSort} from '../../../../helperFunctions/dynamicSort'
+import { paginate, pages } from '../../../../helperFunctions/paginate'
 
 
 
@@ -23,7 +24,6 @@ class ProductSearch extends Component {
             filteredProducts: [],
             paginatedProducts: []
         }
-        this.onChangePage = this.onChangePage.bind(this);
     }
     //Call the Will Mount to set the auth Flag to false
     componentDidMount() {
@@ -40,8 +40,9 @@ class ProductSearch extends Component {
                     this.setState({
                         products: response.data.data,
                         params: name,
-                        filteredProducts: response.data.data
-                        // pages: pages(response.data.data, 10)
+                        filteredProducts: response.data.data,
+                        paginatedProducts : paginate(response.data.data,1, 15),
+                        pages: pages(response.data.data, 15)
                     })
                 }
                 ).catch(ex => {
@@ -54,8 +55,10 @@ class ProductSearch extends Component {
     ratingFilter = (e) => {
         this.setState({
             filteredProducts: this.state.products.filter((product) => {
-                return ((product.ratings.reduce((r, c) => r + c.stars, 0) / product.ratings.length) == e);
-            })
+                return (Math.ceil((product.ratings.reduce((r, c) => r + c.stars, 0) / product.ratings.length)) == e);
+            }),
+            pages: pages(this.state.filteredProducts, 15),
+            paginatedProducts : paginate(this.state.filteredProducts,1, 15),
         })
     }
 
@@ -63,7 +66,10 @@ class ProductSearch extends Component {
         this.setState({
             filteredProducts: this.state.products.filter((product) => {
                 return (product.price >= low && product.price <= high)
-            })
+            }),
+            pages: pages(this.state.filteredProducts, 15),
+            paginatedProducts : paginate(this.state.filteredProducts,1, 15),
+
         })
     }
 
@@ -78,42 +84,67 @@ class ProductSearch extends Component {
              })
                 break;
             case 2: 
-                    const avg = (arr) => arr.reduce((r,c) => r + c) / arr.length
+                    const avg = (arr) => Math.ceil(arr.reduce((r,c) => r + c) / arr.length)
                     this.setState({
-                        filteredProducts :this.state.products.sort((a,b) => (a.length > 0 ? avg(a.ratings) : 0 ) - (b.length > 0 ?avg(b.ratings) : 0 ))
+                        filteredProducts :this.state.products.sort((a,b) => (a.ratings.length > 0 ? avg(a.ratings) : 0 ) - (b.ratings.length > 0 ?avg(b.ratings) : 0 ) * -1)
                     })
                 break;
         }
+        this.setState({
+            paginatedProducts : paginate(this.state.filteredProducts,1, 15),
+            pages: pages(this.state.filteredProducts, 15),
+
+            })
     }
-    onChangePage(paginatedProducts) {
-        // update local state with new page of items
-        this.setState({ paginatedProducts });
+    paginatinon = (e) => {
+        this.setState({
+            paginatedProducts: paginate(this.state.filteredProducts,e, 15)
+        })
     }
 
     render() {
-        let products = this.state.filteredProducts.map(product => {
-            let avgRating = product.ratings.reduce((r, c) => r + c.stars, 0) / product.ratings.length;
-            let productUrl= "/product-detail/" + product._id
-            return (
-                <div className="box-part col-sm-3" key={product._id}>
-                    <div className="card-body">
-                        <div className="product-image">
-                            <img className="img-fluid" src={product.images.length > 0 ? product.images[0].file_name : ""} />
-
-                        </div>
-                        <a className="product-heading" href={productUrl}>{product.name}</a>
-                        <div className="star-rating">
-                            {<StarRating ratings={avgRating} />}
-                            <p className="product-heading">${product.price}</p>
+        let products = null;
+        if(this.state.paginatedProducts.length  >0){
+            products = this.state.paginatedProducts.map(product => {
+                let avgRating = Math.ceil(product.ratings.reduce((r, c) => r + c.stars, 0) / product.ratings.length);
+                let productUrl= "/product-detail/" + product._id
+                return (
+                    <div className="box-part col-sm-3" key={product._id}>
+                        <div className="card-body">
+                            <div className="product-image">
+                                <img className="img-fluid" src={product.images.length > 0 ? product.images[0].file_name : "images/no-image.jpg"} />
+    
+                            </div>
+                            <a className="product-heading" href={productUrl}>{product.name}</a>
+                            <div className="star-rating">
+                                {getRatings(avgRating)}
+                                <p className="product-heading">${product.price}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )
-        })
+                )
+            })
+        }
+        else{
+            products =  <div className="box-part" >No products found for given parameters</div>
+        }
+            
+
+        let links = [];
+        if (this.state.pages > 0) {
+            for (let i = 1; i <= this.state.pages; i++) {
+                links.push(<li className="page-item" key={i}><a className="page-link" onClick={() => { this.paginatinon(i) }}>
+                    {i}
+                </a></li>
+                )
+            }
+        }
+
+        let navMessage= this.state.params ? `Showing search results for ${this.state.params}` : "Nothing to search"
         return (
             <div className="amazon-body">
                 <div className="sorting-bar container-fluid">
-                    <div className="col-sm-8">Showing search results for "<b>{this.state.params}</b>" </div>
+                    <div className="col-sm-8">{navMessage}</div>
                     <div className="col-sm-4 ">
                         <div className="alignRight">
                             <button type="button" className="btn btn-default dropdown-toggle small-button" data-toggle="dropdown">
@@ -135,11 +166,11 @@ class ProductSearch extends Component {
                                     <div className="margin20">
                                         <h4>Ratings</h4>
                                         <ul>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(5)}>{<StarRating ratings={5} />} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(4)}>{<StarRating ratings={4} />} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(3)}>{<StarRating ratings={3} />} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(2)}>{<StarRating ratings={2} />} </div></li>
-                                            <li><div className="pointer" onClick={() => this.ratingFilter(1)}>{<StarRating ratings={1} />} </div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(5)}>{getRatings(5)}</div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(4)}>{getRatings(4)}</div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(3)}>{getRatings(3)}</div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(2)}>{getRatings(2)}</div></li>
+                                            <li><div className="pointer" onClick={() => this.ratingFilter(1)}>{getRatings(1)}</div></li>
                                         </ul>
                                     </div>
                                     <div className="margin20">
@@ -157,11 +188,13 @@ class ProductSearch extends Component {
                         </div>
                     </div>
                     <div className="card col-sm-10 ">
-                        <div>
+                        <div className="row">
                         {products}
                         </div>
-                        <div className="row text-center marginbottom20">
-                        {/* <JwPagination items={this.state.filteredProducts} onChangePage={this.onChangePage} pageSize="20" /> */}
+                        <div className="row marginUpBot20">
+                        <ul className="pagination marginUpBot20">
+                                      {links}
+                        </ul>
                         </div>
                     </div>
                 </div>
