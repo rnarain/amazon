@@ -4,7 +4,7 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal'
 import { Link } from 'react-router-dom';
 import {Button,Form} from 'react-bootstrap';
-import {backendServer} from "../../webConfig";
+import {backendServer, frontendServer} from "../../webConfig";
 import './CartStyles/cart.css'
 
 //Define a Login Component
@@ -45,6 +45,18 @@ class UserCart extends Component {
       cartvalues: [],
       savedcartvalues: []
     })
+  }
+
+  getTotalValue = (cartvalues) => {
+    var total_value = 0;
+    for (let i = 0; i < cartvalues.length; i++){
+      total_value = total_value + (cartvalues[i].product_count * cartvalues[i].price)
+    }
+    console.log(total_value);
+    this.setState({
+      totalcartvalue: total_value
+    })
+    return total_value;
   }
 
   componentDidMount() {
@@ -89,11 +101,11 @@ class UserCart extends Component {
         }
       }
       }
-      console.log(this.state.cartvalues)
+      console.log('cartvalues', this.state.cartvalues)
       console.log(this.state.savedcartvalues)
       console.log(this.state.userdetails)
       console.log(this.state.totalcartvalue)
-
+      console.log('Total', this.getTotalValue(this.state.cartvalues));
     });
   }
 
@@ -214,6 +226,7 @@ class UserCart extends Component {
 
   handleproductcount = async (e, cart) => {
     // console.log("in handleproduct count",e)
+    
     var updatedvalue = e;
     console.log(updatedvalue)
     console.log("cart", cart)
@@ -239,8 +252,9 @@ class UserCart extends Component {
       console.log(data)
     });
     console.log("totalcartvalue", this.state.totalcartvalue)
+    
     this.getallitems();
-
+     
     this.forceUpdate(this.render)
   }
 
@@ -370,7 +384,7 @@ this.setState({
                     <div className="a-fixed-left-grid-col a-col-right" style={{ paddingLeft: '0%', float: 'left' }}>
                       <ul className="a-unordered-list a-nostyle a-vertical a-spacing-mini">
                         <li><span className="a-list-item">
-                          <a className="a-link-normal sc-product-link" target="_self" rel="noopener" href="https://www.amazon.com/gp/product/B07PF1Y28C/ref=ox_sc_act_title_1?smid=ATVPDKIKX0DER&psc=1">
+                          <a className="a-link-normal sc-product-link" target="_self" rel="noopener" href={frontendServer+"/product-detail/"+cart.product_id}>
                             <span className="a-size-medium sc-product-title">
                               {cart.product_name}
                             </span>
@@ -577,7 +591,7 @@ this.setState({
                   </span>
                         <span id="sc-subtotal-amount-activecart" className="a-color-price sc-price-container a-text-bold">
                           <span className="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
-                            ${this.state.totalcartvalue}
+                          ${this.state.totalcartvalue}
                           </span>
                         </span>
                       </div>
