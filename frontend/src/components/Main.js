@@ -48,14 +48,11 @@ class Main extends Component {
                         <Route exact path="/product-search" component={ProductSearch} />
                         <Route exact path="/product-detail/:id" component={ProductDetail} />
                         <Route exact path="/carthome" component={UserCart}/>
-                        <Route exact path="/checkout/:totalcartvalue" component={Checkout} />
                         <Route exact path="/seller/:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
                         <Route exact path="/orders/" component={Orders}/>
                         <Route exact path="/sellerinventory/" component={SellerInventory}/>
-                        <Route exact path="/orderdetails/" component={OrderDetailsPage}/>
-
-                        
+                        <Route exact path="/orderdetails/" component={OrderDetailsPage}/>                       
                         <Route exact path="/checkout" component={Checkout} />
                         {/* <Route exact path="/seller/:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
