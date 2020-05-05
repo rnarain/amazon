@@ -41,7 +41,8 @@ module.exports = {
           for(var eachOrderId of orderObj){
             productList.push(eachOrderId.productid);
           }
-        
+          
+          console.log('productlist',productList);
           //Get mongo data
           productModel.find({'_id': { $in: productList }} , (error, productResult) => {
             var orderDetailsMap = new Map();

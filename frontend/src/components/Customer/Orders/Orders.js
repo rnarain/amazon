@@ -24,6 +24,22 @@ import './Your Orders_files/01Ua3QdLRGL.css';
 
 const jwt_decode = require('jwt-decode');
 
+
+const customStyles = {
+  ul: {
+      display:'block',
+      backgroundColor: 'red'
+  },
+  li: {
+       display:'block',
+      border: '1px solid green'
+  },
+  a: {
+      display:'block',
+      color: 'blue'
+  }
+};
+
 //Define a Login Component
 class Login extends Component {
   //call the constructor method
@@ -43,7 +59,8 @@ class Login extends Component {
       cancelledOrdersClassname: "",
       openOrdersClassname: "",
       showModal :false,
-      trackingData:[]
+      trackingData:[],
+      pageOfItems:[]
     }
     //Bind the handlers to this className
     this.emailChangeHandler = this.emailChangeHandler.bind(this);
@@ -52,6 +69,8 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.showTrackingDetails = this.showTrackingDetails.bind(this);
+    this.handleModal = this.handleModal.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
@@ -125,6 +144,18 @@ class Login extends Component {
 
 } 
 
+//Pagination
+onChangePage(pageOfItems) {
+  // update local state with new page of items
+  this.setState({ pageOfItems });
+}
+
+handleModal=(e) =>{
+  this.setState({
+    showModal : false
+  });
+}
+
 showTrackingDetails = (e) => {
   var data = {
     id: e.target.id
@@ -137,7 +168,7 @@ showTrackingDetails = (e) => {
       console.log('response',response);
       this.setState({
         showModal : true,
-        trackingData : response
+        trackingData : response.data
       });
       
     }
@@ -284,7 +315,12 @@ showTrackingDetails = (e) => {
         
         <div id="a-popover-lgtbox" className="a-declarative" data-action="a-popover-floating-close" style={{zIndex: 1008, opacity: '0.75', display: 'block'}} />
 
-          <div className="a-modal-scroller a-declarative" data-action="a-popover-floating-close" style={{paddingBottom: '1px', visibility: 'visible'}}><div className="a-popover a-popover-modal a-declarative" data-action="a-popover-a11y" aria-modal="true" role="dialog" id="a-popover-3" aria-hidden="false" style={{width: '600px', maxWidth: 'none', visibility: 'visible', position: 'relative', margin: '25.3px 0px 25.3px 340px', top: '0px', left: '0px', opacity: 1}}><span tabIndex={0} className="a-popover-start a-popover-a11y-offscreen" /><div className="a-popover-wrapper"><button data-action="a-popover-close" className=" a-button-close a-declarative a-button-top-right" aria-label="Close"><i className="a-icon a-icon-close" /></button><div className="a-popover-inner a-padding-none" id="a-popover-content-3" style={{height: 'auto', overflowY: 'auto'}}>
+          <div className="a-modal-scroller a-declarative" data-action="a-popover-floating-close" style={{paddingBottom: '1px', visibility: 'visible'}}><div className="a-popover a-popover-modal a-declarative" data-action="a-popover-a11y" aria-modal="true" role="dialog" id="a-popover-3" aria-hidden="false" style={{width: '600px', maxWidth: 'none', visibility: 'visible', position: 'relative', margin: '25.3px 0px 25.3px 340px', top: '0px', left: '0px', opacity: 1}}><span tabIndex={0} className="a-popover-start a-popover-a11y-offscreen" /><div className="a-popover-wrapper">
+          
+          <button onClick={this.handleModal} data-action="a-popover-close" className=" a-button-close a-declarative a-button-top-right" aria-label="Close">
+          <i className="a-icon a-icon-close" />
+          </button><div className="a-popover-inner a-padding-none" id="a-popover-content-3" style={{height: 'auto', overflowY: 'auto'}}>
+
         <div id="tracking-events-container" className="tracking-events-modal-inner">
           <div className="a-container">
             <div className="a-row tracking-event-carrier-header">
@@ -297,72 +333,30 @@ showTrackingDetails = (e) => {
                 Tracking ID: TBA016830574201
               </h4>
             </div>
-            <div className="a-row">
-              <div className="a-row tracking-event-date-header">
-                <span className="tracking-event-date">Saturday, April 25</span>
-              </div>
-              <div className="a-row a-spacing-large a-spacing-top-medium">
-                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
-                  <span className="tracking-event-time">1:12 PM</span>
-                  <span className="vertical-line" />
-                </div>
-                <div className="a-column a-span9 tracking-event-time-right a-span-last">
+
+
+            {this.state.trackingData.map((eachTrack, index) => {
+              var formatteddate = moment(eachTrack.updatedtime).format('MMMM Do YYYY, h:mm a');
+               return(
                   <div className="a-row">
-                    <span className="tracking-event-message">Delivered</span>
+                  <div className="a-row a-spacing-large a-spacing-top-medium">
+                    <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
+                      <span className="tracking-event-time">{formatteddate}</span>
+                      <span className="vertical-line" />
+                    </div>
+                    <div className="a-column a-span9 tracking-event-time-right a-span-last">
+                      <div className="a-row">
+                        <span className="tracking-event-message">{eachTrack.deliverystatus}</span>
+                      </div>
+                      
+                    </div>
                   </div>
-                  <div className="a-row">
-                    <span className="tracking-event-location">San Jose, US</span>
-                  </div>
+                  
                 </div>
-              </div>
-              <div className="a-row a-spacing-large a-spacing-top-medium">
-                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
-                  <span className="tracking-event-time">6:53 AM</span>
-                  <span className="vertical-line" />
-                </div>
-                <div className="a-column a-span9 tracking-event-time-right a-span-last">
-                  <div className="a-row">
-                    <span className="tracking-event-message">Out for delivery</span>
-                  </div>
-                  <div className="a-row">
-                    <span className="tracking-event-location">San Jose, US</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="a-row">
-              <div className="a-row tracking-event-date-header">
-                <span className="tracking-event-date">Friday, April 24</span>
-              </div>
-              <div className="a-row a-spacing-large a-spacing-top-medium">
-                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
-                  <span className="tracking-event-time">11:13 PM</span>
-                  <span className="vertical-line" />
-                </div>
-                <div className="a-column a-span9 tracking-event-time-right a-span-last">
-                  <div className="a-row">
-                    <span className="tracking-event-message">Package arrived at a carrier facility</span>
-                  </div>
-                  <div className="a-row">
-                    <span className="tracking-event-location">San Jose, US</span>
-                  </div>
-                </div>
-              </div>
-              <div className="a-row a-spacing-large a-spacing-top-medium">
-                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
-                  <span className="tracking-event-time" />
-                  <span className="vertical-line" />
-                </div>
-                <div className="a-column a-span9 tracking-event-time-right a-span-last">
-                  <div className="a-row">
-                    <span className="tracking-event-message">Package has shipped</span>
-                  </div>
-                  <div className="a-row">
-                    <span className="tracking-event-location" />
-                  </div>
-                </div>
-              </div>
-            </div>
+               )
+              })
+            }
+            
             <div className="a-row tracking-event-timezoneLabel">Times are shown in the local timezone.</div>
           </div>
         </div>
@@ -372,7 +366,7 @@ showTrackingDetails = (e) => {
       
     ;
 
-    let orderDetailsList = this.state.orderList.map(eachOrder => {
+    let orderDetailsList = this.state.pageOfItems.map(eachOrder => {
       var formattedOrderDate = moment(eachOrder.orderdate).format('MMMM Do YYYY');
 
 
@@ -472,7 +466,7 @@ showTrackingDetails = (e) => {
                         </div>
                         <div className="actions" style={{ width: '220px' }}>
                           <div className="a-row">
-                          {eachProduct.deliverystatus != 'Delivered'  && eachProduct.deliverystatus != 'Cancelled' &&
+                          {eachProduct.deliverystatus != 'Cancelled' &&
                             <div className="a-button-stack">
                               <span className="a-declarative" data-action="set-shipment-info-cookies" data-set-shipment-info-cookies="{}">
                                 <span className="a-button a-button-base track-package-button" id="a-autoid-3"><span className="a-button-inner">
@@ -698,16 +692,18 @@ showTrackingDetails = (e) => {
                   </div>
 
                 </div>
+                <JwPagination pageSize="5" items={this.state.orderList} onChangePage={this.onChangePage} styles={customStyles}/>
+                
                 <div id="ordersContainer">
 
 
                   {orderDetailsList}
-                  <div className="a-row">
-                    <div className="a-text-center pagination-full"><ul className="a-pagination"><li className="a-disabled">←<span className="a-letter-space" /><span className="a-letter-space" />Previous</li>
-                      <li className="a-selected"><a href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_1?ie=UTF8&orderFilter=months-6&search=&startIndex=0">1</a></li>
-                      <li className="a-normal"><a href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_2?ie=UTF8&orderFilter=months-6&search=&startIndex=10">2</a></li>
-                      <li className="a-last"><a href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_2?ie=UTF8&orderFilter=months-6&search=&startIndex=10">Next<span className="a-letter-space" /><span className="a-letter-space" />→</a></li></ul></div>
+                  
+                  <div style={{ display: 'block' }}>
+                  <JwPagination pageSize="5" items={this.state.orderList} onChangePage={this.onChangePage} styles={customStyles}/>
                   </div>
+
+                
                 </div>
               </div>
               <div id="rightRail" style={{}}>

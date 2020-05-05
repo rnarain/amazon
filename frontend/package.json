@@ -7,6 +7,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
     "import-scripts": "^1.0.0",
+    "jw-paginate": "^1.0.4",
     "jw-react-pagination": "^1.1.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.25.1",
