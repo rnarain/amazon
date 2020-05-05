@@ -1,10 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment } from 'react';
 import axios from 'axios';
-import { Form, Button, FormControl, FormGroup,Modal, Fade } from 'react-bootstrap';
+import { Form, FormControl, FormGroup,Modal, Fade } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import JwPagination from 'jw-react-pagination';
+import {Dialog,DialogContent,DialogTitle,Button}from "@material-ui/core";
+import { backendServer } from '../../webConfig';
 
-// import backendServer from "../../../webConfig";
+// import backendServer from "../../webConfig/webConfig";
 
+const customStyles = {
+  li : {
+      first : { 
+        display : 'none'
+      },
+      last : {
+        display : 'none'
+      }
+  }
+};
 
 class SellerInventory extends Component {
   constructor(props) {
@@ -13,14 +26,23 @@ class SellerInventory extends Component {
     //maintain the state required for this component
     this.state = {
       products: [],
-      showedit : false
+      showedit : false,
+      pageOfItems:[]        
+
     }
 
     this.getallsellerproducts = this.getallsellerproducts.bind(this);
     this.handleproductedit = this.handleproductedit.bind(this);
     this.deleteproduct = this.deleteproduct.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
+
   }
 
+  onChangePage(pageOfItems) {
+    // update local state with new page of items
+    this.setState({ pageOfItems });
+  }
+  
 
   componentDidMount() {
     this.getallsellerproducts()
@@ -36,7 +58,7 @@ class SellerInventory extends Component {
     })
     var id = localStorage.getItem("id");
     console.log("id is", id)
-    axios.get('http://localhost:3001/' + 'sellerinventory/getsellerproducts/').then(response => {
+    await axios.get(`${backendServer}/sellerinventory/getsellerproducts/`).then(response => {
       console.log(response.data)
       this.setState({
         products: response.data.data
@@ -60,50 +82,42 @@ this.setState({
     })
   }
 
-deleteproduct = () =>
+deleteproduct = async(value) =>
 {
-console.log("in delete product")
+  const data = {
+    id : value
+  }
+console.log("in delete product",value);
+await axios.post(`${backendServer}/sellerinventory/removeproduct/`,data).then(response => {
+  console.log(response.data)
+  this.getallsellerproducts()
+
+
+})
 }
+
+
   render() {
     let editform = null;
   let editform1=null;
 
     editform = (
-      <Modal show={this.state.showedit} style={{ opacity: 1, marginTop: '255px' }} onHide={this.handleClose}>
-      <Modal.Header >
-          <Modal.Title style={{ opacity: 1, marginTop: '85px' }}>Edit Product</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+      <Dialog open={this.state.showedit} onClose={this.handleClose}>
+
+          <DialogTitle>Edit Product</DialogTitle>
+  
+      <DialogContent>
       <div>
       <form>
-            <label for="name">
-            Product name :</label>
-            <input type="text" name="name" id="nam" defaultValue={this.state.name} onChange={this.onChange} class="form-control" required />
-         
-
-            <label for="date">Price : </label>
-            <input type="date" name="price" id="date" defaultValue={this.state.date} onChange={this.onChange} class="form-control" required />
-
-            <label for="description"> Product Category :</label>
-            <input type="text" name="description" id="description" value={this.state.description} onChange={this.onChange} class="form-control" required />
-            <label for="description"> Product Description : </label>
-            <input type="text" name="description" id="description" value={this.state.description} onChange={this.onChange} class="form-control" required />
-            
-            <br></br><label for="description"> Upload Images</label>
-            <input type="text" name="description" id="description" value={this.state.description} onChange={this.onChange} class="form-control" required />
-            <br></br>
-          </form>
-</div>
-      </Modal.Body>
-      <Modal.Footer>
-          <Button variant="secondary" onClick={this.closeproductedit}>
+          </form></div>
+      </DialogContent>
+          <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
               Close
     </Button>
-          <Button variant="primary" onClick={this.closeproductedit}>
+          <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
               Save Changes
     </Button>
-      </Modal.Footer>
-  </Modal>
+  </Dialog>
     )
       editform1 = (
       <Modal show={this.state.showedit} style={{backgroundColor:"none",opacity : 1}} animation={false}>
@@ -131,12 +145,12 @@ console.log("in delete product")
 
 
 
-    let newArr = this.state.products.map(item => {
+    let newArr = this.state.pageOfItems.map(item => {
       return (
         // <div>
-        <div class="card" style={{ display: 'inline-block', width: '32%', height: '40%',  border: '2px solid #d5dbdb', margin:"2px" }}>
+        <div class="card" style={{ display: 'inline-block', width: '30%', height: '40%',  border: '2px solid #d5dbdb', margin:"2px" }}>
           <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{ width: '100%', margin: '10px' }}>
-            <Link onClick={this.deleteproduct}><span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}></span></Link>
+            <Link onClick={ e => this.deleteproduct(item._id)}><span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}></span></Link>
    
 
             <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
@@ -188,10 +202,15 @@ console.log("in delete product")
 
 
           </tbody>
-          <tfoot>
+          <tfoot >
             <tr>
-              <th>Pagination</th>
-
+              <th> 
+              <div>
+               <Fragment>
+           <JwPagination align="center" items={this.state.products} onChangePage={this.onChangePage} styles={customStyles}/>
+           </Fragment>
+           </div>
+</th>
             </tr>
           </tfoot>
         </table>

@@ -37,7 +37,7 @@ class AddAddressMethod extends Component{
         errors.state = 
         validStateRegex.test(value)
           ? ''
-          : 'State is not in valid format, use two letter abbreviation';
+          : 'State is not in valid format, use correct state abbreviation';
         break;
       case 'zipcode':
         errors.zipcode =
@@ -110,12 +110,12 @@ class AddAddressMethod extends Component{
                           <label for="cardnumber">Country/Region</label>
                           <select class="form-control" name="country" onChange={this.handleChange}>
                             <option>United States</option>
-                            <option>United Kingdom</option>
+                            {/*<option>United Kingdom</option>
                             <option>Inida</option>
                             <option>Singapore</option>
                             <option>Australia</option>
                             <option>New Zealand</option>
-                            {/* <option>Connecticut</option>
+                             <option>Connecticut</option>
                             <option>Delaware</option>
                             <option>District of Columbia</option>
                             <option>Florida</option>
@@ -183,7 +183,7 @@ class AddAddressMethod extends Component{
                   </form>
               </Modal.Body>
               <Modal.Footer>
-                <input type="button" style={{background: '#f0c14b', borderColor: '#a88734' }} value="Use this Address" onClick = {this.handleSubmit}></input>
+                <input type="button" style={{background: '#f0c14b', borderColor: '#a88734' }} value="Add Address To Order" onClick = {this.handleSubmit}></input>
                 <input type="button" style={{background: '#f0c14b', borderColor: '#a88734' }} value="Close" onClick={this.handleClose}></input>
               </Modal.Footer>
           </Modal>

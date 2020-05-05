@@ -4,7 +4,7 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal'
 import { Link } from 'react-router-dom';
 import {Button,Form} from 'react-bootstrap';
-
+import {backendServer} from "../../webConfig";
 import './CartStyles/cart.css'
 
 //Define a Login Component
@@ -59,7 +59,7 @@ class UserCart extends Component {
     })
     var id = localStorage.getItem("id");
     console.log("id is", id)
-    axios.get('http://localhost:3001/' + 'cart/getallitemsincart/' + id).then(response => {
+    axios.get(`${backendServer}/cart/getallitemsincart/` + id).then(response => {
       console.log("calling get all items in cart")
       console.log(response.data);
       this.setState({
@@ -115,7 +115,7 @@ class UserCart extends Component {
       savedforlater: cart.saveforlater
     }
 
-    await axios.post('http://localhost:3001/' + 'cart/deleteproduct/', data).then(response => {
+    await axios.post(`${backendServer}/cart/deleteproduct/`, data).then(response => {
       console.log(data)
     });
 
@@ -134,7 +134,7 @@ class UserCart extends Component {
       saveforlater: false
     }
 
-    await axios.post('http://localhost:3001/' + 'cart/saveforlater/', data).then(response => {
+    await axios.post(`${backendServer}/cart/saveforlater/`, data).then(response => {
       console.log(data)
     });
 
@@ -154,7 +154,7 @@ class UserCart extends Component {
       saveforlater: true
     }
 
-    await axios.post('http://localhost:3001/' + 'cart/saveforlater/', data).then(response => {
+    await axios.post(`${backendServer}/cart/saveforlater/`, data).then(response => {
       console.log(data)
     });
 
@@ -201,7 +201,7 @@ class UserCart extends Component {
       isagift: e,
       giftmessage: ""
     }
-    await axios.post('http://localhost:3001/' + 'cart/updategiftorder/', data).then(response => {
+    await axios.post(`${backendServer}/cart/updategiftorder/`, data).then(response => {
       console.log(data)
       console.log(response.data)
 
@@ -235,7 +235,7 @@ class UserCart extends Component {
       total_cart_value: this.state.totalcartvalue
     }
     console.log("the data in update value ", data)
-    await axios.post('http://localhost:3001/' + 'cart/updatequantity/', data).then(response => {
+    await axios.post(`${backendServer}/cart/updatequantity/`, data).then(response => {
       console.log(data)
     });
     console.log("totalcartvalue", this.state.totalcartvalue)
@@ -263,7 +263,7 @@ this.setState({
       product_id: cart.product_id
 
     }
-    await axios.post('http://localhost:3001/' + 'cart/updategiftmsg/', data).then(response => {
+    await axios.post(`${backendServer}/cart/updategiftmsg/`, data).then(response => {
       console.log(data)
       console.log(response.data)
 

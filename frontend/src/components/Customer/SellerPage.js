@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { backendServer } from '../../webConfig'
 import { frontendServer } from '../../webConfig'
+import {Dialog,DialogContent,DialogTitle}from "@material-ui/core";
 
 var renderedOutput;
 class SellerPage extends Component {

@@ -20,7 +20,7 @@ module.exports = {
       if (error) {
         callBack(error);
       }
-      console.log(result);
+      // console.log(result);
       return callBack(null, result);
     });
   },
@@ -114,10 +114,12 @@ module.exports = {
 
     Product.findOne({ _id: data._id }, (error, result) => {
       if (error) {
+        console.log('error')
         callBack(error);
       }
       return callBack(null, result);
     });
+
   },
   getProductsByCategoryName: (name, callBack) => {
     Product.find({ category: name }, (error, result) => {

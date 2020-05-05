@@ -23,6 +23,8 @@ class ProductDetail extends Component {
             selected_image: '',
             price: 0,
             addReview: 0,
+            quantity: 0,
+            category: '',
             reviewEditable: false
         }
     }
@@ -43,6 +45,7 @@ class ProductDetail extends Component {
                     ratings: response_data.ratings,
                     price: response_data.price,
                     selected_image: response_data.images.length > 0 ? response_data.images[0].file_name : "/images/no-image.jpg"
+                    category: response_data.category
                 })
             });
 
@@ -105,6 +108,41 @@ class ProductDetail extends Component {
         return <SellerPage name={this.state.seller_name} />
     }
 
+    onSelect = (e) => {
+        console.log(e.target.value)
+        this.setState({
+            quantity : e.target.value
+        })
+    }
+
+    addToCart = (e) => {
+
+        debugger
+        const data = {
+            id : localStorage.getItem('id'),
+            product_id : this.state.product_id,
+            product_count : this.state.quantity,
+            productname: this.state.name,
+            category: this.state.category,
+            description: this.state.description,
+            seller_id: this.state.seller_id,
+            seller_name: this.state.seller_name,
+            total_value : this.state.quantity * this.state.price,
+            price : this.state.price,
+            isagift : false,
+            giftmessage : '',
+            image: this.state.selected_image
+        }
+        axios.post(backendServer+'/cart/addtocart', data)
+        .then(response => {
+            if(response.data.success === 1){
+                alert('Added to cart successfully');
+                window.location.href="/carthome"
+            }
+        })
+
+    }
+
     render() {
         let avgRating = this.state.ratings.reduce((r, c) => r + c.stars, 0) / this.state.ratings.length;
         return (
@@ -147,7 +185,7 @@ class ProductDetail extends Component {
                                 <p class="card-text"> Fastest Delivery: <b> April 30 - May 5</b></p>
 
                                 {/* <Dropdown value={this.state.quantity} options={this.state.quantities} style={{width: '5em'}}/> */}
-                                <select id="qty">
+                                <select onChange={this.onSelect} id="qty">
                                     <option value="1">Qty: 1</option>
                                     <option value="2">Qty: 2</option>
                                     <option value="3">Qty: 3</option>
@@ -160,7 +198,7 @@ class ProductDetail extends Component {
                                     <option value="10">Qty: 10</option>
                                 </select>
                                 <br /> <br />
-                                <input type="button" style={{ background: '#f0c14b', borderColor: '#a88734' }} value="Add to Cart"></input>
+                                <input type="button" style={{ background: '#f0c14b', borderColor: '#a88734' }} onClick={this.addToCart} value="Add to Cart"></input>
                             </div>
                         </div>
                     </div>
