@@ -10,7 +10,8 @@ var productSchema = new Schema({
     view_count: { type: Number, default: 0 },
     price: { type: Number, required: true },
     images: [{ file_name: String }],
-
+    deliverystatus: { type: String },
+    id:{type:String},//Orderandproduct tables id
     ratings: [{
         stars: Number,
         comment: String,

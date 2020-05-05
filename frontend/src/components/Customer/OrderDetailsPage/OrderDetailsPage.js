@@ -144,8 +144,7 @@ class Login extends Component {
 
   render() {
     const { orderData } = this.props.location;
-
-
+    var formattedOrderDate =  moment(orderData.eachOrder.orderdate).format('MMMM Do YYYY');
     console.log('data',orderData);
 
     //redirect based on successful login
@@ -153,7 +152,7 @@ class Login extends Component {
     
 
     let orderDetailsList = this.state.orderList.map(eachOrder => {
-      var formattedOrderDate =  moment(eachOrder.orderdate).format('MMMM Do YYYY');
+      
       
       
       return (<div></div>)
@@ -174,312 +173,28 @@ class Login extends Component {
     <img src="./Order Details_files/nav-sprite-global_bluebeacon-1x_optimized_layout1._CB468670774_.png" style={{display: 'none'}} alt="" />
     
     <style mark="aboveNavInjectionCSS" type="text/css" dangerouslySetInnerHTML={{__html: "\n      div#navSwmHoliday.nav-focus {border: none;margin: 0;}\n    " }} />
-    <noscript>
-      &lt;style type="text/css"&gt;&lt;!--
-      #navbar #nav-shop .nav-a:hover {'{'}
-      color: #ff9900;
-      text-decoration: underline;
-      {'}'}
-      #navbar #nav-search .nav-search-facade,
-      #navbar #nav-tools .nav-icon,
-      #navbar #nav-shop .nav-icon,
-      #navbar #nav-subnav .nav-hasArrow .nav-arrow {'{'}
-      display: none;
-      {'}'}
-      #navbar #nav-search .nav-search-submit,
-      #navbar #nav-search .nav-search-scope {'{'}
-      display: block;
-      {'}'}
-      #nav-search .nav-search-scope {'{'}
-      padding: 0 5px;
-      {'}'}
-      #navbar #nav-search .nav-search-dropdown {'{'}
-      position: relative;
-      top: 5px;
-      height: 23px;
-      font-size: 14px;
-      opacity: 1;
-      filter: alpha(opacity = 100);
-      {'}'}
-      --&gt;&lt;/style&gt;
-    </noscript>
+    
     <a id="nav-top" />
     <a id="skiplink" tabIndex={3} className="skip-link">Skip to main content</a>
     {/* Navyaan Upnav */}
     <div id="nav-upnav" aria-hidden="true">
       {/* unw1 failed */}
     </div>
-    <header className="nav-opt-sprite nav-locale-us nav-lang-en nav-ssl nav-rec">
-      <div id="navbar" cel_widget_id="Navigation-desktop-navbar" data-template="layoutSwapToolBar" role="navigation" className="nav-sprite-v1 celwidget nav-bluebeacon nav-a11y-t1 layout2 nav-fresh nav-packard-glow hamburger bold-focus-hover using-mouse" data-cel-widget="Navigation-desktop-navbar">
-        <div id="nav-belt">
-          <div className="nav-left">
-            <a href="javascript: void(0)" id="nav-hamburger-menu" role="button" tabIndex={5} aria-label="Open Menu">
-              <i className="hm-icon nav-sprite" />
-            </a>
-            <div id="nav-logo" className="nav-prime-1">
-              <a href="https://www.amazon.com/ref=nav_logo" className="nav-logo-link" aria-label="Amazon" tabIndex={6}>
-                <span className="nav-sprite nav-logo-base" />
-                <span className="nav-sprite nav-logo-ext" />
-                <span className="nav-logo-locale" />
-              </a>
-              <a href="https://www.amazon.com/ref=nav_logo_prime" aria-label="Prime" className="nav-sprite nav-logo-tagline" tabIndex={7}>
-              </a>
-            </div>
-          </div>
-          <div className="nav-right">
-            <div id="nav-tools" className="layoutToolbarPadding">
-              <a href="https://www.amazon.com/gp/customer-preferences/select-language/ref=topnav_lang_c?preferencesReturnUrl=%2Fgp%2Fyour-account%2Forder-details%2Fref%3Dppx_yo_dt_b_order_details_o07%3Fie%3DUTF8%26orderID%3D111-4692873-3576202" id="icp-nav-flyout" className="nav-a nav-a-2 icp-link-style-2">
-                <span className="icp-nav-link-inner">
-                  <span className="nav-line-1">
-                    <span className="icp-nav-globe-img-2" />
-                    <span className="icp-nav-language">EN</span>
-                  </span>
-                  <span className="nav-line-2">&nbsp;
-                    <span className="nav-icon nav-arrow" style={{visibility: 'visible'}} />
-                  </span>
-                </span>
-              </a>
-              <a href="https://www.amazon.com/gp/css/homepage.html?ref_=nav_youraccount_btn" className="nav-a nav-a-2 nav-truncate  " data-nav-ref="nav_ya_signin" data-nav-role="signin" data-ux-jq-mouseenter="true" id="nav-link-accountList" tabIndex={22}>
-                <span className="nav-line-1">Hello, Harshit</span>
-                <span className="nav-line-2 ">Account &amp; Lists<span className="nav-icon nav-arrow" style={{visibility: 'visible'}} />
-                </span>
-                <span className="nav-line-3">Hi Harshit</span>
-                <span className="nav-line-4">Account &amp; Lists</span>
-              </a>
-              <a href="https://www.amazon.com/gp/flex/sign-out.html?path=%2Fgp%2Fyourstore%2Fhome&signIn=1&useRedirectOnSuccess=1&action=sign-out&ref_=nav_signout" className="nav-hidden-aria  " tabIndex={23}>
-                Not Harshit? Sign Out
-              </a>
-              <a href="https://www.amazon.com/gp/css/order-history?ref_=nav_orders_first" className="nav-a nav-a-2  " id="nav-orders" tabIndex={24}>
-                <span className="nav-line-1">Returns</span>
-                <span className="nav-line-2">&amp; Orders</span>
-              </a>
-              <a href="https://www.amazon.com/prime?ref_=nav_prime_member_btn" className="nav-a nav-a-2 nav-single-row-link  " data-ux-jq-mouseenter="true" id="nav-link-prime" tabIndex={25}>
-                <span className="nav-line-1" />
-                <span className="nav-line-2 ">Prime<span className="nav-icon nav-arrow" style={{visibility: 'visible'}} />
-                </span>
-              </a>
-              <a href="https://www.amazon.com/gp/cart/view.html?ref_=nav_cart" aria-label="4 items in cart" className="nav-a nav-a-2" id="nav-cart" tabIndex={26}>
-                <span aria-hidden="true" className="nav-line-1" />
-                <span aria-hidden="true" className="nav-line-2">Cart<span className="nav-icon nav-arrow" />
-                </span>
-                <span className="nav-cart-icon nav-sprite" />
-                <span id="nav-cart-count" aria-hidden="true" className="nav-cart-count nav-cart-1">4</span>
-              </a>
-            </div>
-          </div>
-          <div className="nav-fill">
-            <div id="nav-search">
-              <div id="nav-bar-left" />
-              <form acceptCharset="utf-8" action="https://www.amazon.com/s/ref=nb_sb_noss" className="nav-searchbar" method="GET" name="site-search" role="search">
-                <div className="nav-left">
-                  <div id="nav-search-dropdown-card">
-                    <div className="nav-search-scope nav-sprite">
-                      <div className="nav-search-facade" data-value="search-alias=aps">
-                        <span className="nav-search-label" style={{width: 'auto'}}>All</span>
-                        <i className="nav-icon" />
-                      </div>
-                      <span id="searchDropdownDescription" style={{display: 'none'}}>Select the department you want to search in</span>
-                      <select aria-describedby="searchDropdownDescription" className="nav-search-dropdown searchSelect" data-nav-digest="MBCJnu8VgK5vcuYV9qp6ymW2rgc=" data-nav-selected={0} id="searchDropdownBox" name="url" style={{display: 'block', top: '2.5px'}} tabIndex={18} title="Search in">
-                        <option selected="selected" value="search-alias=aps">All Departments</option>
-                        <option value="search-alias=audible">Audible Books &amp; Originals</option>
-                        <option value="search-alias=alexa-skills">Alexa Skills</option>
-                        <option value="search-alias=amazon-devices">Amazon Devices</option>
-                        <option value="search-alias=amazonfresh">Amazon Fresh</option>
-                        <option value="search-alias=warehouse-deals">Amazon Warehouse</option>
-                        <option value="search-alias=appliances">Appliances</option>
-                        <option value="search-alias=mobile-apps">Apps &amp; Games</option>
-                        <option value="search-alias=arts-crafts">Arts, Crafts &amp; Sewing</option>
-                        <option value="search-alias=automotive">Automotive Parts &amp; Accessories</option>
-                        <option value="search-alias=baby-products">Baby</option>
-                        <option value="search-alias=beauty">Beauty &amp; Personal Care</option>
-                        <option value="search-alias=stripbooks">Books</option>
-                        <option value="search-alias=popular">CDs &amp; Vinyl</option>
-                        <option value="search-alias=mobile">Cell Phones &amp; Accessories</option>
-                        <option value="search-alias=fashion">Clothing, Shoes &amp; Jewelry</option>
-                        <option value="search-alias=fashion-womens">&nbsp;&nbsp;&nbsp;Women</option>
-                        <option value="search-alias=fashion-mens">&nbsp;&nbsp;&nbsp;Men</option>
-                        <option value="search-alias=fashion-girls">&nbsp;&nbsp;&nbsp;Girls</option>
-                        <option value="search-alias=fashion-boys">&nbsp;&nbsp;&nbsp;Boys</option>
-                        <option value="search-alias=fashion-baby">&nbsp;&nbsp;&nbsp;Baby</option>
-                        <option value="search-alias=under-ten-dollars">	
-                          Under $10</option>
-                        <option value="search-alias=pantry">Amazon Pantry</option>
-                        <option value="search-alias=collectibles">Collectibles &amp; Fine Art</option>
-                        <option value="search-alias=computers">Computers</option>
-                        <option value="search-alias=courses">Courses</option>
-                        <option value="search-alias=financial">Credit and Payment Cards</option>
-                        <option value="search-alias=edu-alt-content">Digital Educational Resources</option>
-                        <option value="search-alias=digital-music">Digital Music</option>
-                        <option value="search-alias=electronics">Electronics</option>
-                        <option value="search-alias=lawngarden">Garden &amp; Outdoor</option>
-                        <option value="search-alias=gift-cards">Gift Cards</option>
-                        <option value="search-alias=grocery">Grocery &amp; Gourmet Food</option>
-                        <option value="search-alias=handmade">Handmade</option>
-                        <option value="search-alias=hpc">Health, Household &amp; Baby Care</option>
-                        <option value="search-alias=local-services">Home &amp; Business Services</option>
-                        <option value="search-alias=garden">Home &amp; Kitchen</option>
-                        <option value="search-alias=industrial">Industrial &amp; Scientific</option>
-                        <option value="search-alias=prime-exclusive">Just for Prime</option>
-                        <option value="search-alias=digital-text">Kindle Store</option>
-                        <option value="search-alias=fashion-luggage">Luggage &amp; Travel Gear</option>
-                        <option value="search-alias=magazines">Magazine Subscriptions</option>
-                        <option value="search-alias=movies-tv">Movies &amp; TV</option>
-                        <option value="search-alias=mi">Musical Instruments</option>
-                        <option value="search-alias=office-products">Office Products</option>
-                        <option value="search-alias=pets">Pet Supplies</option>
-                        <option value="search-alias=luxury-beauty">Premium Beauty</option>
-                        <option value="search-alias=instant-video">Prime Video</option>
-                        <option value="search-alias=smart-home">Smart Home</option>
-                        <option value="search-alias=software">Software</option>
-                        <option value="search-alias=sporting">Sports &amp; Outdoors</option>
-                        <option value="search-alias=subscribe-with-amazon">Subscription Boxes</option>
-                        <option value="search-alias=tools">Tools &amp; Home Improvement</option>
-                        <option value="search-alias=toys-and-games">Toys &amp; Games</option>
-                        <option value="search-alias=vehicles">Vehicles</option>
-                        <option value="search-alias=videogames">Video Games</option>
-                        <option value="search-alias=wholefoods">Whole Foods Market</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div className="nav-right">
-                  <div className="nav-search-submit nav-sprite">
-                    <span id="nav-search-submit-text" className="nav-search-submit-text nav-sprite">
-                      Go
-                    </span>
-                    <input type="submit" className="nav-input" defaultValue="Go" tabIndex={20} />
-                  </div>
-                </div>
-                <div className="nav-fill">
-                  <div className="nav-search-field ">
-                    <label id="nav-search-label" htmlFor="twotabsearchtextbox" className="aok-offscreen">
-                      Search
-                    </label>
-                    <input type="text" id="twotabsearchtextbox" defaultValue name="field-keywords" autoComplete="off" placeholder className="nav-input" dir="auto" tabIndex={19} />
-                  </div>
-                  <div id="nav-iss-attach" />
-                </div>
-              </form>
-            </div>
-          </div>
-          <div id="nav-flyout-anchor"><div id="nav-flyout-prime" className="nav-coreFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content nav-spinner" /></div><div id="nav-flyout-accountList" className="nav-coreFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content"><div id="nav-al-container"><div id="nav-al-wishlist" className="nav-al-column nav-tpl-itemList"><div className="nav-title" id="nav-al-title">Your Lists</div><div className="nav-template" id="nav-flyout-wl-alexa" style={{display: 'block'}} /><div className="nav-template nav-spinner" id="nav-flyout-wl-items" style={{display: 'block'}} /><a href="https://www.amazon.com/gp/registry/wishlist?triggerElementID=createList&ref_=nav_ListFlyout_create" className="nav-link nav-item"><span className="nav-text">Create a List</span></a> <a href="https://www.amazon.com/gp/registry/search?ref_=nav_ListFlyout_find" className="nav-link nav-item"><span className="nav-text">Find a List or Registry</span></a> <a href="https://www.amazon.com/gcx/Gifts-for-Everyone/gfhz/?_encoding=UTF8&ref_=nav_wishlist_gf" className="nav-link nav-item"><span className="nav-text">Find a Gift</span></a> <a href="https://www.amazon.com/gp/BIT?bitCampaignCode=a0032&ref_=nav_ListFlyout_bit_v2_a0032" className="nav-link nav-item"><span className="nav-text">Save Items from the Web</span></a> <a href="https://www.amazon.com/wedding/home?ref_=nav_ListFlyout_wr" className="nav-link nav-item"><span className="nav-text">Wedding Registry</span></a> <a href="https://www.amazon.com/baby-reg/homepage?ref_=nav_ListFlyout_br" className="nav-link nav-item"><span className="nav-text">Baby Registry</span></a> <a href="https://www.amazon.com/gp/clpf?ref_=nav_ListFlyout_smi_se_ya_lll_ll" className="nav-link nav-item"><span className="nav-text">AmazonSmile Charity Lists</span></a> <a href="https://www.amazon.com/gp/pantry/yourlists?ref_=nav_ListFlyout_pntry_gno" className="nav-link nav-item"><span className="nav-text">Pantry Lists</span></a> <a href="https://www.amazon.com/ideas/saves?ref_=nav_ListFlyout_strm_in_youtique_lists" className="nav-link nav-item"><span className="nav-text">Your Hearts</span></a> <a href="https://www.amazon.com/ideas?ref_=nav_ListFlyout_idea_nav" className="nav-link nav-item"><span className="nav-text">Explore Idea Lists</span></a> <a href="https://www.amazon.com/showroom?ref_=nav_ListFlyout_srm_your_desk_wl" className="nav-link nav-item"><span className="nav-text">Explore Showroom</span></a> <a href="https://www.amazon.com/discover/?ref_=nav_ListFlyout_sbl" className="nav-link nav-item"><span className="nav-text">Discover</span></a> <a href="https://www.amazon.com/stylequiz/?ref_=nav_ListFlyout_sq_ya_yl" className="nav-link nav-item"><span className="nav-text">Take the Home Style Quiz</span></a></div><div id="nav-al-your-account" className="nav-al-column nav-template nav-flyout-content nav-tpl-itemList"><div className="nav-title">Your Account</div><a href="https://www.amazon.com/gp/css/homepage.html?ref_=nav_AccountFlyout_ya" className="nav-link nav-item"><span className="nav-text">Your Account</span></a> <a id="nav_prefetch_yourorders" href="https://www.amazon.com/gp/css/order-history?ref_=nav_AccountFlyout_orders" className="nav-link nav-item"><span className="nav-text">Your Orders</span></a> <a href="https://www.amazon.com/ddb/your-dash-buttons?ref_=nav_AccountFlyout_snk_ddb_ydb_d_nav_ya" className="nav-link nav-item"><span className="nav-text">Your Dash Buttons</span></a> <a href="https://www.amazon.com/gp/registry/wishlist?requiresSignIn=1&ref_=nav_AccountFlyout_wl" className="nav-link nav-item"><span className="nav-text">Your Lists</span></a> <a href="https://www.amazon.com/gp/yourstore?ref_=nav_AccountFlyout_recs" className="nav-link nav-item"><span className="nav-text">Your Recommendations</span></a> <a href="https://www.amazon.com/gp/subscribe-and-save/manager/viewsubscriptions?ref_=nav_AccountFlyout_sns" className="nav-link nav-item"><span className="nav-text">Your Subscribe &amp; Save Items</span></a> <a href="https://www.amazon.com/yourmembershipsandsubscriptions?ref_=nav_AccountFlyout_digital_subscriptions" className="nav-link nav-item"><span className="nav-text">Memberships &amp; Subscriptions</span></a> <a href="https://www.amazon.com/localservices/ya/servicerequests?ref_=nav_AccountFlyout_desktop_vas_requestlist" className="nav-link nav-item"><span className="nav-text">Your Service Requests</span></a> <a href="https://www.amazon.com/gp/subs/primeclub/account/homepage.html?ref_=nav_AccountFlyout_prime" className="nav-link nav-item"><span className="nav-text">Your Prime Membership</span></a> <a href="https://www.amazon.com/gp/your-garage/?ref_=nav_AccountFlyout_au_pf_as_GNO" className="nav-link nav-item"><span className="nav-text">Your Garage</span></a> <a href="https://www.amazon.com/fanshop?ref_=nav_AccountFlyout_yfs" className="nav-link nav-item"><span className="nav-text">Your Fanshop</span></a> <a href="https://www.amazon.com/yourpets?ref_=nav_AccountFlyout_pet_profiles" className="nav-link nav-item"><span className="nav-text">Your Pets</span></a> <a href="https://www.amazon.com/b/?node=12766669011&ld=AZUSSOA-yaflyout&ref_=nav_cs_sell" className="nav-link nav-item"><span className="nav-text">Start a Selling Account</span></a> <a href="https://www.amazon.com/gp/browse.html?node=11261610011&ref_=nav_AccountFlyout_b2b_reg" className="nav-link nav-item"><span className="nav-text">Register for a Business Account</span></a> <a href="https://www.amazon.com/credit/landing?ref_=nav_AccountFlyout_ya_amazon_cc_landing_ms" className="nav-link nav-item"><span className="nav-text">Your Amazon Credit Cards</span></a> <a href="https://www.amazon.com/hz/mycd/myx?ref_=nav_AccountFlyout_myk" className="nav-link nav-item"><span className="nav-text">Your Content and Devices</span></a> <a href="https://www.amazon.com/gp/dmusic/mp3/player?ref_=nav_AccountFlyout_cldplyr" className="nav-link nav-item"><span className="nav-text">Your Music Library</span></a> <a href="https://www.amazon.com/photos?ref_=nav_AccountFlyout_primephotos" className="nav-link nav-item"><span className="nav-text">Your Amazon Photos</span></a> <a href="https://www.amazon.com/clouddrive?ref_=nav_AccountFlyout_clddrv" className="nav-link nav-item"><span className="nav-text">Your Amazon Drive</span></a> <a href="https://www.amazon.com/Prime-Instant-Video/s/browse?node=2676882011&ref_=nav_AccountFlyout_piv" className="nav-link nav-item"><span className="nav-text">Your Prime Video</span></a> <a href="https://www.amazon.com/gp/kindle/ku/ku_central?ref_=nav_AccountFlyout_ku" className="nav-link nav-item"><span className="nav-text">Your Kindle Unlimited</span></a> <a href="https://www.amazon.com/gp/video/watchlist?ref_=nav_AccountFlyout_ywl" className="nav-link nav-item"><span className="nav-text">Your Watchlist</span></a> <a href="https://www.amazon.com/gp/video/library?ref_=nav_AccountFlyout_yvl" className="nav-link nav-item"><span className="nav-text">Your Video Purchases &amp; Rentals</span></a> <a href="https://www.amazon.com/gp/mas/your-account/myapps?ref_=nav_AccountFlyout_aad" className="nav-link nav-item"><span className="nav-text">Your Android Apps &amp; Devices</span></a> <a id="nav-item-switch-account" href="https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2Fgp%2Fyourstore%2Fhome%2F%3Fie%3DUTF8%26orderID%3D111-4692873-3576202%26ref_%3Dnav_youraccount_switchacct&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&switch_account=picker&ignoreAuthState=1&_encoding=UTF8" className="nav-link nav-item"><span className="nav-text">Switch Accounts</span></a> <a id="nav-item-signout" href="https://www.amazon.com/gp/flex/sign-out.html?path=%2Fgp%2Fyourstore%2Fhome&signIn=1&useRedirectOnSuccess=1&action=sign-out&ref_=nav_AccountFlyout_signout" className="nav-link nav-item"><span className="nav-text">Sign Out</span></a></div></div></div></div><div id="nav-flyout-timeline" className="nav-coreFlyout nav-fullWidthFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content nav-spinner" /></div><div id="nav-flyout-abAcquisition" className="nav-coreFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content nav-spinner" /></div><div id="nav-flyout-transientFlyout" className="nav-coreFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content nav-spinner" /></div><div id="nav-flyout-fresh" className="nav-coreFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content nav-spinner" /></div><div id="nav-flyout-icp" className="nav-coreFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content nav-spinner" /></div><div id="nav-flyout-icp-footer-flyout" className="nav-coreFlyout nav-flyout"><div className="nav-arrow"><div className="nav-arrow-inner" /></div><div className="nav-template nav-flyout-content nav-spinner" /></div></div><div id="nav-flyout-iss-anchor"><div id="nav-flyout-searchAjax" className="nav-issFlyout nav-flyout"><div className="nav-template nav-flyout-content" /></div></div></div>
-        <div id="nav-main" className="nav-sprite">
-          <div className="nav-left">
-            {/* NAVYAAN-GLOW-NAV */}
-            <div id="nav-global-location-slot">
-              <span className="a-declarative" data-a-modal="{&quot;width&quot;:375, &quot;closeButton&quot;:&quot;false&quot;,&quot;popoverLabel&quot;:&quot;Choose your location&quot;, &quot;name&quot;:&quot;glow-modal&quot;, &quot;url&quot;:&quot;/gp/glow/get-address-selections.html?deviceType=desktop&pageType=OrderDetails&storeContext=NoStoreName&quot;, &quot;footer&quot;:&quot;<span class=\&quot;a-declarative\&quot; data-action=\&quot;a-popover-close\&quot; data-a-popover-close=\&quot;{}\&quot;><span class=\&quot;a-button a-button-primary\&quot;><span class=\&quot;a-button-inner\&quot;><button name=\&quot;glowDoneButton\&quot; class=\&quot;a-button-text\&quot; type=\&quot;button\&quot;>Done</button></span></span></span>&quot;,&quot;header&quot;:&quot;Choose your location&quot;}" data-action="a-modal">
-                <a className="nav-a nav-a-2 a-popover-trigger a-declarative" tabIndex={35}>
-                  <div className="nav-sprite" id="nav-packard-glow-loc-icon" />
-                  <div id="glow-ingress-block">
-                    <span className="nav-line-1" id="glow-ingress-line1">
-                      Deliver to Harshit
-                    </span>
-                    <span className="nav-line-2" id="glow-ingress-line2">
-                      San Jose 95126‌
-                    </span>
-                  </div>
-                </a>
-              </span>
-              <input data-addnewaddress="add-new" id="unifiedLocation1ClickAddress" name="dropdown-selection" type="hidden" defaultValue="lhpjrppnqnkq" />
-              <input data-addnewaddress="add-new" id="ubbShipTo" name="dropdown-selection-ubb" type="hidden" defaultValue="lhpjrppnqnkq" />
-            </div>
-          </div>
-          <div className="nav-right">
-            {/* Navyaan SWM */}
-            <div id="nav-swmslot" className="nav-swm-text-widget">
-              <a href="https://www.amazon.com/gcx/Gifts-for-Mother%27s-Day/gfhz/events/?_encoding=UTF8&categoryId=mothers-day&ref_=nav_swm_aav&pf_rd_p=d8cfb4b5-c385-422f-99e8-e402ca189b21&pf_rd_s=nav-sitewide-msg-text&pf_rd_t=4201&pf_rd_i=navbar-4201&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=0ZGQBYT37RF8VQF5WN50" className="nav_a nav-swm-text" tabIndex={68}>Mother's Day ideas</a>
-            </div>
-          </div>
-          <div className="nav-fill">
-            <div id="nav-shop">
-            </div>
-            <div id="nav-xshop-container">
-              <div id="nav-xshop">
-                <a href="https://www.amazon.com/alm/storefront?almBrandId=QW1hem9uIEZyZXNo&ref_=nav_cs_fresh" className="nav-a  " data-ux-jq-mouseenter="true" id="nav-link-fresh" tabIndex={47}>Fresh<span className="nav-icon nav-arrow" style={{visibility: 'visible'}} /></a>
-                <a href="https://www.amazon.com/alm/storefront?almBrandId=VUZHIFdob2xlIEZvb2Rz&ref_=nav_cs_whole_foods_in_region" className="nav-a  " tabIndex={48}>Whole Foods</a>
-                <a href="https://www.amazon.com/Amazon-Video/b/?ie=UTF8&node=2858778011&ref_=nav_cs_prime_video" className="nav-a  " tabIndex={49}>Prime Video</a>
-                <a href="https://www.amazon.com/gp/bestsellers/?ref_=nav_cs_bestsellers" className="nav-a  " tabIndex={50}>Best Sellers</a>
-                <a href="https://www.amazon.com/Amazon-Grocery-Snacks/b/?ie=UTF8&node=7301146011&ref_=nav_cs_pantry" className="nav-a  " tabIndex={51}>Pantry</a>
-                <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=508510&ref_=nav_cs_help" className="nav-a  " tabIndex={52}>Help</a>
-                <a href="https://www.amazon.com/gift-cards/b/?ie=UTF8&node=2238192011&ref_=nav_cs_gc" className="nav-a  " tabIndex={53}>Gift Cards</a>
-                <a href="https://www.amazon.com/gp/history?ref_=nav_cs_timeline" className="nav-a  " data-ux-jq-mouseenter="true" id="nav-recently-viewed" tabIndex={54}>Browsing History<span className="nav-icon nav-arrow" style={{visibility: 'visible'}} /></a>
-                <a id="nav-your-amazon" href="https://www.amazon.com/gp/yourstore/home?ref_=nav_cs_ys" className="nav-a  " tabIndex={55}><span id="nav-your-amazon-text"><span className="nav-shortened-name">Harshit</span>'s Amazon.com</span></a>
-                <a href="https://www.amazon.com/stores/node/2528919011/?field-lbr_brands_browse-bin=AmazonBasics&ref_=nav_cs_amazonbasics" className="nav-a  " tabIndex={56}>AmazonBasics</a>
-                <a href="https://www.amazon.com/pickuplocations?ref=cs_campus_sjs" className="nav-a  " tabIndex={57}>Your Pickup Location</a>
-                <a href="https://www.amazon.com/gcx/Gifts-for-Everyone/gfhz/?ref_=nav_cs_giftfinder" className="nav-a  " tabIndex={58}>Find a Gift</a>
-                <a href="https://www.amazon.com/gp/buyagain?ie=UTF8&ref_=nav_cs_buy_again" className="nav-a  " tabIndex={59}>Buy Again</a>
-                <a href="https://www.amazon.com/gp/new-releases/?ref_=nav_cs_newreleases" className="nav-a  " tabIndex={60}>New Releases</a>
-                <a href="https://www.amazon.com/gp/browse.html?node=16115931011&ref_=nav_cs_registry" className="nav-a  " tabIndex={61}>Registry</a>
-                <a href="https://www.amazon.com/b/?_encoding=UTF8&ld=AZUSSOA-sell&node=12766669011&ref_=nav_cs_sell" className="nav-a  " tabIndex={62}>Sell</a>
-                <a href="https://www.amazon.com/finds?ref_=nav_cs_foundit" className="nav-a  " tabIndex={63}>#FoundItOnAmazon</a>
-                <a href="https://www.amazon.com/gp/browse.html?node=19126033011&ref_=nav_cs_creditcards" className="nav-a  " tabIndex={64}>Credit Cards</a>
-                <a href="https://www.amazon.com/live?ref_=nav_cs_amazonlive" className="nav-a  " tabIndex={65}>Livestreams</a>
-                <a href="https://www.amazon.com/b/?node=17867753011&ref_=nav_cs_shoppertoolkit" className="nav-a  " tabIndex={66}>Shopper Toolkit</a>
-                <a href="https://www.amazon.com/gp/help/customer/accessibility" aria-label="Click to call our Disability Customer Support line, or reach us directly at 1-888-283-1678" className="nav-hidden-aria  " tabIndex={67}>Disability Customer Support</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="nav-subnav-toaster" />
-        <div id="nav-flyout-ewc" aria-hidden="true" tabIndex={-1} className="nav-ewc-lazy-align nav-ewcFlyout nav-flyout nav-locked" style={{top: '0px', height: '566px'}}>
-          <div className="nav-flyout-head nav-tools nav-sprite" style={{top: '0px', paddingTop: '0px', height: '53px'}}>
-            <a href="https://www.amazon.com/gp/cart/view.html?ie=UTF8&ref_=nav_crt_ewc_hd" aria-hidden="true" className="nav-a nav-cart nav-a-2" tabIndex={-1}><span className="nav-line-1" /><span className="nav-line-2">Cart<span className="nav-icon nav-arrow" /></span><span className="nav-cart-icon nav-sprite" /><span id="nav-ewc-cart-count" aria-hidden="true" className="nav-cart-count nav-cart-1">4</span></a>
-          </div>
-          <div className="nav-flyout-body ewc-beacon" style={{top: '0px', height: '513px'}}>
-            <div className="nav-ewc-content" />
-          </div>
-          <div className="nav-flyout-tail" />
-          <div className="nav-ewc-pin-tail">
-            <a href="javascript:void(0);" className="nav-ewc-pin-button" aria-hidden="true" tabIndex={-1}>
-              <span className="nav-ewc-pin-arrow" />
-            </a>
-            <div className="nav-ewc-pin-tt">
-              <div className="nav-ewc-pin-ttc">
-                <div className="nav-ewc-pin-ttc-open">Open Cart</div>
-                <div className="nav-ewc-pin-ttc-close">Close Cart</div>
-              </div>
-              <div className="nav-ewc-pin-tt-arrow" />
-            </div>
-          </div>
-          <div className="nav-template nav-flyout-content" style={{display: 'none'}}> </div></div></div>
-    </header>
+    
     <a id="skippedLink" tabIndex={-1} />
-    {/* EndNav */}
-    <div id="orderDetails" className>
-      <div className="a-section a-spacing-large a-spacing-top-small a-subheader a-breadcrumb">
-        <ul className="a-unordered-list a-nostyle a-horizontal">
-          <li><span className="a-list-item">
-              <a className="a-link-normal" title="Return to Your Account" href="https://www.amazon.com/gp/css/homepage.html/ref=ppx_od_dt_b_ya_link">
-                Your Account
-              </a>
-            </span></li>
-          <li className="a-breadcrumb-divider">›</li>
-          <li><span className="a-list-item">
-              <a className="a-link-normal" title="Return to Your Orders" href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_od_dt_b_oh_link">
-                Your Orders
-              </a>        
-            </span></li>
-          <li className="a-breadcrumb-divider">›</li>
-          <li className="a-selected"><span className="a-list-item">
-              <span className="a-color-state">
-                Order Details
-              </span>            
-            </span></li> 
-        </ul>
-      </div>
-      <h1>
+    <div id="orderDetails" className><h1>
         Order Details
       </h1> 
       <div className="a-row a-spacing-base">
         <div className="a-column a-span9 a-spacing-top-mini">
           <div className="a-row a-spacing-none">
             <span className="order-date-invoice-item">
-              Ordered on January 25, 2020
+              Ordered on {formattedOrderDate}
               <i className="a-icon a-icon-text-separator" role="img" />
             </span>
             <span className="order-date-invoice-item">
               Order#
-              <bdi dir="ltr">111-4692873-3576202</bdi>
+              <bdi dir="ltr">{orderData.eachOrder.id}</bdi>
             </span>
           </div> 
         </div> 
@@ -515,10 +230,10 @@ class Login extends Component {
                         <div className="a-row a-spacing-micro">
                           <div className="displayAddressDiv">
                             <ul className="displayAddressUL">
-                              <li className="displayAddressLI displayAddressFullName">Aditya Zende</li>
-                              <li className="displayAddressLI displayAddressAddressLine1">754 THE ALAMEDA APT 2107</li>
-                              <li className="displayAddressLI displayAddressCityStateOrRegionPostalCode">SAN JOSE, CA 95126-3168</li>
-                              <li className="displayAddressLI displayAddressCountryName">United States</li>
+                              <li className="displayAddressLI displayAddressFullName">Update this</li>
+                              <li className="displayAddressLI displayAddressAddressLine1">{orderData.eachOrder.streetaddressline1}</li>
+                              <li className="displayAddressLI displayAddressCityStateOrRegionPostalCode">{orderData.eachOrder.city} {orderData.eachOrder.state} {orderData.eachOrder.zipcode}</li>
+                              <li className="displayAddressLI displayAddressCountryName">{orderData.eachOrder.country}</li>
                             </ul>
                           </div>
                         </div> 
@@ -536,7 +251,7 @@ class Login extends Component {
                           </h5> 
                           <div className="a-row a-spacing-mini">
                             <img alt="Visa" src="./Order Details_files/visa._CB485936331_.gif" />
-                            <span>**** 8315</span>
+                            <span>**** {orderData.eachOrder.cardnumber}</span>
                           </div>
                         </div> 
                       </div>
@@ -557,7 +272,7 @@ class Login extends Component {
                     </div> 
                     <div className="a-column a-span5 a-text-right a-span-last">
                       <span className="a-color-base">
-                        $133.63
+                        {orderData.eachOrder.totalcost}
                       </span> 
                     </div> 
                   </div> 
@@ -583,7 +298,7 @@ class Login extends Component {
                     </div> 
                     <div className="a-column a-span5 a-text-right a-span-last">
                       <span className="a-color-base">
-                        $133.63
+                      {orderData.eachOrder.totalcost}
                       </span> 
                     </div> 
                   </div> 
@@ -595,7 +310,7 @@ class Login extends Component {
                     </div> 
                     <div className="a-column a-span5 a-text-right a-span-last">
                       <span className="a-color-base">
-                        $12.36
+                        $0.00
                       </span> 
                     </div> 
                   </div> 
@@ -607,7 +322,7 @@ class Login extends Component {
                     </div> 
                     <div className="a-column a-span5 a-text-right a-span-last">
                       <span className="a-color-base">
-                        $10.50
+                        $0.00
                       </span> 
                     </div> 
                   </div> 
@@ -621,7 +336,7 @@ class Login extends Component {
                     </div> 
                     <div className="a-column a-span5 a-text-right a-span-last">
                       <span className="a-color-base a-text-bold">
-                        $156.49
+                      {orderData.eachOrder.totalcost}
                       </span> 
                     </div> 
                   </div> 
@@ -629,7 +344,8 @@ class Login extends Component {
                     <div className="a-column a-span7 a-text-left">
                       <span className="a-color-success a-text-bold">
                         <span className="a-declarative" data-action="a-popover" data-a-popover="{&quot;width&quot;:&quot;350&quot;,&quot;closeButton&quot;:&quot;false&quot;,&quot;position&quot;:&quot;triggerBottom&quot;,&quot;name&quot;:&quot;orderRefundBreakdown&quot;}">
-                          <a href="javascript:void(0)" className="a-popover-trigger a-declarative"><span className="a-color-success">Refund Total</span><i className="a-icon a-icon-popover" /></a>
+                          <a href="javascript:void(0)" className="a-popover-trigger a-declarative">
+                          <span className="a-color-success">Refund Total</span><i className="a-icon a-icon-popover" /></a>
                         </span>
                         <div className="a-popover-preload" id="a-popover-orderRefundBreakdown">
                           <div className="a-row">
@@ -658,23 +374,17 @@ class Login extends Component {
                           </div>
                           <div className="a-row a-spacing-top-mini">
                             <div className="a-column a-span9">
-                              <span className="a-color-success a-text-bold">
-                                Refund Total:
-                              </span>
+                             
                             </div>
                             <div className="a-column a-span3 a-text-right a-span-last">
-                              <span className="a-color-success a-text-bold">
-                                $23.63
-                              </span>
+                             
                             </div>
                           </div>
                         </div>
                       </span> 
                     </div> 
                     <div className="a-column a-span5 a-text-right a-span-last">
-                      <span className="a-color-success a-text-bold">
-                        $23.63
-                      </span> 
+                      
                     </div> 
                   </div> 
                 </div> 
@@ -746,7 +456,7 @@ class Login extends Component {
             </div>
           </div></div> 
       </div> 
-      <div className="a-box-group od-shipments">
+      {/*<div className="a-box-group od-shipments">
         <div className="a-box a-first a-box-title"><div className="a-box-inner">
             <h4>
               2 Shipments
@@ -953,7 +663,7 @@ class Login extends Component {
               </div></div>
           </div></div>
       </div>
-      <div className="a-row a-spacing-top-large">
+      */}<div className="a-row a-spacing-top-large">
 
       </div>
     </div>

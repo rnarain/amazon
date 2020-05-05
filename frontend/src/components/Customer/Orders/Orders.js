@@ -2,13 +2,17 @@ import React, { Component, Fragment } from 'react';
 //import '../../App.css';
 import axios from 'axios';
 import { Redirect, withRouter, Route } from 'react-router';
-import {
-  Link
-} from 'react-router-dom';
+import { Nav ,Button} from 'react-bootstrap';
+
+import { Link } from 'react-router-dom';
 //import backendServer from '../../webConfig'
 //import importScripts from 'import-scripts'
 //import logo from './Amazon Sign-In_files/amazonlogo.png';
 import moment from 'moment/moment';
+import JwPagination from 'jw-react-pagination';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import './Your Orders_files/21taIyvn9cL._RC_71VqKg9169L.css,21TJB5pc5TL.css,31vGzsqCErL.css,21lRUdwotiL.css,41tc24mJIGL.css,11G4HxMtMSL.css,31OvHRW+XiL.css,01XHMOHpK1L.css_.css';
@@ -34,19 +38,27 @@ class Login extends Component {
       authFlag: false,
       redirectToHome: false,
       showLoginError: false,
-      orderList: []
+      orderList: [],
+      ordersClassname: "selected",
+      cancelledOrdersClassname: "",
+      openOrdersClassname: "",
+      showModal :false,
+      trackingData:[]
     }
     //Bind the handlers to this className
     this.emailChangeHandler = this.emailChangeHandler.bind(this);
     this.passwordChangeHandler = this.passwordChangeHandler.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.showTrackingDetails = this.showTrackingDetails.bind(this);
   }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
     console.log('test');
     var data = {
-      userid: localStorage.getItem('id')
+      userid: localStorage.getItem('id'),
+      type:"All"
     }
     axios.defaults.withCredentials = true;
     //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
@@ -85,10 +97,116 @@ class Login extends Component {
       password: e.target.value
     })
   }
+
+
+ handleButtonClick = (e) => {
+  var data = {
+    id: e.target.id
+  }
+  console.log('id',e.target.id);
+  axios.defaults.withCredentials = true;
+  //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
+  axios.post('http://localhost:3001/' + 'orders/cancelOrders', data)
+    .then(response => {
+      console.log('inside response');
+      toast.configure();
+      toast.success("Cancellation succesfull! Updating Orders", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000
+      });
+      setTimeout(() => { window.location.reload(); }, 3000);
+    }
+    ).catch(ex => {
+      console.log('error', ex);
+      this.setState({
+        showLoginError: true
+      })
+    });
+
+} 
+
+showTrackingDetails = (e) => {
+  var data = {
+    id: e.target.id
+  }
+  console.log('id',e.target.id);
+  axios.defaults.withCredentials = true;
+  //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
+  axios.post('http://localhost:3001/' + 'orders/getTrackingDetails', data)
+    .then(response => {
+      console.log('response',response);
+      this.setState({
+        showModal : true,
+        trackingData : response
+      });
+      
+    }
+    ).catch(ex => {
+      console.log('ex',ex);
+    });
+
+} 
+  
   userTypeChangeHandler = (e) => {
     this.setState({
       type: e.target.value
     })
+  }
+
+  handleTabChange = (e) => {
+
+    var queryType;
+    if (e.target.name == "ordersTab") {
+      this.setState({
+        ordersClassname: "selected",
+        cancelledOrdersClassname: "",
+        openOrdersClassname: ""
+      })
+      queryType = "All";
+    } else if (e.target.name == "cancelledOrdersTab") {
+      this.setState({
+        ordersClassname: "",
+        cancelledOrdersClassname: "selected",
+        openOrdersClassname: ""
+      })
+      queryType = "Cancelled";
+    } else if (e.target.name == "openOrdersTab") {
+      this.setState({
+        ordersClassname: "",
+        cancelledOrdersClassname: "",
+        openOrdersClassname: "selected"
+      })
+      queryType = "Open";
+    }
+
+
+    var data = {
+      userid: localStorage.getItem('id'),
+      type: queryType
+    }
+    axios.defaults.withCredentials = true;
+    //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
+    axios.post('http://localhost:3001/' + 'orders/getOrders', data)
+      .then(response => {
+        if (response) {
+          console.log('response', response.data);
+          this.setState({
+            orderList: response.data
+          })
+        } else {
+          // No orders found
+          console.log('1', response);
+        }
+      }
+      ).catch(ex => {
+        console.log('error', ex);
+        this.setState({
+          showLoginError: true
+        })
+      });
+
+
+
   }
 
   handleChange = (e) => {
@@ -158,6 +276,101 @@ class Login extends Component {
         localStorage.setItem("type", 1);
         redirectVar = <Redirect to="/company/postings" />
     }*/
+
+    let showOrdersModal = 
+     
+        <Fragment>
+        
+        
+        <div id="a-popover-lgtbox" className="a-declarative" data-action="a-popover-floating-close" style={{zIndex: 1008, opacity: '0.75', display: 'block'}} />
+
+          <div className="a-modal-scroller a-declarative" data-action="a-popover-floating-close" style={{paddingBottom: '1px', visibility: 'visible'}}><div className="a-popover a-popover-modal a-declarative" data-action="a-popover-a11y" aria-modal="true" role="dialog" id="a-popover-3" aria-hidden="false" style={{width: '600px', maxWidth: 'none', visibility: 'visible', position: 'relative', margin: '25.3px 0px 25.3px 340px', top: '0px', left: '0px', opacity: 1}}><span tabIndex={0} className="a-popover-start a-popover-a11y-offscreen" /><div className="a-popover-wrapper"><button data-action="a-popover-close" className=" a-button-close a-declarative a-button-top-right" aria-label="Close"><i className="a-icon a-icon-close" /></button><div className="a-popover-inner a-padding-none" id="a-popover-content-3" style={{height: 'auto', overflowY: 'auto'}}>
+        <div id="tracking-events-container" className="tracking-events-modal-inner">
+          <div className="a-container">
+            <div className="a-row tracking-event-carrier-header">
+              <h2 className="a-spacing-small a-spacing-top-medium">
+                Delivery by Amazon
+              </h2>
+            </div>
+            <div className="a-row tracking-event-trackingId-text">
+              <h4 className="a-spacing-medium">
+                Tracking ID: TBA016830574201
+              </h4>
+            </div>
+            <div className="a-row">
+              <div className="a-row tracking-event-date-header">
+                <span className="tracking-event-date">Saturday, April 25</span>
+              </div>
+              <div className="a-row a-spacing-large a-spacing-top-medium">
+                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
+                  <span className="tracking-event-time">1:12 PM</span>
+                  <span className="vertical-line" />
+                </div>
+                <div className="a-column a-span9 tracking-event-time-right a-span-last">
+                  <div className="a-row">
+                    <span className="tracking-event-message">Delivered</span>
+                  </div>
+                  <div className="a-row">
+                    <span className="tracking-event-location">San Jose, US</span>
+                  </div>
+                </div>
+              </div>
+              <div className="a-row a-spacing-large a-spacing-top-medium">
+                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
+                  <span className="tracking-event-time">6:53 AM</span>
+                  <span className="vertical-line" />
+                </div>
+                <div className="a-column a-span9 tracking-event-time-right a-span-last">
+                  <div className="a-row">
+                    <span className="tracking-event-message">Out for delivery</span>
+                  </div>
+                  <div className="a-row">
+                    <span className="tracking-event-location">San Jose, US</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="a-row">
+              <div className="a-row tracking-event-date-header">
+                <span className="tracking-event-date">Friday, April 24</span>
+              </div>
+              <div className="a-row a-spacing-large a-spacing-top-medium">
+                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
+                  <span className="tracking-event-time">11:13 PM</span>
+                  <span className="vertical-line" />
+                </div>
+                <div className="a-column a-span9 tracking-event-time-right a-span-last">
+                  <div className="a-row">
+                    <span className="tracking-event-message">Package arrived at a carrier facility</span>
+                  </div>
+                  <div className="a-row">
+                    <span className="tracking-event-location">San Jose, US</span>
+                  </div>
+                </div>
+              </div>
+              <div className="a-row a-spacing-large a-spacing-top-medium">
+                <div className="a-column a-span3 tracking-event-time-left vertical-line-wrapper">
+                  <span className="tracking-event-time" />
+                  <span className="vertical-line" />
+                </div>
+                <div className="a-column a-span9 tracking-event-time-right a-span-last">
+                  <div className="a-row">
+                    <span className="tracking-event-message">Package has shipped</span>
+                  </div>
+                  <div className="a-row">
+                    <span className="tracking-event-location" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="a-row tracking-event-timezoneLabel">Times are shown in the local timezone.</div>
+          </div>
+        </div>
+      </div></div><span tabIndex={0} className="a-popover-end a-popover-a11y-offscreen" /></div></div>
+
+        </Fragment>
+      
+    ;
 
     let orderDetailsList = this.state.orderList.map(eachOrder => {
       var formattedOrderDate = moment(eachOrder.orderdate).format('MMMM Do YYYY');
@@ -249,23 +462,27 @@ class Login extends Component {
                         <div style={{ marginRight: '220px', paddingRight: '20px' }}>
                           <div className="a-row">
                             <span className="a-size-medium a-color-base a-text-bold">
-                              Delivered Saturday
+                            {eachProduct.deliverystatus}
                       </span>
                           </div>
                           <div className="a-row">
-                            <span data-isstatuswithwarning={0} data-yodeliveryestimate="Delivered Saturday" data-yoshortstatuscode="DELIVERED" data-yostatusstring className="js-shipment-info aok-hidden">
+                            <span data-isstatuswithwarning={0} data-yodeliveryestimate={eachProduct.deliverystatus}data-yoshortstatuscode="DELIVERED" data-yostatusstring className="js-shipment-info aok-hidden">
                             </span>
                           </div>
                         </div>
                         <div className="actions" style={{ width: '220px' }}>
                           <div className="a-row">
+                          {eachProduct.deliverystatus != 'Delivered'  && eachProduct.deliverystatus != 'Cancelled' &&
                             <div className="a-button-stack">
                               <span className="a-declarative" data-action="set-shipment-info-cookies" data-set-shipment-info-cookies="{}">
-                                <span className="a-button a-button-base track-package-button" id="a-autoid-3"><span className="a-button-inner"><a href="https://www.amazon.com/progress-tracker/package/ref=ppx_yo_dt_b_track_package?_encoding=UTF8&itemId=lhpilqksomqsqn&orderId=114-9827306-5149810&packageIndex=0&shipmentId=D4tPS0vgt&vt=YOUR_ORDERS" className="a-button-text" role="button" id="a-autoid-3-announce">
+                                <span className="a-button a-button-base track-package-button" id="a-autoid-3"><span className="a-button-inner">
+                                <span className="a-button-text"  id={eachProduct.id} onClick={this.showTrackingDetails} >
                                   Track package
-                              </a></span></span>
+                                  </span>
+                              </span></span>
                               </span>
                             </div>
+                          }
                           </div>
                         </div>
                       </div>
@@ -275,8 +492,8 @@ class Login extends Component {
                             <div className="a-fixed-left-grid a-spacing-none"><div className="a-fixed-left-grid-inner" style={{ paddingLeft: '100px' }}>
                               <div className="a-text-center a-fixed-left-grid-col a-col-left" style={{ width: '100px', marginLeft: '-100px', float: 'left' }}>
                                 <div className="item-view-left-col-inner">
-                                  <a className="a-link-normal" href="https://www.amazon.com/gp/product/B0090YJBYS/ref=ppx_yo_dt_b_asin_image_o00_s00?ie=UTF8&psc=1">
-                                    <img alt="" src="./Your Orders_files/41L4gtTop+L._SY180_.jpg" aria-hidden="true" onload="if (typeof uet == 'function') { uet('cf'); uet('af'); }" className="yo-critical-feature" height={90} width={90} title={eachProduct.name} data-a-hires="https://images-na.ssl-images-amazon.com/images/I/41L4gtTop%2BL._SY180_.jpg" />
+                                  <a className="a-link-normal" >
+                                  <img className="img-fluid" src={eachProduct.images.length > 0 ? eachProduct.images[0].file_name : ""} />
                                   </a>
                                 </div>
                               </div>
@@ -291,6 +508,12 @@ class Login extends Component {
                                     Sold by:
                                     Amazon.com Services LLC
                                 </span>
+                                </div>
+                                <div className="a-row">
+
+                                  <span class="a-size-small a-color-price">
+                                    ${eachProduct.price}
+                                  </span>
                                 </div>
                                 <div className="a-row">
                                   <span className="a-size-small">
@@ -322,15 +545,13 @@ class Login extends Component {
                         <div className="a-fixed-right-grid-col a-col-right" style={{ width: '220px', marginRight: '-220px', float: 'left' }}>
                           <div className="a-row">
                             <div className="a-button-stack">
-                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-6"><span className="a-button-inner"><a id="Return-or-replace-items_2" href="https://www.amazon.com/spr/returns/cart?_encoding=UTF8&orderId=114-9827306-5149810&ref_=ppx_yo_dt_b_return_replace_o00_s00" className="a-button-text" role="button">
-                                Return or replace items
-                              </a></span></span>
-                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-7"><span className="a-button-inner"><a id="Share-gift-receipt_2" href="https://www.amazon.com/gcx/-/ty/gr/114-9827306-5149810/D4tPS0vgt/ref=ppx_yo_dt_b_gift_receipt_o00_s00" className="a-button-text" role="button">
-                                Share gift receipt
-                              </a></span></span>
-                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-8"><span className="a-button-inner"><a id="Write-a-product-review_2" href="https://www.amazon.com/review/review-your-purchases/ref=ppx_yo_dt_b_rev_prod_o00_s00?_encoding=UTF8&asins=B0090YJBYS&channel=YAcc-wr" className="a-button-text" role="button">
-                                Write a product review
-                              </a></span></span>
+                            
+                              {eachProduct.deliverystatus != 'Delivered'  && eachProduct.deliverystatus != 'Cancelled' && 
+                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-7"><span className="a-button-inner">
+                                <span className="a-button-text" role="button" id={eachProduct.id} onClick={this.handleButtonClick}>
+                                    Cancel Product Order
+                                  </span></span></span>
+                              }
                             </div>
                           </div>
                         </div>
@@ -358,6 +579,11 @@ class Login extends Component {
     return (
 
       <div>
+
+      {this.state.showModal == true && 
+        showOrdersModal
+      }
+         
         {redirectVar}
         <div>
           <link rel="stylesheet" href="./Your Orders_files/21taIyvn9cL._RC_71VqKg9169L.css,21TJB5pc5TL.css,31vGzsqCErL.css,21lRUdwotiL.css,41tc24mJIGL.css,11G4HxMtMSL.css,31OvHRW+XiL.css,01XHMOHpK1L.css_.css" />
@@ -452,38 +678,29 @@ class Login extends Component {
                     <ul className="a-unordered-list a-nostyle a-horizontal" role="tablist">
                       <li role="tab"><span className="a-list-item">
                       </span></li>
-                      <li className="selected" role="tab"><span className="a-list-item">
-                        <span className="item">
+                      <li className={this.state.ordersClassname} name="ordersTab" onClick={this.handleTabChange} role="tab"><span className="a-list-item">
+                      <Button variant="link" name="ordersTab" onClick={this.handleTabChange}>
                           Orders
-                  </span>
+                 </Button>
                       </span></li>
-                      <li role="tab"><span className="a-list-item">
-                        <a className="a-link-normal item" href="https://www.amazon.com/buyagain/ref=ppx_yo_dt_b_ba_tab?_encoding=UTF8&orderFilter=buyagain">
-                          Buy Again
-                  </a>
-                      </span></li>
-                      <li role="tab"><span className="a-list-item">
-                        <a className="a-link-normal item" href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_oo_view_all?ie=UTF8&orderFilter=open">
+
+                      <li role="tab" className={this.state.openOrdersClassname} name="openOrdersTab" onClick={this.handleTabChange} >
+                      <Button variant="link" name="openOrdersTab" className="a-list-item" onClick={this.handleTabChange}>
                           Open Orders
-                  </a>
-                      </span></li>
-                      <li role="tab"><span className="a-list-item">
-                        <a className="a-link-normal item" href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_digital_orders?ie=UTF8&digitalOrders=1&orderFilter=months-6&unifiedOrders=0">
-                          Digital Orders
-                  </a>
-                      </span></li>
-                      <li role="tab"><span className="a-list-item">
-                        <a className="a-link-normal item" href="https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_cancelled_orders?ie=UTF8&orderFilter=cancelled">
+                          </Button>
+                          </li>
+
+                      <li role="tab" className={this.state.cancelledOrdersClassname} name="cancelledOrdersTab" onClick={this.handleTabChange} >
+                      <Button variant="link" name="cancelledOrdersTab" className="a-list-item" onClick={this.handleTabChange}>
                           Cancelled Orders
-                  </a>
-                      </span></li>
+                          </Button></li>
                     </ul>
                   </div>
 
                 </div>
                 <div id="ordersContainer">
-                  
-                    
+
+
                   {orderDetailsList}
                   <div className="a-row">
                     <div className="a-text-center pagination-full"><ul className="a-pagination"><li className="a-disabled">←<span className="a-letter-space" /><span className="a-letter-space" />Previous</li>
