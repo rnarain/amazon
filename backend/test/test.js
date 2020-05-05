@@ -7,8 +7,9 @@ var agent = require('chai').request.agent(app);
 
 describe('amazon test', function(){
 
-    it('GET /studenrProfile - Get student Profile',function(done){
-        agent.get('/api/account/getStudentDetails/17')
+    it('GET /getProductDetails - Get Product Details',function(done){
+        const _id =  '5e967879668b061d392f4b7d';
+        agent.get('/product/getProductDetails/', _id)
             .then(function(res){
                 expect(res.body.success).to.equal(1);
                 done();
@@ -17,8 +18,10 @@ describe('amazon test', function(){
                 done(e);
             });
     });
-    it('GET /getAllEventsByStudentID - Get all events Student participated',function(done){
-        agent.get('/api/event/getAllEventsByStudentID/17')
+
+    it('GET /getCustomerDetails - Get details of the customer',function(done){
+        const _id = '5e9ecd3ed5359705519db18b'
+        agent.get('/customer/getCustomerDetails', _id)
             .then(function(res){
                 expect(res.body.success).to.equal(1);
                 done();
@@ -27,8 +30,10 @@ describe('amazon test', function(){
                 done(e);
             });
     });
-    it('GET /getApplicantListByJobID - Get all aplicants for a job',function(done){
-        agent.get('/api/job/getApplicantListByJobID/1')
+
+    it('GET /getSellerDetails - Get details of the Seller',function(done){
+        const _id = '5ea4c57c89f77fce1106f251'
+        agent.get('/seller/getSellerDetails', _id)
             .then(function(res){
                 expect(res.body.success).to.equal(1);
                 done();
@@ -37,6 +42,20 @@ describe('amazon test', function(){
                 done(e);
             });
     });
+
+    it('GET /getSellerProducts - Get all products of the Seller',function(done){
+        const _id = '5ea4c57c89f77fce1106f251'
+        agent.get('/seller/getSellerProducts', _id)
+            .then(function(res){
+                expect(res.body.success).to.equal(1);
+                done();
+            })
+            .catch((e) => {
+                done(e);
+            });
+    });
+
+
     it('POST /createEvent - Create a new event',function(done){ 
         const data = {
         companyID :1,

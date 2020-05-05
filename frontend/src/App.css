@@ -131,12 +131,20 @@ li{
 .box-part{
   border-radius:0;
   padding:20px 20px;
-  margin:10px 10px;
+  margin:30px 10px;
   height:250px;
-  box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); 
-  overflow: auto;
 
 }
+
+.box-part-shadow{
+  border-radius:0;
+  padding:20px 20px;
+  margin:10px 10px;
+  height:250px;
+  overflow: auto;
+  box-shadow: 0 0 4px 1px rgba(0,0,0,0.05); 
+}
+
 
 .box-part-nopadding{
     border-radius:0;

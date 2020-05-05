@@ -61,7 +61,7 @@ const {
 
     deletecart: (req, res) => {
       const body = req.body;
-      console.log("body",body)
+      console.log("delete body",body)
 
       deletecart(body,(err, results) => {
         if (err) {
@@ -71,7 +71,7 @@ const {
         else
         {
           console.log("the results are",results)
-        return res.json({
+          return res.json({
           success: 1,
           data: results
         });

@@ -17,7 +17,8 @@ class Navbar extends Component {
             cart: [],
             name: null,
             searchValue: "",
-            redirect: false
+            redirect: false,
+            logoutRedirect: false,
         }
         this.handleLogout = this.handleLogout.bind(this);
     }
@@ -25,6 +26,9 @@ class Navbar extends Component {
     handleLogout = () => {
         localStorage.removeItem('id');
         localStorage.removeItem('type');
+        this.setState({
+            logoutRedirect : true
+        })
     }
 
     componentDidMount() {
@@ -95,9 +99,10 @@ class Navbar extends Component {
         if (localStorage.getItem('type') === 'Customer') {
             navLinks = (
                 <ul className="nav navbar-nav navbar-right">
-                    <li><Link to="/product-search">{this.state.name}</Link></li>
+                    <li><Link to="/customer/profile">{this.state.name}</Link></li>
                     <li><a onClick={this.handleLogout}>Logout</a></li>
-                    <li><Link to="/carthome"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">{this.state.cart.length}</span></Link></li>
+                    {/* <li><Link to="/carthome"><span><i className="icon-shopping-cart icon-2x"></i></span><span className="badge badge-light">{this.state.cart.length}</span></Link></li> */}
+                    <li><Link to="/carthome"><span><i className="icon-shopping-cart icon-2x"></i></span></Link></li>
                 </ul>
             );
 
@@ -109,14 +114,12 @@ class Navbar extends Component {
                 <div className="col-sm-7">
                     <ul className="nav navbar-nav xshop">
                         <li><Link to="/company/postings">Your Reviews</Link></li>
-                        <li><Link to="">New Releases</Link></li>
-                        <li><Link to="/orders">Orders</Link></li>
-                        <li><Link to="/company/students">Link 2</Link></li>
-                        <li><Link to="/company/events">Link 3</Link></li>
+                        <li><Link to="/cards">Cards</Link></li>
+                        <li><Link to="/address">Address</Link></li>
 
                     </ul>
                 </div>
-                
+                <div className="col-sm-3">&nbsp;</div>
                 </div>
             );
         }
@@ -143,37 +146,49 @@ class Navbar extends Component {
             )
 
         }
-
-
-        //if Cookie is set render Logout Button
-        let navLogin = null;
-        if (localStorage.getItem('id')) {
-            navLogin = (
+        else{
+            navLinks = (
                 <ul className="nav navbar-nav navbar-right">
-                    <li><Link to="/" onClick={this.handleLogout}><span className="glyphicon glyphicon-user"></span>Logout</Link></li>
+                    <li><Link to="/product-search">{this.state.name}</Link></li>
+                    <li><a onClick={this.handleLogout}>Logout</a></li>
                 </ul>
             );
-        } else {
-            //Else display login button
-            navLogin = (
-                <ul className="nav navbar-nav col-sm-3">
-                    <li><Link to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
-                </ul>
+
+            navLinkBottom = (
+                <div className="container-fluid">
+                <div className="col-sm-offset-2 col-sm-7">
+                    <ul className="nav navbar-nav xshop">
+                        {/* <li><Link to="/admin-dashboard">Dashboard</Link></li>
+                        <li><Link to="/admin-category">categories</Link></li>
+                        <li><Link to="/list-sellers">Sellers</Link></li>
+                        <li><Link to="#">Orders</Link></li> */}
+                    </ul>
+                </div>
+                <div className="col-sm-3">&nbsp;</div>
+                </div>
             )
         }
+
+
         let redirectVar = null;
         let categoriesDropDownOptions = this.state.categories.map(c => {
             return (
                 <li className="li-dropdown" key={c.category}><button className="btn btn-link" onClick={this.categoriesChangeHandler} value={c.category}> {c.category} </button></li>
             )
         });
-        if (this.state.redirect) {
+        if (this.state.redirect && localStorage.getItem('type')==='Customer') {
             let link = "/product-search?name=" + this.state.searchValue + "&category=" + this.state.selectedCategory;
             redirectVar = <Redirect to={link} />
+        }
+
+        let logoutRedirect=null;
+        if(this.state.logoutRedirect){
+            logoutRedirect = <Redirect to="/login"/>
         }
         return (
             <div className="nopadding">
                 {redirectVar}
+                {logoutRedirect}
                 <nav className="navbar navbar-top">
                     <div className="container-fluid">
                         <div className="navbar-header col-sm-2 nopadding">

@@ -1,10 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment } from 'react';
 import axios from 'axios';
-import { Form, Button, FormControl, FormGroup,Modal, Fade } from 'react-bootstrap';
+import { Form, FormControl, FormGroup,Modal, Fade } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import JwPagination from 'jw-react-pagination';
+import {Dialog,DialogContent,DialogTitle,Button}from "@material-ui/core";
+import { backendServer } from '../../webConfig';
 
-// import backendServer from "../../../webConfig";
+// import backendServer from "../../webConfig/webConfig";
 
+const customStyles = {
+  li : {
+      first : { 
+        display : 'none'
+      },
+      last : {
+        display : 'none'
+      }
+  }
+};
 
 class SellerInventory extends Component {
   constructor(props) {
@@ -13,14 +26,23 @@ class SellerInventory extends Component {
     //maintain the state required for this component
     this.state = {
       products: [],
-      showedit : false
+      showedit : false,
+      pageOfItems:[]        
+
     }
 
     this.getallsellerproducts = this.getallsellerproducts.bind(this);
     this.handleproductedit = this.handleproductedit.bind(this);
     this.deleteproduct = this.deleteproduct.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
+
   }
 
+  onChangePage(pageOfItems) {
+    // update local state with new page of items
+    this.setState({ pageOfItems });
+  }
+  
 
   componentDidMount() {
     this.getallsellerproducts()
@@ -36,7 +58,7 @@ class SellerInventory extends Component {
     })
     var id = localStorage.getItem("id");
     console.log("id is", id)
-    axios.get('http://localhost:3001/' + 'sellerinventory/getsellerproducts/').then(response => {
+    await axios.get(`${backendServer}/sellerinventory/getsellerproducts/`).then(response => {
       console.log(response.data)
       this.setState({
         products: response.data.data
@@ -60,33 +82,50 @@ this.setState({
     })
   }
 
-deleteproduct = () =>
+deleteproduct = async(value) =>
 {
-console.log("in delete product")
+  const data = {
+    id : value
+  }
+console.log("in delete product",value);
+await axios.post(`${backendServer}/sellerinventory/removeproduct/`,data).then(response => {
+  console.log(response.data)
+  this.getallsellerproducts()
+
+
+})
 }
+
+
   render() {
     let editform = null;
+  let editform1=null;
+
+    editform = (
+      <Dialog open={this.state.showedit} onClose={this.handleClose}>
+
+          <DialogTitle>Edit Product</DialogTitle>
   
-      editform = (
+      <DialogContent>
+      <div>
+      <form>
+          </form></div>
+      </DialogContent>
+          <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
+              Close
+    </Button>
+          <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
+              Save Changes
+    </Button>
+  </Dialog>
+    )
+      editform1 = (
       <Modal show={this.state.showedit} style={{backgroundColor:"none",opacity : 1}} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Task </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="nam" value={this.state.name} onChange={this.onChange} class="form-control" required />
-            <br></br>
-
-            <br></br><label for="date">  Date</label>
-            <input type="date" name="date" id="date" value={this.state.date} onChange={this.onChange} class="form-control" required />
-
-            <br></br><label for="description"> description</label>
-            <input type="text" name="description" id="description" value={this.state.description} onChange={this.onChange} class="form-control" required />
-            <br></br>
-
-
-          </form>
+        
 
 
         </Modal.Body>
@@ -106,12 +145,13 @@ console.log("in delete product")
 
 
 
-    let newArr = this.state.products.map(item => {
+    let newArr = this.state.pageOfItems.map(item => {
       return (
         // <div>
-        <div class="card" style={{ display: 'inline-block', width: '32%', height: '40%',  border: '2px solid #d5dbdb', margin:"2px" }}>
+        <div class="card" style={{ display: 'inline-block', width: '30%', height: '40%',  border: '2px solid #d5dbdb', margin:"2px" }}>
           <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{ width: '100%', margin: '10px' }}>
-            <Link onClick={this.deleteproduct}><span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}></span></Link><br></br>
+            <Link onClick={ e => this.deleteproduct(item._id)}><span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}></span></Link>
+   
 
             <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
               <img src="https://images-na.ssl-images-amazon.com/images/I/81PW0jPGzvL._SY355_.jpg" alt="img" width="90%" height={280} className="sc-product-image" />
@@ -119,7 +159,8 @@ console.log("in delete product")
           </div>
           <div></div>
           <div class="card-body" style={{margin:"5px"}}>
-            <h5 class="card-title" style={{ padding: '5px', textAlign: 'center' }}> {item.name}</h5>
+            <h5 class="card-title" style={{ padding: '5px', textAlign: 'center' }}>{item.category} => {item.name}, ${item.price}</h5>
+  
            {/* <span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}>Edit</span></Link><br></br> */}
            <h5 class="card-title" onClick={this.handleproductedit} style={{  textAlign: 'center' }}><Button>Edit Product</Button></h5>
 
@@ -130,6 +171,7 @@ console.log("in delete product")
 
     return (
       <div className="a-container">
+        {editform}
         <table class="table table-striped table-bordered table-sm" cellspacing="0">
           <thead>
             <tr>
@@ -150,9 +192,9 @@ console.log("in delete product")
               <td>
                 <div>
                   {newArr}
-                  
+                
                 </div>
-                {editform}
+               
               </td>
 
             </tr>
@@ -160,10 +202,15 @@ console.log("in delete product")
 
 
           </tbody>
-          <tfoot>
+          <tfoot >
             <tr>
-              <th>Pagination</th>
-
+              <th> 
+              <div>
+               <Fragment>
+           <JwPagination align="center" items={this.state.products} onChangePage={this.onChangePage} styles={customStyles}/>
+           </Fragment>
+           </div>
+</th>
             </tr>
           </tfoot>
         </table>
