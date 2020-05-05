@@ -209,9 +209,8 @@ checkoutcart : (data,callBack) =>
 
 deletecart :  (body,callBack) => 
 {
-  console.log("inside delete cart")
-  console.log("body.id")
- 
+  console.log("inside delete cart",body) 
+  // return callBack(null, "Success");
   User.update(
     {_id: body.id},
     {$pull: {cart : {$exists: true}}},
@@ -221,8 +220,7 @@ deletecart :  (body,callBack) =>
       callBack(error);
     }
     return callBack(null, result);
-
-      });      
+  });      
 }
 
 
