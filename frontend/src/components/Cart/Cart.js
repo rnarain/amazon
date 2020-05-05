@@ -53,6 +53,9 @@ class UserCart extends Component {
       total_value = total_value + (cartvalues[i].product_count * cartvalues[i].price)
     }
     console.log(total_value);
+    this.setState({
+      totalcartvalue: total_value
+    })
     return total_value;
   }
 
@@ -512,7 +515,7 @@ this.setState({
                         </span>
                             <span id="sc-subtotal-amount-buybox" className="a-color-price sc-price-container a-text-bold">
                               <span className="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
-                                ${this.getTotalValue(this.state.cartvalues)}
+                                ${this.state.totalcartvalue}
                               </span>
                             </span>
                           </div>
@@ -588,7 +591,7 @@ this.setState({
                   </span>
                         <span id="sc-subtotal-amount-activecart" className="a-color-price sc-price-container a-text-bold">
                           <span className="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
-                          ${this.getTotalValue(this.state.cartvalues)}
+                          ${this.state.totalcartvalue}
                           </span>
                         </span>
                       </div>
