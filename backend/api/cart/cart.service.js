@@ -116,6 +116,7 @@ addtocart : (data,callBack) =>
      isagift : data.isagift,
      giftmessage : data.giftmessage,
      saveforlater :false,
+     image : data.image
    }
  };
 

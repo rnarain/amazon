@@ -11,7 +11,6 @@ const {
   module.exports = {
     getSellerDetails: (req, res) => {
       var queryObject = req.query;
-      console.log('IN controller ', queryObject);
       getSellerDetails(queryObject, (err, results) => {
         if (err) {
           console.log(err);
@@ -39,7 +38,6 @@ const {
 
     getSellerProducts: (req, res) => {
       var queryObject = req.query;
-      console.log('IN controller ', queryObject);
       getSellerProducts(queryObject, (err, results) => {
         if (err) {
           console.log(err);
