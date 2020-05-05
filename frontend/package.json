@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.9.13",
     "aws-sdk": "^2.668.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
