@@ -102,8 +102,7 @@ class UserCart extends Component {
       console.log(this.state.savedcartvalues)
       console.log(this.state.userdetails)
       console.log(this.state.totalcartvalue)
-      console.log('TOOOT', this.getTotalValue(this.state.cartvalues));
-      debugger
+      console.log('Total', this.getTotalValue(this.state.cartvalues));
     });
   }
 
@@ -589,7 +588,7 @@ this.setState({
                   </span>
                         <span id="sc-subtotal-amount-activecart" className="a-color-price sc-price-container a-text-bold">
                           <span className="a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign">
-                            ${this.state.totalcartvalue}
+                          ${this.getTotalValue(this.state.cartvalues)}
                           </span>
                         </span>
                       </div>
