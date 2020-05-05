@@ -4,6 +4,7 @@ import { Form, FormControl, FormGroup,Modal, Fade } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import JwPagination from 'jw-react-pagination';
 import {Dialog,DialogContent,DialogTitle,Button}from "@material-ui/core";
+import { backendServer } from '../../webConfig';
 
 // import backendServer from "../../webConfig/webConfig";
 
@@ -57,7 +58,7 @@ class SellerInventory extends Component {
     })
     var id = localStorage.getItem("id");
     console.log("id is", id)
-    axios.get('http://localhost:3001/' + 'sellerinventory/getsellerproducts/').then(response => {
+    await axios.get(`${backendServer}/sellerinventory/getsellerproducts/`).then(response => {
       console.log(response.data)
       this.setState({
         products: response.data.data
@@ -81,10 +82,18 @@ this.setState({
     })
   }
 
-deleteproduct = () =>
+deleteproduct = async(value) =>
 {
-console.log("in delete product")
+  const data = {
+    id : value
+  }
+console.log("in delete product",value);
+await axios.post(`${backendServer}/sellerinventory/removeproduct/`,data).then(response => {
+  console.log(response.data)
+  this.getallsellerproducts()
 
+
+})
 }
 
 
@@ -141,7 +150,7 @@ console.log("in delete product")
         // <div>
         <div class="card" style={{ display: 'inline-block', width: '30%', height: '40%',  border: '2px solid #d5dbdb', margin:"2px" }}>
           <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{ width: '100%', margin: '10px' }}>
-            <Link onClick={this.deleteproduct}><span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}></span></Link>
+            <Link onClick={ e => this.deleteproduct(item._id)}><span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}></span></Link>
    
 
             <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >

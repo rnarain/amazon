@@ -23,7 +23,6 @@ removeproduct :  (body,callBack) =>
 {
   console.log("inside delete cart")
   console.log("body.id",body.id);
-  console.log("body.seller_id",body.seller_id);
  
   Product.updateOne(
     {_id: body.id},
