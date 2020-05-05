@@ -44,7 +44,7 @@ class ProductDetail extends Component {
                     images: response_data.images.length > 0 ? response_data.images : this.state.images.concat({file_name : "/images/no-image.jpg"}),
                     ratings: response_data.ratings,
                     price: response_data.price,
-                    selected_image: response_data.images.length > 0 ? response_data.images[0].file_name : "/images/no-image.jpg"
+                    selected_image: response_data.images.length > 0 ? response_data.images[0].file_name : "/images/no-image.jpg",
                     category: response_data.category
                 })
             });
