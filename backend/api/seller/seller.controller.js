@@ -1,5 +1,6 @@
 const {
-    getSellerDetails, getSellerProducts
+    getSellerDetails, getSellerProducts , getAllSellers,
+    updateProfile
   } = require("./seller.service");
   
   const jwt = require('jsonwebtoken');
@@ -12,6 +13,19 @@ const {
       var queryObject = req.query;
       console.log('IN controller ', queryObject);
       getSellerDetails(queryObject, (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        return res.json({
+          success: 1,
+          data: results
+        });
+      });
+    },
+
+    getAllSellers: (req, res) => {
+      getAllSellers((err, results) => {
         if (err) {
           console.log(err);
           return;
@@ -36,7 +50,21 @@ const {
           data: results
         });
       });
-    }
+    },
+
+    updateProfile: (req, res) => {
+      var body = req.body
+      updateProfile(body, (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        return res.json({
+          success: 1,
+          data: results
+        });
+      });
+    },
 
 
   

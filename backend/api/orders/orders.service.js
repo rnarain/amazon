@@ -14,8 +14,18 @@ module.exports = {
   orders: (req, res) => {
 
     var orderObj;
-    const getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '"';
+    var getcast;
+    if(req.body.type == "All"){
+      getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '"';
 
+    }else if(req.body.type == "Open"){
+      getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus <> "Delivered" And productandorders.deliverystatus <> "Cancelled"';
+
+    }else{
+      getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus ="Cancelled"';
+
+    }
+    
     sqlpool.query(getcast, (error, result) => {
       console.log("in orders")
       if (error) {
@@ -39,21 +49,13 @@ module.exports = {
             var productMap = new Map(productResult.map(i => [i._id.toString(), i]));
             console.log('productMap',productMap);
 
-
-           /* for(var eachOrder of orderObj){
-                if(productMap.has(eachOrder.productid)){
-                  orderObj['productDetails'] = productMap.get(eachOrder.productid);
-                }
-            }*/
-            
-           
-
             orderObj.forEach((eachOrder, index)=> {
               console.log('1',eachOrder);
               //if(productMap.has(eachOrder.productid)){
                 console.log('typeof',eachOrder);
 
                 eachOrder['productDetails'] = productMap.get(eachOrder.productid);
+                //eachOrder['productDetails.deliverystatus'] = productMap.get(eachOrder.deliverystatus);
                 //console.log('2',eachOrder);
              // }
             });
@@ -64,14 +66,21 @@ module.exports = {
             for(var eachOrder of orderObj){
               if(orderDetailsMap && orderDetailsMap.has(eachOrder.orderid)){
                 //let list = orderDetailsMap.get(orderObj.orderid).produ;
-                let tempList = orderDetailsMap.get(eachOrder.orderid).productDetailList.push(eachOrder.productDetails);
-              }else{
+                eachOrder.productDetails.deliverystatus = eachOrder.deliverystatus;
+                eachOrder.productDetails.id = eachOrder.id;
+
+                orderDetailsMap.get(eachOrder.orderid).productDetailList.push(eachOrder.productDetails);
+              }else{ 
                   var productList = [];
+                  eachOrder.productDetails.deliverystatus = eachOrder.deliverystatus;
+                  eachOrder.productDetails.id = eachOrder.id;
+
                   productList.push(eachOrder.productDetails);
                   
                   let eachOrderDetailObj = eachOrder;
                   eachOrderDetailObj.productDetailList = productList;
-
+                  eachOrderDetailObj.cardnumber = eachOrderDetailObj.cardnumber.substring(eachOrderDetailObj.cardnumber.length - 4);
+ 
                   orderDetailsMap.set(eachOrder.orderid,eachOrderDetailObj);
               }
             }
@@ -91,6 +100,48 @@ module.exports = {
           console.log('invalid');
           res.end("Invalid Credentials");
         }
+      }
+
+    });
+  },
+
+  cancelOrders: (req, res) => {
+
+    var getcast;
+    
+    getcast = 'UPDATE amazondb.productandorders SET deliverystatus ="Cancelled" WHERE id="'+req.body.id + '"';
+
+    sqlpool.query(getcast, (error, result) => {
+      console.log("in cancel orders")
+      if (error) {
+        console.log(error);
+        res.end("Success");
+        //callBack(error);
+      } else {
+        console.log(result);
+        res.end("Success");
+        
+      }
+
+    });
+  },
+  
+  getTrackingDetails: (req, res) => {
+
+    var getcast;
+    
+    getcast = 'SELECT * FROM amazondb.trackingtable WHERE productorderid = "'+req.body.id + '"';
+
+    sqlpool.query(getcast, (error, result) => {
+      console.log("in cancel orders")
+      if (error) {
+        console.log(error);
+        res.send("Error");
+        //callBack(error);
+      } else {
+        console.log(result);
+        res.send(result);
+
       }
 
     });

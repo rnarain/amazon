@@ -97,7 +97,12 @@ class Login extends Component {
                         localStorage.setItem("id", response.data._id);
                         localStorage.setItem("name", response.data.name);
                         localStorage.setItem("type", response.data.userType);
+                        if(response.data.userType === 'Admin'){
                         window.location.href = "/product-search";
+                        }
+                        else{
+                            window.location.href = "/product-search";
+                        }
                         this.setState({ redirectToHome: true });
                         this.setState({
                             authFlag: true

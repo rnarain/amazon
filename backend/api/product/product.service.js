@@ -119,6 +119,14 @@ module.exports = {
       return callBack(null, result);
     });
   },
+  getProductsByCategoryName: (name, callBack) => {
+    Product.find({ category: name }, (error, result) => {
+          if (error) {
+            callBack(error);
+          }
+          return callBack(null, result);
+        });
+  },
 
   addReview: (data, callBack) => {
     console.log('In service ', data);
