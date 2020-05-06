@@ -59,7 +59,6 @@ class Profile extends Component {
             name: this.state.name,
             profile_pic: this.state.profile_pic
         }
-        localStorage.setItem('name', data.name)
         console.log(data)
         axios.post(backendServer + "/customer/updateProfile", data)
             .then(response => {
@@ -164,7 +163,7 @@ class Profile extends Component {
                             <Modal.Title> <br />Change your name</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <input name="name" type="text" value={this.state.name} onChange={this.onChange} />
+                            <input name="name" type="text" onChange={this.onChange} />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={(e) => { this.setState({ show: false }) }}>

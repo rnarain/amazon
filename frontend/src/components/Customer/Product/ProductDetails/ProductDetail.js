@@ -23,7 +23,7 @@ class ProductDetail extends Component {
             selected_image: '',
             price: 0,
             addReview: 0,
-            quantity: 1,
+            quantity: 0,
             category: '',
             reviewEditable: false
         }
