@@ -55,31 +55,29 @@ module.exports = {
 
              
                 eachOrder['productDetails'] = productMap.get(eachOrder.productid);
-                //eachOrder['productDetails.deliverystatus'] = productMap.get(eachOrder.deliverystatus);
+                eachOrder['productDetails']['deliverystatus'] = eachOrder.deliverystatus;
                 //console.log('2',eachOrder);
              // }
             });
 
-
+            // console.log("kailash console=>"+ JSON.stringify(orderObj))
             
             for(var eachOrder of orderObj){
               if(orderDetailsMap && orderDetailsMap.has(eachOrder.orderid)){
                 //let list = orderDetailsMap.get(orderObj.orderid).produ;
                 
-                eachOrder.productDetails.deliverystatus = eachOrder.deliverystatus;
+                //eachOrder.productDetails.deliverystatus = eachOrder.deliverystatus;
                 eachOrder.productDetails.id = eachOrder.id;
+                // console.log("kailash console next time=>",eachOrder.productDetails)
 
                 orderDetailsMap.get(eachOrder.orderid).productDetailList.push(eachOrder.productDetails);
               }else{ 
                 //console.log('eachOrder',eachOrder);
                   var productList = [];
-                  eachOrder.productDetails.deliverystatus = eachOrder.deliverystatus;
+                 // eachOrder.productDetails.deliverystatus = eachOrder.deliverystatus;
                   eachOrder.productDetails.id = eachOrder.id;
-
+                  // console.log("kailash console first time=>",eachOrder.productDetails );
                   productList.push(eachOrder.productDetails);
-                  console.log('productList',productList);
-                  console.log('orderId',eachOrder.orderid);
-
 
                   let eachOrderDetailObj = eachOrder;
                   eachOrderDetailObj.productDetailList = productList;
@@ -87,9 +85,13 @@ module.exports = {
  
                   orderDetailsMap.set(eachOrder.orderid,eachOrderDetailObj);
               }
+              
             }
+            //console.log('productList',orderDetailsMap);
+            console.log("kailash console=>",orderDetailsMap)
             res.body = orderDetailsMap;
             var arrayList = Array.from( orderDetailsMap.values() );
+            console.log('productList',orderDetailsMap.values());
             return res.send(arrayList);
           });
 
