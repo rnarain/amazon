@@ -29,7 +29,7 @@ class SellerInventory extends Component {
       products: [],
       showedit: false,
       pageOfItems: [],
-      add_product : false
+      add_product: false
 
     }
 
@@ -96,10 +96,22 @@ class SellerInventory extends Component {
   }
 
   addProductCallBackFunction = (data) => {
-    if(data.cancel === 1){
-      this.setState({
-        add_product : false
+    debugger
+    if (data.cancel === 1) {
+      this.setState({ add_product: 0 })
+    }
+    else {
+
+      this.setState(prevState => ({
+        add_product: 0
+      }), function () {
+        console.log('data : ', data)
+        axios.post(`${backendServer}/product/addProduct`, data)
+          .then(response => {
+            alert('Product Successfully Posted');
+          });
       })
+
     }
   }
 
@@ -189,7 +201,7 @@ class SellerInventory extends Component {
               </th>
               <th style={{ backgroundColor: "#FFA500" }} align="right">
                 <td >
-                  {this.state.add_product ? <AddProductPopUp parentCallback={this.addProductCallBackFunction} /> : <input type="button" value="Add Product" onClick={() => {this.setState ({ add_product : true })}} /> }
+                  {this.state.add_product ? <AddProductPopUp parentCallback={this.addProductCallBackFunction} /> : <input type="button" value="Add Product" onClick={() => { this.setState({ add_product: true }) }} />}
                 </td>
               </th>
             </tr>
@@ -222,7 +234,7 @@ class SellerInventory extends Component {
           </tfoot>
         </table>
 
-        
+
 
 
       </div>

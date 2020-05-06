@@ -3,6 +3,8 @@ const User = require("../../Models/UserModel");
 const client = require("../../config/redisconfig");
 var kafka = require('../../kafka/client');
 
+const {upload} = require('../customer/customer.service')
+
 module.exports = {
 
   searchProduct: (data, callBack) => {
@@ -173,9 +175,18 @@ module.exports = {
 
   addProduct: (data, callBack) => {
     console.log("In add products service");
+    // User.find({ seller_id : data.seller_id, userType: 'Seller'}, (error, results) => {
+    //   if(error)
+    //     callBack(error);
+    //   if(results.length == 0)
+    //     return callBack(null, 'No Seller with this ID')
+    // })
     Product.create({ name: data.name, description: data.description, price: data.price, category: data.category, seller_id: data.seller_id, seller_name: data.seller_name, images: data.images }, (error, results) => {
       if (error)
         callBack(error);
+      // if(data.images.length > 0){
+      //   upload(data.images[0]);
+      // }
       return callBack(null, results);
     });
 

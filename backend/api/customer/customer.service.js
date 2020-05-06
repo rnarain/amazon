@@ -18,6 +18,7 @@ module.exports = {
     },
 
     upload(req, callBack) {
+        console.log('In upload');
         aws.config.setPromisesDependency();
         aws.config.update({
             accessKeyId: connectionSting.s3AccessKey,
