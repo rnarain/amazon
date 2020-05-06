@@ -56,13 +56,14 @@ module.exports = {
              
                 eachOrder['productDetails'] = productMap.get(eachOrder.productid);
                 eachOrder['productDetails']['deliverystatus'] = eachOrder.deliverystatus;
+                eachOrder['productDetails']['quantity'] = eachOrder.quantity;
                 //console.log('2',eachOrder);
              // }
             });
 
             // console.log("kailash console=>"+ JSON.stringify(orderObj))
             
-            for(var eachOrder of orderObj){
+            for(let eachOrder of orderObj){
               if(orderDetailsMap && orderDetailsMap.has(eachOrder.orderid)){
                 //let list = orderDetailsMap.get(orderObj.orderid).produ;
                 
@@ -73,7 +74,7 @@ module.exports = {
                 orderDetailsMap.get(eachOrder.orderid).productDetailList.push(eachOrder.productDetails);
               }else{ 
                 //console.log('eachOrder',eachOrder);
-                  var productList = [];
+                  let productList = [];
                  // eachOrder.productDetails.deliverystatus = eachOrder.deliverystatus;
                   eachOrder.productDetails.id = eachOrder.id;
                   // console.log("kailash console first time=>",eachOrder.productDetails );

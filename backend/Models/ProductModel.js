@@ -13,6 +13,7 @@ var productSchema = new Schema({
     images: [new Schema ({ file_name: String }, { _id: false })],
     deliverystatus: { type: String },
     id: { type: String },//Orderandproduct tables id
+    quantity:{type:String},
     ratings: [{
         stars: Number,
         comment: String,
