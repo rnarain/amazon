@@ -1,7 +1,7 @@
 const {
   searchProduct, getProductDetails,
-  addReview, insertProducts,
-  searchProductWithKafka, searchProductWithRedis , getProductsByCategoryName
+  addReview, insertProducts, addProduct,
+  searchProductWithKafka, searchProductWithRedis, getProductsByCategoryName
 } = require("./product.service");
 
 const jwt = require('jsonwebtoken');
@@ -142,6 +142,21 @@ module.exports = {
     body = req.body;
     console.log('In controller insert Products ', body)
     insertProducts(body, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: results
+      });
+    });
+  },
+
+  addProduct: (req, res) => {
+    body = req.body;
+    console.log('In controller Add Products ', body)
+    addProduct(body, (err, results) => {
       if (err) {
         console.log(err);
         return;

@@ -7,7 +7,7 @@ const passport = require('passport');
 const {
   searchProduct,
   searchProductWithKafka,
-  getProductDetails,
+  getProductDetails, addProduct,
   addReview, insertProducts, searchProductWithRedis ,getProductsByCategoryName
 } = require("./product.controller");
 
@@ -21,5 +21,7 @@ router.get("/getProductsByCategoryName/:name", getProductsByCategoryName);
 
 router.post("/addReview", addReview);
 router.post("/insertProducts", insertProducts);
+
+router.post("/addProduct", addProduct)
 
 module.exports = router;

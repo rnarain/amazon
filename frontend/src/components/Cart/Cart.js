@@ -240,6 +240,7 @@ class UserCart extends Component {
     })
     console.log("present totalvalue", this.state.totalcartvalue)
     console.log("product total", total)
+    debugger
     const data = {
       id: localStorage.getItem("id"),
       product_id: cart.product_id,

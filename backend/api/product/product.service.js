@@ -12,8 +12,8 @@ module.exports = {
     }
     else {
       filter = {
-        name:  { "$regex": data.name, "$options": "i" },
-        category: { "$regex": data.category, "$options": "i" } 
+        name: { "$regex": data.name, "$options": "i" },
+        category: { "$regex": data.category, "$options": "i" }
       }
     }
     Product.find(filter, (error, result) => {
@@ -25,7 +25,7 @@ module.exports = {
     });
   },
 
-  
+
   searchProductWithRedis: (data, callBack) => {
 
     const productSearchRedisKey = 'product_search:details';
@@ -123,11 +123,11 @@ module.exports = {
   },
   getProductsByCategoryName: (name, callBack) => {
     Product.find({ category: name }, (error, result) => {
-          if (error) {
-            callBack(error);
-          }
-          return callBack(null, result);
-        });
+      if (error) {
+        callBack(error);
+      }
+      return callBack(null, result);
+    });
   },
 
   addReview: (data, callBack) => {
@@ -139,17 +139,17 @@ module.exports = {
     })
 
     userRating = {
-      product_id : data.id,
-      product_name : data.name,
-      stars : data.ratings[data.ratings.length-1].stars,
-      comment : data.ratings[data.ratings.length-1].comment
+      product_id: data.id,
+      product_name: data.name,
+      stars: data.ratings[data.ratings.length - 1].stars,
+      comment: data.ratings[data.ratings.length - 1].comment
     }
 
     console.log(userRating)
 
-    
 
-    User.findOneAndUpdate({ _id: data.ratings[data.ratings.length-1].user_id }, { $push: { ratings: userRating } }, { upsert: true }, (error, result) => {
+
+    User.findOneAndUpdate({ _id: data.ratings[data.ratings.length - 1].user_id }, { $push: { ratings: userRating } }, { upsert: true }, (error, result) => {
       if (error) {
         callBack(error);
       }
@@ -169,6 +169,16 @@ module.exports = {
       });
     }
     return callBack(null, '');
+  },
+
+  addProduct: (data, callBack) => {
+    console.log("In add products service");
+    Product.create({ name: data.name, description: data.description, price: data.price, category: data.category, seller_id: data.seller_id, seller_name: data.seller_name, images: data.images }, (error, results) => {
+      if (error)
+        callBack(error);
+      return callBack(null, results);
+    });
+
   }
 
 
