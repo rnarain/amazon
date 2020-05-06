@@ -27,7 +27,9 @@ class SellerInventory extends Component {
     this.state = {
       products: [],
       showedit : false,
-      pageOfItems:[]        
+      pageOfItems:[],
+      productname : "",
+      description : ""        
 
     }
 
@@ -82,6 +84,22 @@ this.setState({
     })
   }
 
+  handleeditdeschange = (e) =>
+  {
+this.setState({
+  description : e.target.value
+})
+  }
+
+
+handleeditnamechange = (e) =>
+{
+  this.setState({
+   productname: e.target.value
+  })
+
+}
+
 deleteproduct = async(value) =>
 {
   const data = {
@@ -102,15 +120,34 @@ await axios.post(`${backendServer}/sellerinventory/removeproduct/`,data).then(re
   let editform1=null;
 
     editform = (
-      <Dialog open={this.state.showedit} onClose={this.handleClose}>
+      <Dialog open={this.state.showedit}  aria-labelledby="customized-dialog-title" onClose={this.handleClose}>
 
           <DialogTitle>Edit Product</DialogTitle>
   
-      <DialogContent>
-      <div>
-      <form>
-          </form></div>
-      </DialogContent>
+          <DialogContent>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label> Name</Form.Label>
+            <Form.Control
+              type="text"
+              // placeholder="Enter Usergroup Name"
+              name="productname"
+              defaultValue={this.state.productname}
+              // onKeyDown={this.onKeyUp}
+              onChange={this.handleeditnamechange}
+            />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label> Description</Form.Label>
+            <Form.Control
+              type="text"
+              // placeholder="Enter Description"
+              name="description"
+              defaultValue={this.state.description}
+              // onKeyDown={this.onKeyUp}
+              onChange={this.handleeditdeschange}
+            />
+          </Form.Group>
+        </DialogContent>
           <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
               Close
     </Button>
