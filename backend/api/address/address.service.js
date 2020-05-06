@@ -43,13 +43,18 @@ module.exports = {
       zipcode : data.zipcode,
       phone : data.phone
     }
-    User.updateOne({ _id : data.id }, { $push : { addresses : newData }  }, { upsert: false }, (error, results) => {
+    User.findOneAndUpdate({ _id : data.id }, { $addToSet : { addresses : newData }  },{new:true}, (error, results) => {
       if (error) {
         callBack(error);
+      }//console.log("Address",results);
+      if(!results){
+        return callBack(null,{address : null});
       }
-      return callBack(null, results);
-    }
-    );
+      var idx=results.addresses.length;
+      var insertedAddress = results.addresses[idx-1];
+      // console.log("Address",results.addresses[idx-1]);
+      return callBack(null,{address : insertedAddress});
+    });
   },
 
   updateAddress :(data,callBack)=>{
@@ -76,14 +81,16 @@ module.exports = {
   },
   
   deleteAddress : (data, callBack) => {
-    User.update({ _id: data.id },
+    console.log("delete address ", data);
+    User.updateOne({ _id: data.id },
       { "$pull": { 'addresses': { _id : data.addressid } } },
       (error, result) => {
    
-    if (error) {
-      callBack(error);
-    }
-    return callBack(null, result);
+      if (error) {
+        callBack(error);
+      }
+      // console.log("Here",result);
+      return callBack(null, result);
   });
 },
 

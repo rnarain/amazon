@@ -78,6 +78,7 @@ module.exports = {
 
   deleteAddress: (req, res) => {
     const body = req.body;
+    // console.log("Body ", req.body);
     deleteAddress(body, (err, results) => {
       if (err) {
         console.log(err);
@@ -95,7 +96,7 @@ module.exports = {
 
 
   getAllAddress: (req, res) => {
-    // console.log("GetAllAddress ", req);
+    // console.log("GetAllAddress ", req.params);
     const id = req.params.id;
     getAllAddress(id,(err, results) => {
       if (err) {
