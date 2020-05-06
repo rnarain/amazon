@@ -42,7 +42,7 @@ var userSchema = new Schema({
       country : String,
       state : String,
       city : String,
-      zipcode : Number,
+      zipcode : String,
       phone : String
     }],
     cards : 

@@ -151,7 +151,7 @@ module.exports = {
 
     var getcast;
     
-    getcast = 'SELECT * FROM amazondb.trackingtable WHERE productorderid = "'+req.body.id + '"';
+    getcast = 'SELECT * FROM amazondb.trackingtable WHERE productorderid = "'+req.body.id + '" ORDER By updatedtime DESC';
 
     sqlpool.query(getcast, (error, result) => {
       console.log("in cancel orders")
