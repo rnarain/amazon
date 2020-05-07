@@ -495,10 +495,13 @@ showTrackingDetails = (e) => {
                                   </a>
                                 </div>
                                 <div className="a-row">
+                                <a className="a-link-normal" href={"/seller/name=" +  eachProduct.seller_name}>
                                   <span className="a-size-small a-color-secondary">
                                     Sold by:
-                                    Amazon.com Services LLC
+                                    {eachProduct.seller_name}
+                                   
                                 </span>
+                                </a>
                                 </div>
                                 <div className="a-row">
 
@@ -508,7 +511,7 @@ showTrackingDetails = (e) => {
                                 </div>
                                 <div className="a-row">
                                   <span className="a-size-small">
-                                    <div className="a-row a-size-small">Return eligible through May 31, 2020</div>
+                                    <div className="a-row a-size-small">Quantity : {eachProduct.quantity}</div>
                                   </span>
                                 </div>
                                 <div className="a-row">

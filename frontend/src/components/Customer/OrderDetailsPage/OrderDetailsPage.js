@@ -230,7 +230,7 @@ class Login extends Component {
                         <div className="a-row a-spacing-micro">
                           <div className="displayAddressDiv">
                             <ul className="displayAddressUL">
-                              <li className="displayAddressLI displayAddressFullName">Update this</li>
+                              <li className="displayAddressLI displayAddressFullName">{orderData.eachOrder.addressName}</li>
                               <li className="displayAddressLI displayAddressAddressLine1">{orderData.eachOrder.streetaddressline1}</li>
                               <li className="displayAddressLI displayAddressCityStateOrRegionPostalCode">{orderData.eachOrder.city} {orderData.eachOrder.state} {orderData.eachOrder.zipcode}</li>
                               <li className="displayAddressLI displayAddressCountryName">{orderData.eachOrder.country}</li>
@@ -250,7 +250,7 @@ class Login extends Component {
                             Payment Method
                           </h5> 
                           <div className="a-row a-spacing-mini">
-                            <img alt="Visa" src="./Order Details_files/visa._CB485936331_.gif" />
+                            <img alt="Visa" src="https://images-na.ssl-images-amazon.com/images/G/01/checkout/payselect/card-logos-small/visa._CB485936331_.gif" />
                             <span>**** {orderData.eachOrder.cardnumber}</span>
                           </div>
                         </div> 

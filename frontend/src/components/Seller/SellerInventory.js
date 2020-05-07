@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogTitle, Button } from "@material-ui/core";
 import { backendServer } from '../../webConfig';
 import AddProductPopUp from './AddProductPopUp';
 import queryString from 'query-string'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import backendServer from "../../webConfig/webConfig";
 
@@ -149,7 +151,11 @@ deleteproduct = async(value) =>
         console.log('data : ', data)
         axios.post(`${backendServer}/product/addProduct`, data)
           .then(response => {
-            alert('Product Successfully Posted');
+            toast.configure();
+            toast.success("Product Added Successfully", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000
+            });
           });
       })
 

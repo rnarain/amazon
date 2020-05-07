@@ -19,6 +19,7 @@ module.exports = {
 
     upload(req, callBack) {
         console.log('In upload');
+        console.log('REQ : ', req)
         aws.config.setPromisesDependency();
         aws.config.update({
             accessKeyId: connectionSting.s3AccessKey,
@@ -30,7 +31,7 @@ module.exports = {
             ACL: 'public-read',
             Bucket: connectionSting.s3BucketName,
             Body: fs.createReadStream(req.file.path),
-            Key: `public/${req.file.originalname}`
+            Key: `images/${req.file.originalname}`
         };
 
         s3.upload(params, (err, data) => {
