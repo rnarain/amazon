@@ -1,14 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { Form, FormControl, FormGroup, Modal, Fade } from 'react-bootstrap';
+import { Form, FormControl, FormGroup, Fade } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import JwPagination from 'jw-react-pagination';
 import { Dialog, DialogContent, DialogTitle, Button } from "@material-ui/core";
+import Modal from 'react-bootstrap/Modal'
+
 import { backendServer } from '../../webConfig';
 import AddProductPopUp from './AddProductPopUp';
 import queryString from 'query-string'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+const validnumber = RegExp(/^\d$/g)
 
 // import backendServer from "../../webConfig/webConfig";
 
@@ -31,18 +35,26 @@ class SellerInventory extends Component {
     this.state = {
       products: [],
       showedit : false,
-      pageOfItems:[],
-      productname : "",
-      description : "",        
+      pageOfItems:[],       
       add_product: false,
-      params:null
+      params:null,
+      name: "",
+      description : "",
+      price : 0,
+      category : "",
+      productid : "",
+      categories : [],
+      errors: {
+        name : '',
+        price : '',
+      }
     }
 
     this.getallsellerproducts = this.getallsellerproducts.bind(this);
     this.handleproductedit = this.handleproductedit.bind(this);
     this.deleteproduct = this.deleteproduct.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
-
+// this.getAllCategories = this.getAllCategories.bind(this);
   }
 
   onChangePage(pageOfItems) {
@@ -51,9 +63,19 @@ class SellerInventory extends Component {
   }
 
 
-  componentDidMount() {
-    this.getallsellerproducts()
-
+  async componentDidMount() {
+   await this.getallsellerproducts()
+    await axios.get(`${backendServer}/category/getAllCategories`)
+    .then(response => {
+        if (response.status === 200) {
+              this.setState({
+                categories: response.data.data      
+              })
+            console.log("categories",response.data.data);
+        } else {
+            console.log("error");
+        }
+    });
   }
 
   componentDidUpdate() {
@@ -67,7 +89,7 @@ class SellerInventory extends Component {
             .then(response => {
                 this.setState({
                     products: response.data.data,
-                 
+                       params: name,
                 })
             }
             ).catch(ex => {
@@ -81,7 +103,6 @@ class SellerInventory extends Component {
     console.log("in get seller products")
     this.setState({
       products: [],
-
     })
     var id = localStorage.getItem("id");
     console.log("id is", id)
@@ -91,12 +112,25 @@ class SellerInventory extends Component {
         products: response.data.data
       })
     })
+   this.setState({
+     errmsg : "",
+     errors : {
+       name:""
+     }
+   })
   }
 
 
-  handleproductedit = (e) => {
+  handleproductedit = (e,value) => {
+    
     this.setState({
-      showedit: true
+      showedit: true,
+      name : value.name,
+      description:value.description,
+      price:value.price,
+      category:value.category,
+      productid : value._id,
+      errors : {name : ""}
     })
   }
 
@@ -144,29 +178,125 @@ class SellerInventory extends Component {
     }
   }
 
+  
+
+
+  handleChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let errors = this.state.errors;
+
+    switch (name) {
+      case 'name':
+        errors.name = value.trim().length > 0
+          ? ''
+          : 'Please Enter the Product Name';
+        break;
+    
+    
+      default:
+        break;
+    }
+     
+  //   this.setState({
+  //     [name]: value
+  // })
+
+  this.setState({errors, [name]: value}, ()=> {
+    console.log(errors)
+})
+  console.log("in handle changes", name,)
+  console.log("in handle",value)
+  }
+    
+
+
+  handleSubmit = async(e) => {
+    const data = {
+        name: this.state.name,
+        description: this.state.description,
+        id: this.state.productid,
+        seller_name: localStorage.getItem('name'),
+        price: this.state.price,
+        category: this.state.category,
+                 }
+
+    
+      if(this.state.errors.name.length > 0)
+      {
+        console.log(this.state.errors.name)
+        this.setState({
+          errmsg : this.state.errors.name
+        })
+      }
+    
+    else
+    {
+    console.log("in handle submit",data)
+    await axios.put(`${backendServer}/sellerinventory/updatesellerproduct/`, data).then(response => {
+      console.log(response.data)
+      toast.configure();
+      toast.success("Product Added Successfully", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000
+      });
+      this.getallsellerproducts();
+    }) 
+  }
+   }
+    
+
+
+   
+//     axios.put(backendServer + "/sellerinventory/updatesellerproduct", data).then(response =>{
+// console.log("in add product",data)
+//     }
+//     )
+  
+  
 
   render() {
     let editform = null;
     let editform1 = null;
-
+    let categoriesDropDownOptions = this.state.categories.map(c => {
+      return (
+    <option key={ c.category } value={c.category}>{ c.category }</option> );
+  })
     editform = (
-      <Dialog open={this.state.showedit} onClose={this.handleClose}>
-
-        <DialogTitle>Edit Product</DialogTitle>
-
-        <DialogContent>
-          <div>
-            <form>
-            </form></div>
-        </DialogContent>
-        <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
-          Close
-    </Button>
-        <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
-          Save Changes
-    </Button>
-      </Dialog>
+        <Modal show={this.state.showedit} style={{ opacity: 1}} >
+        <Modal.Header >
+            <Modal.Title style={{ opacity: 1, marginTop: '190px' }}>Edit the Product
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.closeproductedit}>
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <form>  
+         
+                            <span style={{color:"red"}}>{this.state.errors.name}</span>
+                    <label for="">Product Name</label>
+                    <input type="text" class="form-control" name="name" onInput={this.handleChange} defaultValue={this.state.name} placeholder="enter name" required></input><br/>
+                    <label for="">Price</label>
+                    <input type="number" class="form-control" name="price" onInput={this.handleChange} defaultValue={this.state.price} placeholder="Enter Price" required></input><br/>
+                    <label for="">Product Category</label>
+                    <select onInput={this.handleChange} name="category" defaultValue={this.state.category} required>
+                    {categoriesDropDownOptions}
+                    </select>
+                    <label for="">Description:</label>
+                    <input type="text" class="form-control" name="description" onInput={this.handleChange} defaultValue={this.state.description} placeholder="Enter Description"></input><br/>
+                    <label for="">Offers/Promotions/Discounts</label>
+                    <input type="tel" class="form-control" name="offers" onInput={this.handleChange}></input><br/>
+                    </form>
+        </Modal.Body>
+        <Modal.Footer >
+                  <input type="button" style={{background: '#f0c14b', borderColor: '#a88734' }} value="Update Product" onClick = {this.handleSubmit}></input>
+          
+          {/* <input type="button" style={{background: '#f0c14b', borderColor: '#a88734' }} value="Close" onClick={this.handleClose}></input> */}
+        </Modal.Footer>
+    </Modal>
     )
+
     editform1 = (
       <Modal show={this.state.showedit} style={{ backgroundColor: "none", opacity: 1 }} animation={false}>
         <Modal.Header closeButton>
@@ -210,7 +340,7 @@ class SellerInventory extends Component {
             <h5 class="card-title" style={{ padding: '5px', textAlign: 'center' }}>{item.category} => {item.name}, ${item.price}</h5>
 
             {/* <span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}>Edit</span></Link><br></br> */}
-            <h5 class="card-title" onClick={this.handleproductedit} style={{ textAlign: 'center' }}><Button>Edit Product</Button></h5>
+            <h5 class="card-title" onClick={ e => this.handleproductedit(e,item)} style={{ textAlign: 'center' }}><Button>Edit Product</Button></h5>
 
 
           </div>
