@@ -287,8 +287,8 @@ this.setState({
     this.getallitems();
   }
   
-  render() {
-
+  render() { 
+    var cartdata;
     let savedforlater = this.state.savedcartvalues.map(savedcart => {
       return (<div data-name="Active Items" className="a-row a-spacing-mini sc-list-body sc-java-remote-feature">
 
@@ -361,11 +361,15 @@ this.setState({
       </div>
       )
     })
-    let cartdata = this.state.cartvalues.map(cart => {
+    if(this.state.cartvalues.length > 1)
+    {
+     cartdata = this.state.cartvalues.map(cart => {
 
       return (
         <div data-name="Active Items" className="a-row a-spacing-mini sc-list-body sc-java-remote-feature">
-
+ <h2>
+                          Shopping Cart
+                  </h2>
           <div className="sc-list-overwrap" style={{ display: 'none' }} />
           <div data-asin="B07PF1Y28C" data-encoded-offering="wLEUl5KyZNGvxl5wENyClr61uMDsU8RIMQ6pHgFxtncjSDFC1f%2BF9xxBkN5umyigoIbo6VDRmbKWppjYDhvDk%2BMimMcuDxiu8OAHDmWZKCXJENfa4Z9PIR%2B%2Fi1nE6AFNynhXGJmNlahKq01j0MLLPg%3D%3D" data-giftable={1} data-giftwrapped={0} data-isprimeasin={0} data-item-count={1} data-itemcategory="normal" data-itemid="Cf845a2ba-1356-43ab-a05d-d1a5acb6cce0" data-itemislastpantryitem={0} data-itemtype="active" data-minquantity={1} data-outofstock={0} data-price="99.99" data-quantity={5} data-subtotal="{&quot;numberOfItems&quot;:5,&quot;subtotal&quot;:{&quot;code&quot;:&quot;USD&quot;,&quot;amount&quot;:499.95},&quot;points&quot;:0}" id="sc-item-Cf845a2ba-1356-43ab-a05d-d1a5acb6cce0" className="a-row sc-list-item sc-list-item-border sc-java-remote-feature">
             <div className="sc-list-item-spinner" style={{ display: 'none' }}>
@@ -469,7 +473,17 @@ this.setState({
 
         </div>
       )
-    })
+    })}
+    else
+    {
+      cartdata = <div><h2>Your Shopping Cart is empty</h2>
+      Your Shopping Cart lives to serve. Give it purpose — fill it with books, CDs, DVDs, toys, electronics, and more.
+Continue shopping on the <Link to="/product-search">Amazon.com</Link> homepage.
+      <img src={"/images/kettle.svg"} ></img>
+      </div>
+
+     
+    }
     return (
       <div>
         {/* saved from url=(0177)https://www.amazon.com/gp/cart/view.html?ie=UTF8&app-nav-type=none&dc=df&dc=df&path=%2Fgp%2Fcart%2Fview.html%3Fapp-nav-type%3Dnone&ref_=cart_empty_sign_in&useRedirectOnSuccess=1 */}
@@ -508,7 +522,7 @@ this.setState({
                   </div>
                   <div id="sc-buy-box">
                     <form>
-                      <div className="a-box-group sc-buy-box-group">
+                    {this.state.cartvalues.length > 0 ?<div className="a-box-group sc-buy-box-group">
                         <div className="a-box a-color-alternate-background sc-buy-box-inner-box"><div className="a-box-inner">
                           <div data-name="Subtotals" className="a-row a-spacing-mini sc-subtotal sc-java-remote-feature">
                             <span id="sc-subtotal-label-buybox" className="a-size-medium sc-number-of-items">
@@ -547,7 +561,7 @@ this.setState({
                           <div className="a-section a-text-center sc-buy-box-delivery-info">
                           </div>
                         </div></div>
-                      </div>
+                      </div> : " "}
                     </form>
                   </div>
 
@@ -576,9 +590,7 @@ this.setState({
                     <a name="sc-anchor-active-cart" aria-hidden="true" />
                     <div className="a-row sc-cart-header sc-compact-bottom">
                       <div className="a-row">
-                        <h2>
-                          Shopping Cart
-                  </h2>
+                       
                       </div>
                     </div>
                     <form id="activeCartViewForm" method="post" action="https://www.amazon.com/gp/cart/view.html/ref=ord_cart_shr?app-nav-type=none&dc=df">
@@ -608,7 +620,7 @@ this.setState({
                
                   
                 </div>{/* for right */}
-              </div></div>{/* for cart-left */}
+              </div></div>
               <div>
 
                 <div id="sc-authportal-migration" className="a-row a-hidden" data-signinurl="https://www.amazon.com/ap/signin?_encoding=UTF8&openid.assoc_handle=amazon_checkout_us&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2Fgp%2Fbuy%2Fsignin%2Fhandlers%2Fcontinue.html%3Fie%3DUTF8%26brandId%3D%26cartItemIds%3D%26eGCApp%3D%26hasWorkingJavascript%3D0%26isEGCOrder%3D0%26isFresh%3D0%26oldCustomerId%3D%26oldPurchaseId%3D%26preInitiateCustomerId%3DA1L4DO19ZELRND%26purchaseInProgress%3D%26ref_%3Dcart_signin_submit%26siteDesign%3D&pageId=amazon_checkout_us&showRmrMe=1&siteState=isRegularCheckout.1%7CIMBMsgs.%7CisRedirect.0" />

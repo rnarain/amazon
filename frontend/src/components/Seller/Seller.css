@@ -5,10 +5,9 @@
 }
 
 .a-container {
-    min-width: 998px;
-    padding: 14px 48px 10px 48px;
-    margin: auto;
-    margin-top: 100px;
+    min-width: 100%;
+    /* padding: 14px 48px 10px 48px; */
+    /* margin: auto; */
 }
 
 .modal-backdrop
