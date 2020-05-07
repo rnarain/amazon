@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Form, FormControl, FormGroup, Fade } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import JwPagination from 'jw-react-pagination';
-import { Dialog, DialogContent, DialogTitle, Button } from "@material-ui/core";
+import { Dialog, DialogContent, DialogTitle, Button, Collapse } from "@material-ui/core";
 import Modal from 'react-bootstrap/Modal'
 
 import { backendServer } from '../../webConfig';
@@ -327,12 +327,12 @@ class SellerInventory extends Component {
       return (
         // <div>
         <div class="card" style={{ display: 'inline-block', width: '30%', height: '40%', border: '2px solid #d5dbdb', margin: "2px" }}>
-          <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{ width: '100%', margin: '10px' }}>
+          <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{ width: '100%', margin: '6px' }}>
             <Link onClick={e => this.deleteproduct(item._id)}><span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}></span></Link>
 
 
             <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
-              <img src="https://images-na.ssl-images-amazon.com/images/I/81PW0jPGzvL._SY355_.jpg" alt="img" width="90%" height={280} className="sc-product-image" />
+              <img  src={item.images.length > 0 ? '/images/products/'+item.images[0].file_name : "/images/no-image.jpg"}   alt="img" width="90%" height={280} className="sc-product-image" />
             </a>
           </div>
           <div></div>
@@ -340,7 +340,7 @@ class SellerInventory extends Component {
             <h5 class="card-title" style={{ padding: '5px', textAlign: 'center' }}>{item.category} => {item.name}, ${item.price}</h5>
 
             {/* <span className="glyphicon glyphicon-trash" style={{ fontSize: 15, color: "black" }}>Edit</span></Link><br></br> */}
-            <h5 class="card-title" onClick={ e => this.handleproductedit(e,item)} style={{ textAlign: 'center' }}><Button>Edit Product</Button></h5>
+            <h5 class="card-title" onClick={ e => this.handleproductedit(e,item)} style={{ textAlign: 'center' }}><Button variant="primary" color="primary">Edit Product</Button></h5>
 
 
           </div>
@@ -349,26 +349,24 @@ class SellerInventory extends Component {
     let navMessage= this.state.params ? `Showing search results for ${this.state.params}` : "Nothing to search"
 
     return (
-      <div className="a-container">
+      <div>
       {navMessage}
         {editform}
-        <table class="table table-striped table-bordered table-sm" cellspacing="0">
+        <table style={{borderCollapse:"collapse"}} class="table table-striped table-bordered table-sm" cellspacing="0">
           <thead>
-            <tr>
+            <tr align="right">
               <th>
-                <td>
-                  Search Bar
-      </td>
+                
               </th>
               <th style={{ backgroundColor: "#FFA500" }} align="right">
-                <td >
-                  {this.state.add_product ? <AddProductPopUp parentCallback={this.addProductCallBackFunction} /> : <input type="button" value="Add Product" onClick={() => { this.setState({ add_product: true }) }} />}
+                <td align="right">
+                  {this.state.add_product ? <AddProductPopUp parentCallback={this.addProductCallBackFunction} /> : <input type="button" value="Add Product" align="right" onClick={() => { this.setState({ add_product: true }) }} />}
                 </td>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr align="center">
               <td>
                 <div>
                   {newArr}
@@ -385,17 +383,17 @@ class SellerInventory extends Component {
           <tfoot >
             <tr>
               <th>
-                <div>
-                  <Fragment>
-                    <JwPagination align="center" items={this.state.products} onChangePage={this.onChangePage} styles={customStyles} />
-                  </Fragment>
-                </div>
+               
               </th>
             </tr>
           </tfoot>
         </table>
 
-
+        <div align="center">
+                  <Fragment>
+                    <JwPagination align="center" items={this.state.products} onChangePage={this.onChangePage} styles={customStyles} />
+                  </Fragment>
+                </div>
 
 
       </div>
