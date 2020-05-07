@@ -16,8 +16,11 @@ class AddProductPopUp extends Component {
             category: '',
             description: '',
             images: [],
-            images_new: []
+            images_new: [],
+            categories: this.props.categories
         }
+
+        console.log(this.props);
     }
 
     handleTextChange = (e) => {
@@ -114,7 +117,14 @@ class AddProductPopUp extends Component {
                         <form>
                             <h4 style={{ display: 'inline' }}> Name : </h4> <input style={{ display: 'inline' }} type="text" name="name" onChange={this.handleTextChange} /> <br /> <br />
                             <h4 style={{ display: 'inline' }}> Description : </h4> <textarea rows='3' cols='25' name="description" onChange={this.handleTextChange} /> <br /> <br />
-                            <h4 style={{ display: 'inline' }}> Category : </h4> <input style={{ display: 'inline' }} type="text" name="category" onChange={this.handleTextChange} /> <br /> <br />
+                            <h4 style={{ display: 'inline' }}> Category : </h4>
+                            <select name="category" onChange={(e) => { this.setState({ category: e.target.value }); console.log(e.target.value) }}>
+                                {this.state.categories.map(item =>
+                                    <option value={item.category}> {item.category} </option>
+                                )};
+                            </select>
+                            {/* <input style={{ display: 'inline' }} type="text" name="category" onChange={this.handleTextChange} /> <br /> <br /> */}
+                            <br /> <br />
                             <h4 style={{ display: 'inline' }}> Price : </h4> <input style={{ display: 'inline' }} type="text" name="price" onChange={this.handleTextChange} /> <br /> <br />
                             <h4> Upload Images : </h4>
                             <input type="file" multiple onChange={this.onFileSeletedHandler} />
