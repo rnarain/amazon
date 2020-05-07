@@ -1,12 +1,14 @@
 const {
     orders,
     cancelOrders,
-    getTrackingDetails
+    getTrackingDetails,
 } = require("./orders.service");
 
 const jwt = require('jsonwebtoken');
 const { secret } = require('../../config/configValues');
 var kafka = require('../../kafka/client');
+var sqlpool = require('../../config/sqlconfig');
+
 
 console.log('req');
 module.exports = {

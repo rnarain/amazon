@@ -15,8 +15,12 @@ import Address from './Address/Address';
 import AdminCategories from './Admin/Category/ListCategories';
 import AdminProducts from './Admin/Category/ListProducts';
 import ListSellers from './Admin/Sellers/ListSellers';
+import SellerOrders from './Seller/Orders/Orders';
+
 import ListProductsBySellerName from './Admin/Sellers/ListProductsBySellerName';
 import AdminDashboard from './Admin/Dashboard/Dashboard';
+import SellerMonthlySales from './Admin/Sellers/SellerMonthlySales';
+
 
 
 
@@ -65,6 +69,7 @@ class Main extends Component {
                         <Route exact path="/seller/name=:name" component={SellerPage} />
                         <Route exact path="/customer/profile" component={CustomerProfile} />
                         <Route exact path="/orders/" component={Orders}/>
+                        <Route exact path="/seller-orders" component={SellerOrders}/>
                         <Route exact path="/sellerinventory/" component={SellerInventory}/>
                         <Route exact path="/orderdetails/" component={OrderDetailsPage}/>
 
@@ -80,6 +85,7 @@ class Main extends Component {
                         <Route path="/admin-product/:name" component={AdminProducts}/>
                         <Route path="/list-sellers" component={ListSellers}/>
                         <Route path="/list-seller-products/:name" component={ListProductsBySellerName}/>
+                        <Route path="/list-monthly-sales/:id" component={SellerMonthlySales}/>
                         <Route path="/admin-dashboard" component={AdminDashboard}/>
 
 

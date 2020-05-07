@@ -21,7 +21,12 @@ module.exports = {
     }else if(req.body.type == "Open"){
       getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus <> "Delivered" And productandorders.deliverystatus <> "Cancelled"';
       console.log('inside open');
-    }else{
+    }
+    else if(req.body.type == "Seller"){
+    getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where  productandorders.sellerid = "' +  req.body.sellerid + '" ORDER BY order.orderdate DESC';
+    }
+    
+    else{
       getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus ="Cancelled"';
       console.log('inside nit open');
     }
@@ -40,7 +45,9 @@ module.exports = {
           
           var productList = [];
           for(var eachOrderId of orderObj){
-            productList.push(eachOrderId.productid);
+            if(!productList.includes(eachOrderId.productid)){
+              productList.push(eachOrderId.productid);
+            }
           }
           
           //Get mongo data //Get products
@@ -61,7 +68,7 @@ module.exports = {
              // }
             });
 
-            // console.log("kailash console=>"+ JSON.stringify(orderObj))
+            console.log(orderObj)
             
             for(let eachOrder of orderObj){
               if(orderDetailsMap && orderDetailsMap.has(eachOrder.orderid)){
@@ -89,10 +96,10 @@ module.exports = {
               
             }
             //console.log('productList',orderDetailsMap);
-            console.log("kailash console=>",orderDetailsMap)
+            // console.log("kailash console=>",orderDetailsMap)
             res.body = orderDetailsMap;
             var arrayList = Array.from( orderDetailsMap.values() );
-            console.log('productList',orderDetailsMap.values());
+            // console.log('productList',orderDetailsMap.values());
             return res.send(arrayList);
           });
 
@@ -111,6 +118,7 @@ module.exports = {
 
     });
   },
+
 
   cancelOrders: (req, res) => {
 
