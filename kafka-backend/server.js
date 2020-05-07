@@ -6,6 +6,8 @@ var Address = require('./services/address.js');
 var Card = require('./services/card.js');
 var Checkout = require('./services/checkout.js');
 var Cart = require('./services/cart.js');
+var Seller = require('./services/seller.js');
+var SellerInventory = require('./services/seller_inventory');
 
 const { mongoDB} = require('./config/configValues');
 
@@ -67,4 +69,6 @@ handleTopicRequest("address", Address);
 handleTopicRequest("card", Card);
 handleTopicRequest("checkout", Checkout);
 handleTopicRequest("cart", Cart);
+handleTopicRequest("seller", Seller);
+handleTopicRequest("seller-inventory", SellerInventory);
 

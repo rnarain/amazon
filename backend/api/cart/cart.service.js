@@ -327,18 +327,18 @@ module.exports = {
     });
 
 
-    console.log("inside delete cart", body)
-    // return callBack(null, "Success");
-    User.update(
-      { _id: body.id },
-      { $pull: { cart: { $exists: true } } },
-      (error, result) => {
-        console.log(result)
-        if (error) {
-          callBack(error);
-        }
-        return callBack(null, result);
-      });
+    // console.log("inside delete cart", body)
+    // // return callBack(null, "Success");
+    // User.update(
+    //   { _id: body.id },
+    //   { $pull: { cart: { $exists: true } } },
+    //   (error, result) => {
+    //     console.log(result)
+    //     if (error) {
+    //       callBack(error);
+    //     }
+    //     return callBack(null, result);
+    //   });
   }
 
 

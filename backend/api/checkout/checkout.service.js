@@ -5,8 +5,6 @@ module.exports = {
 
   placeOrder: (orderdetails, callBack) => {
 
-    
-
     const params = {
       orderdetails: orderdetails,
       path: 'place-order'
@@ -16,11 +14,7 @@ module.exports = {
       if (error) {
         callBack(error);
       }
-      results = {
-          status: "200",
-          message: "Order placed successfully"
-        }
-      return callBack(null, results);
+      return callBack(null, result);
     });
 
     // const card = orderdetails.card;

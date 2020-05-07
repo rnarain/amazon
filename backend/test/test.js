@@ -7,20 +7,20 @@ var agent = require('chai').request.agent(app);
 
 describe('amazon test', function () {
 
-    it('GET /getProductDetails - Get Product Details', function (done) {
-        const _id = '5e967879668b061d392f4b7d';
-        agent.get('/product/getProductDetails/', _id)
-            .then(function (res) {
-                expect(res.body.success).to.equal(1);
-                done();
-            })
-            .catch((e) => {
-                done(e);
-            });
-    });
+    // it('GET /getProductDetails - Get Product Details', function (done) {
+    //     const _id = '5eb4645941ec51849fb7a75b';
+    //     agent.get('/product/getProductDetails/', _id)
+    //         .then(function (res) {
+    //             expect(res.body.success).to.equal(1);
+    //             done();
+    //         })
+    //         .catch((e) => {
+    //             done(e);
+    //         });
+    // });
 
     it('GET /getCustomerDetails - Get details of the customer', function (done) {
-        const _id = '5e9ecd3ed5359705519db18b'
+        const _id = '5ea4c57c89f77fce1106f251'
         agent.get('/customer/getCustomerDetails', _id)
             .then(function (res) {
                 expect(res.body.success).to.equal(1);
@@ -57,8 +57,8 @@ describe('amazon test', function () {
 
 
     it('GET /getAllCategories - Get all product categories', function (done) {
-        const _id = '5ea4c57c89f77fce1106f251'
-        agent.get('/category/getAllCategories', _id)
+        // const _id = '5ea4c57c89f77fce1106f251'
+        agent.get('/category/getAllCategories')
             .then(function (res) {
                 expect(res.body.success).to.equal(1);
                 done();

@@ -1,21 +1,36 @@
 var sqlpool = require('../../config/sqlconfig');
 const User = require("../../Models/UserModel");
 const Product = require("../../Models/ProductModel")
+var kafka = require('../../kafka/client');
 
 module.exports = {
     getsellerproducts : (body,callBack) => {
-      console.log("id is",body);
-    Product.find({seller_id: body }, (error, result) => {
-    if (error) {
-      callBack(error);
+
+      const params = {
+        body: body,
+        path: 'get-seller-products'
     }
-    else 
-    {
-        console.log("results from seller products")
-    // console.log(result)
-  }
-  return callBack(null, result);
-  });
+
+    kafka.make_request('seller-inventory', params, (error, result) => {
+        if (error) {
+            callBack(error);
+        }
+        return callBack(null, result);
+    });
+
+    
+      // console.log("id is",body);
+  //   Product.find({seller_id: body }, (error, result) => {
+  //   if (error) {
+  //     callBack(error);
+  //   }
+  //   else 
+  //   {
+  //       console.log("results from seller products")
+  //   // console.log(result)
+  // }
+  // return callBack(null, result);
+  // });
 },
 
 
