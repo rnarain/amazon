@@ -61,6 +61,17 @@ class Navbar extends Component {
                    alert(ex);
                 });
             }
+            else if(localStorage.getItem('type')==='Seller'){
+                axios.get(`${backendServer}/category/getAllCategories`)
+                .then(response => {
+                        this.setState({
+                            categories : response.data.data
+                        })
+                    }
+                ).catch( ex =>{
+                   alert(ex);
+                });
+            }
             
     }
 
@@ -178,6 +189,11 @@ class Navbar extends Component {
         });
         if (this.state.redirect && localStorage.getItem('type')==='Customer') {
             let link = "/product-search?name=" + this.state.searchValue + "&category=" + this.state.selectedCategory;
+            redirectVar = <Redirect to={link} />
+        }
+        else if (this.state.redirect && localStorage.getItem('type')==='Seller') {
+            console.log("he is a seller")
+            let link = "/sellerinventory?name=" + this.state.searchValue + "&category=" + this.state.selectedCategory + "&seller_id=" + localStorage.getItem("id");
             redirectVar = <Redirect to={link} />
         }
 

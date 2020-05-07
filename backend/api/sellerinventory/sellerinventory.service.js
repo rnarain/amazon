@@ -4,15 +4,15 @@ const Product = require("../../Models/ProductModel")
 
 module.exports = {
     getsellerproducts : (body,callBack) => {
-    //   console.log("id is",body);
-    Product.find({seller_id: '5eaaa3be714680116063c7bd' }, (error, result) => {
+      console.log("id is",body);
+    Product.find({seller_id: body }, (error, result) => {
     if (error) {
       callBack(error);
     }
     else 
     {
         console.log("results from seller products")
-    console.log(result)
+    // console.log(result)
   }
   return callBack(null, result);
   });
