@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal'
 
+const validCardRegex = RegExp(/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/g);
+const validCvvRegex = RegExp(/^[0-9]{3}$/g);
+
 
 class AddPaymentMethod extends Component{
   constructor(props) {
@@ -12,44 +15,85 @@ class AddPaymentMethod extends Component{
       cardname : null,
       cardnumber : null,
       cardcvv : null,
-      cardtype : null
+      cardtype : null,
+      errors: {
+        cardnumber : '',
+        cvv : '',
+      }
     }
   }
-  getExpDt =(e) =>{
-  console.log(e.target.value);
-    this.setState({
-      expdt : e.target.value
-    })
-  }
-  getCardType =(e) =>{
-    console.log(e.target.value);
-      this.setState({
-        cardtype : e.target.value
-      })
+
+  handleChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let errors = this.state.errors;
+  console.log("inside card error");
+    switch (name) {
+      case 'cardnumber':
+        errors.cardnumber = 
+        validCardRegex.test(value)
+          ? ''
+          : 'Card is not in valid format, use correct format 0000-0000-0000-0000';
+        break;
+      case 'cvv':
+        errors.cvv =
+        validCvvRegex.test(value)
+        ? ''
+        : 'Not a valid format, use 000 format'
+        break;
+      // case 'phone':
+      //   errors.phone =
+      //   validPhoneRegex.test(value)
+      //   ? ''
+      //   : 'Not a valid format, use 000-000-0000 format'
+      //   break;
+      default:
+        break;
     }
-  getCardName =(e) =>{
-  console.log(e.target.value);
-    this.setState({
-      cardname : e.target.value
+  
+    this.setState({errors, [name]: value}, ()=> {
+        console.log(errors)
     })
   }
-  getCardNumber =(e) =>{
-    console.log(e.target.value);
-    this.setState({
-      cardnumber : e.target.value
-    })
+
+  validateForm = () => {
+    let valid = true;
+    const card = this.props.paymentdetails;
+    console.log("Validate ", this.state , card)
+    if( (!this.state.cardname && (card ? !card.cardname : true)) ||
+        (!this.state.cardtype && (card ? !card.cardtype : true)) ||
+        (!this.state.cardnumber  && (card ? !card.cardnumber : true))||
+        (!this.state.cvv && (card ? !card.cvv : true))|| 
+        (!this.state.expirydate && (card ? !card.expirydate: true)) ) 
+    {
+       valid = false;
+    }
+    Object.values(this.state.errors).forEach(
+      (val) => val.length > 0 && (valid = false)
+    );
+    console.log("validate form :", valid)
+    return valid;
   }
-  getCardCvv =(e) =>{
-    console.log(e.target.value);
-    this.setState({
-      cardcvv : e.target.value
-    })
-  }
-  getCardType =(e) =>{
-    console.log(e.target.value);
-    this.setState({
-      cardtype : e.target.value
-    })
+  handleSave = (e) => {
+    this.setState({ show: false });
+    const card = this.props.paymentdetails;
+    if(this.validateForm()) {
+      const data = {
+                    invalid : false, 
+                    cardid : card ? card._id : null,
+                    cardname : this.state.cardname || card.cardname,
+                    cardnumber : this.state.cardnumber || card.cardnumber,
+                    cardtype : this.state.cardtype || card.cardtype, 
+                    cvv : this.state.cvv || card.cvv,
+                    expirydate : this.state.expirydate || card.expirydate, 
+                  };
+      this.props.parentCallback(data);
+    }else{
+      const data = {invalid : true};
+      console.log("Data is",data);
+      this.props.parentCallback(data);
+      console.error('Invalid Form')
+    }
   }
 
   handleClose = (e) => {

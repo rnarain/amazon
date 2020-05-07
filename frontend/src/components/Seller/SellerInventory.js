@@ -141,27 +141,9 @@ class SellerInventory extends Component {
     })
   }
 
-  handleeditdeschange = (e) =>
-  {
-this.setState({
-  description : e.target.value
-})
-  }
-
-
-handleeditnamechange = (e) =>
-{
-  this.setState({
-   productname: e.target.value
-  })
-
-}
-
-deleteproduct = async(value) =>
-{
-  const data = {
-    id : value
- 
+  deleteproduct = async (value) => {
+    const data = {
+      id: value
     }
     console.log("in delete product", value);
     await axios.post(`${backendServer}/sellerinventory/removeproduct/`, data).then(response => {

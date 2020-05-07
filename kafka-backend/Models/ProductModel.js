@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var productSchema = new Schema({
+    _id: { type: Schema.ObjectId, auto: true },
     name: { type: String, required: true },
     category: { type: String, required: true },
     description: { type: String, default: '' },
@@ -9,8 +10,10 @@ var productSchema = new Schema({
     seller_name: { type: String, required: true },
     view_count: { type: Number, default: 0 },
     price: { type: Number, required: true },
-    images: [{ file_name: String }],
-
+    images: [ new Schema({ file_name: String }, {_id: false})],
+    deliverystatus: { type: String },
+    id: { type: String },//Orderandproduct tables id
+    quantity:{type:String},
     ratings: [{
         stars: Number,
         comment: String,

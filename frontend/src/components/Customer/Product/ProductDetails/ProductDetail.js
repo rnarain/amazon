@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import {backendServer, frontendServer} from '../../../../webConfig'
+import { backendServer, frontendServer } from '../../../../webConfig'
 import axios from 'axios';
 import { StarRating } from '../../../../helperFunctions/ratings';
 import ReviewPopUp from './ReviewPopUp';
 import SellerPage from '../../SellerPage';
 import { Link } from 'react-router-dom';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 var renderedOutput;
 var reviewOutput;
@@ -23,7 +26,7 @@ class ProductDetail extends Component {
             selected_image: '',
             price: 0,
             addReview: 0,
-            quantity: 1,
+            quantity: 0,
             category: '',
             reviewEditable: false
         }
@@ -41,7 +44,7 @@ class ProductDetail extends Component {
                     seller_id: response_data.seller_id,
                     seller_name: response_data.seller_name,
                     view_count: response_data.view_count,
-                    images: response_data.images.length > 0 ? response_data.images : this.state.images.concat({file_name : "/images/no-image.jpg"}),
+                    images: response_data.images.length > 0 ? response_data.images : this.state.images.concat({ file_name: "/images/no-image.jpg" }),
                     ratings: response_data.ratings,
                     price: response_data.price,
                     selected_image: response_data.images.length > 0 ? response_data.images[0].file_name : "/images/no-image.jpg",
@@ -53,7 +56,7 @@ class ProductDetail extends Component {
 
     showImages = (e) => {
         renderedOutput = this.state.images.map(item =>
-            
+
             <div class="images_preview" style={{ marginBottom: '15px' }}>
                 <img src={frontendServer + '/images/products/' + item.file_name} style={{ width: '80px' }} alt="im" onClick={(e) => { this.setState({ selected_image: item.file_name }) }} />
                 {/* <div className="row"> " " </div> */}
@@ -76,7 +79,7 @@ class ProductDetail extends Component {
     }
 
     addReviewCallBackFunction = (data) => {
-        
+
         if (data.cancel === 1) {
             this.setState({ addReview: 0 })
         }
@@ -90,12 +93,16 @@ class ProductDetail extends Component {
                 const data = {
                     ratings: this.state.ratings,
                     id: this.state.product_id,
-                    name : this.state.name
+                    name: this.state.name
                 }
                 console.log('data : ', data)
                 axios.post(`${backendServer}/product/addReview`, data)
                     .then(response => {
-                        alert('Comment Successfully Posted');
+                        toast.configure();
+                        toast.success("Comment Posted Successfully", {
+                            position: toast.POSITION.TOP_CENTER,
+                            autoClose: 3000
+                        });
                     });
             })
 
@@ -111,7 +118,7 @@ class ProductDetail extends Component {
     onSelect = (e) => {
         console.log(e.target.value)
         this.setState({
-            quantity : e.target.value
+            quantity: e.target.value
         })
     }
 
@@ -119,27 +126,31 @@ class ProductDetail extends Component {
 
         debugger
         const data = {
-            id : localStorage.getItem('id'),
-            product_id : this.state.product_id,
-            product_count : this.state.quantity,
+            id: localStorage.getItem('id'),
+            product_id: this.state.product_id,
+            product_count: this.state.quantity,
             productname: this.state.name,
             category: this.state.category,
             description: this.state.description,
             seller_id: this.state.seller_id,
             seller_name: this.state.seller_name,
-            total_value : this.state.quantity * this.state.price,
-            price : this.state.price,
-            isagift : false,
-            giftmessage : '',
+            total_value: this.state.quantity * this.state.price,
+            price: this.state.price,
+            isagift: false,
+            giftmessage: '',
             image: this.state.selected_image
         }
-        axios.post(backendServer+'/cart/addtocart', data)
-        .then(response => {
-            if(response.data.success === 1){
-                alert('Added to cart successfully');
-                window.location.href="/carthome"
-            }
-        })
+        axios.post(backendServer + '/cart/addtocart', data)
+            .then(response => {
+                if (response.data.success === 1) {
+                    toast.configure();
+                    toast.success("Added to Cart Successfully", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose: 3000
+                    });
+                    window.location.href = "/carthome"
+                }
+            })
 
     }
 
@@ -147,7 +158,7 @@ class ProductDetail extends Component {
         let avgRating = this.state.ratings.reduce((r, c) => r + c.stars, 0) / this.state.ratings.length;
         return (
 
-            <div className="amazon-body container-fluid" style={{minHeight: '75vh'}}>
+            <div className="amazon-body container-fluid" style={{ minHeight: '75vh' }}>
                 <div className="profile-container card-columns">
                     <div className="row">
                         <div className="col-sm-1">
@@ -166,7 +177,7 @@ class ProductDetail extends Component {
                         {/* <div className="col-md-2"></div> */}
                         <div className="col-md-2">
                             <h1> {this.state.name} </h1>
-                            <Link to={{ pathname: "/seller/name="+this.state.seller_name, seller_id: this.state.seller_id }} style={{ color: '#0066c0' }} > by {this.state.seller_name} </Link>
+                            <Link to={{ pathname: "/seller/name=" + this.state.seller_name, seller_id: this.state.seller_id }} style={{ color: '#0066c0' }} > by {this.state.seller_name} </Link>
 
                             <div className="star-rating">
                                 {isNaN(avgRating) ? null : <StarRating ratings={avgRating} />}

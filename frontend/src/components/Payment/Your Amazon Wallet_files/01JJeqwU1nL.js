@@ -1,1 +1,0 @@
-(function(){var a=PaymentsPortal2.modules.define;a("components/PayAtStoreComponent",["components/SimplePaymentOptionListItemComponent"],function(a){return a.extend({_getContainerElement:function(){return this.getDOMElement("pasContainer")}})})})();
