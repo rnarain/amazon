@@ -26,7 +26,7 @@ class ProductDetail extends Component {
             selected_image: '',
             price: 0,
             addReview: 0,
-            quantity: 0,
+            quantity: 1,
             category: '',
             reviewEditable: false
         }
@@ -44,10 +44,10 @@ class ProductDetail extends Component {
                     seller_id: response_data.seller_id,
                     seller_name: response_data.seller_name,
                     view_count: response_data.view_count,
-                    images: response_data.images.length > 0 ? response_data.images : this.state.images.concat({ file_name: "/images/no-image.jpg" }),
+                    images: response_data.images.length > 0 ? response_data.images : this.state.images.concat({ file_name: "no-image.jpg" }),
                     ratings: response_data.ratings,
                     price: response_data.price,
-                    selected_image: response_data.images.length > 0 ? response_data.images[0].file_name : "/images/no-image.jpg",
+                    selected_image: response_data.images.length > 0 ? response_data.images[0].file_name : "no-image.jpg",
                     category: response_data.category
                 })
             });
@@ -192,8 +192,8 @@ class ProductDetail extends Component {
                             <div class="card-body">
                                 <h1 class="card-title"> ${this.state.price} </h1>
                                 <p class="card-text"> & FREE Shipping</p>
-                                <p class="card-text"> Arrives: <b> May 4 - 12</b></p>
-                                <p class="card-text"> Fastest Delivery: <b> April 30 - May 5</b></p>
+                                <p class="card-text"> Arrives: <b> May 12 - 16</b></p>
+                                <p class="card-text"> Fastest Delivery: <b> May 10 - May 11</b></p>
 
                                 {/* <Dropdown value={this.state.quantity} options={this.state.quantities} style={{width: '5em'}}/> */}
                                 <select onChange={this.onSelect} id="qty">
