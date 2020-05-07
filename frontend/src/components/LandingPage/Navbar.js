@@ -26,9 +26,12 @@ class Navbar extends Component {
     handleLogout = () => {
         localStorage.removeItem('id');
         localStorage.removeItem('type');
+        localStorage.removeItem('token');
+        localStorage.removeItem('name');
         this.setState({
             logoutRedirect : true
         })
+        window.location.href="/login";
     }
 
     componentDidMount() {
