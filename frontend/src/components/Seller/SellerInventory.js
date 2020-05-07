@@ -107,27 +107,9 @@ class SellerInventory extends Component {
     })
   }
 
-  handleeditdeschange = (e) =>
-  {
-this.setState({
-  description : e.target.value
-})
-  }
-
-
-handleeditnamechange = (e) =>
-{
-  this.setState({
-   productname: e.target.value
-  })
-
-}
-
-deleteproduct = async(value) =>
-{
-  const data = {
-    id : value
- 
+  deleteproduct = async (value) => {
+    const data = {
+      id: value
     }
     console.log("in delete product", value);
     await axios.post(`${backendServer}/sellerinventory/removeproduct/`, data).then(response => {
@@ -168,36 +150,17 @@ deleteproduct = async(value) =>
     let editform1 = null;
 
     editform = (
-      <Dialog open={this.state.showedit}  aria-labelledby="customized-dialog-title" onClose={this.handleClose}>
+      <Dialog open={this.state.showedit} onClose={this.handleClose}>
 
-          <DialogTitle>Edit Product</DialogTitle>
-  
-          <DialogContent>
-          <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label> Name</Form.Label>
-            <Form.Control
-              type="text"
-              // placeholder="Enter Usergroup Name"
-              name="productname"
-              defaultValue={this.state.productname}
-              // onKeyDown={this.onKeyUp}
-              onChange={this.handleeditnamechange}
-            />
-          </Form.Group>
-          <Form.Group controlId="exampleForm.ControlInput1">
-            <Form.Label> Description</Form.Label>
-            <Form.Control
-              type="text"
-              // placeholder="Enter Description"
-              name="description"
-              defaultValue={this.state.description}
-              // onKeyDown={this.onKeyUp}
-              onChange={this.handleeditdeschange}
-            />
-          </Form.Group>
+        <DialogTitle>Edit Product</DialogTitle>
+
+        <DialogContent>
+          <div>
+            <form>
+            </form></div>
         </DialogContent>
-          <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
-              Close
+        <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
+          Close
     </Button>
         <Button variant="outlined" colour="primary" onClick={this.closeproductedit}>
           Save Changes

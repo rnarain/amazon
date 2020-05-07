@@ -41,9 +41,8 @@ module.exports = {
         });
       });
   },
-  deleteCategory: (req, res) => {
-    console.log("ya");
-    Product.find({category :  req.body.category} , (error, product) =>{
+  deleteCategory:  async (req, res) => {
+    await Product.findOne({category :  req.body.category} , async (error, product) =>{
       console.log(product)
       if(product){
         return res.status(200).json({
@@ -52,7 +51,7 @@ module.exports = {
         });
       }
       else{
-        Category.deleteOne({category : req.body.category},(error, results) => {
+        await Category.deleteOne({category : req.body.category},async (error, results) => {
           if (error) {
             return res.status(200).json({
               success: 0,

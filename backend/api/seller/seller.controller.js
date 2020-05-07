@@ -1,6 +1,6 @@
 const {
     getSellerDetails, getSellerProducts , getAllSellers,
-    updateProfile
+    updateProfile ,getSellerMonthlySales
   } = require("./seller.service");
   
   const jwt = require('jsonwebtoken');
@@ -25,6 +25,19 @@ const {
 
     getAllSellers: (req, res) => {
       getAllSellers((err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        return res.json({
+          success: 1,
+          data: results
+        });
+      });
+    },
+    getSellerMonthlySales: (req, res) => {
+      let id = req.params.id;
+      getSellerMonthlySales(id,(err, results) => {
         if (err) {
           console.log(err);
           return;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import {  toast } from 'react-toastify';
 
 import './AmazonCheckoutFiles/01CGKqzfp4L.css';
 import './AmazonCheckoutFiles/01GNzT-9TkL.css';
@@ -22,8 +23,8 @@ import './AmazonCheckoutFiles/loading-4x._CB485930722_.gif';
 import './AmazonCheckoutFiles/loading-4x._V391853216_.gif';
 import './AmazonCheckoutFiles/secured-ssl._CB485936932_.png';
 import { backendServer } from '../../webConfig'
-import AddPaymentMethod from './AddPaymentMethod';
-import AddAddresMethod from './AddAddressMethod';
+import AddPaymentMethod from '../Payment/AddPaymentMethod';
+import AddAddresMethod from '../Address/AddAddressMethod';
 import axios from 'axios';
 
 
@@ -78,6 +79,11 @@ class Checkout extends Component {
     this.setState({
       shippingaddress: this.state.renderaddresses[this.state.addressindex]
     });
+    toast.configure();
+    toast.success("Address selected", {
+      position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000
+    })
   }
 
   currentPayment = (e) => {
@@ -85,6 +91,11 @@ class Checkout extends Component {
     this.setState({
       paymentmethod: this.state.renderpayments[this.state.paymentindex]
     });
+    toast.configure();
+    toast.success("Card selected", {
+      position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000
+    })
   }
 
   placeOrder = async (e) => {

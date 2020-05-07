@@ -5,7 +5,7 @@ console.log('test api');
 const {
     orders,
     cancelOrders,
-    getTrackingDetails
+    getTrackingDetails,
 } = require("./orders.service");
 
 let checkAuth = passport.authenticate('jwt', { session: false });
@@ -14,6 +14,7 @@ let checkAuth = passport.authenticate('jwt', { session: false });
 router.post("/getOrders", orders);
 router.post("/cancelOrders", cancelOrders);
 router.post("/getTrackingDetails", getTrackingDetails);
+
 
 
 module.exports = router;

@@ -65,13 +65,13 @@ class AddAddressMethod extends Component{
     let valid = true;
     const address = this.props.addressdetails;
 
-    if( (!this.state.name && !address.name)||
-        (!this.state.streetaddressline_1 && !address.streetaddressline_1 )||
-        (!this.state.streetaddressline_2  && !address.streetaddressline_2)||
-        (!this.state.city && !address.city)||
-        (!this.state.state  && !address.state)||
-        (!this.state.zipcode && !address.zipcode)|| 
-        (!this.state.phone && !address.phone)) 
+    if( (!this.state.name && (address ? !address.name : true))||
+        (!this.state.streetaddressline_1 &&  (address ? !address.streetaddressline_1: true))||
+        (!this.state.streetaddressline_2  && (address ? !address.streetaddressline_2 : true))||
+        (!this.state.city && (address ? !address.city : true))||
+        (!this.state.state  && (address?  !address.state : true))||
+        (!this.state.zipcode && (address ? !address.zipcode : true))|| 
+        (!this.state.phone && (address? !address.phone : true)) ) 
     {
        valid = false;
     }
@@ -129,7 +129,7 @@ class AddAddressMethod extends Component{
               </Modal.Header>
               <Modal.Body>
                   <form>  
-                          <label for="cardnumber">Country/Region</label>
+                          <label for="country">Country/Region</label>
                           <select class="form-control" name="country" onChange={this.handleChange}>
                             <option>United States</option>
                           </select>                           

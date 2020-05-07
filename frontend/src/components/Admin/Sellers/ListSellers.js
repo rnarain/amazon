@@ -48,6 +48,7 @@ class ListSellers extends Component {
     render() {
         let sellers = this.state.filteredSellers.map(seller => {
                 let viewProductsLink="/list-seller-products/" + seller.name;
+                let viewSalesLink = "/list-monthly-sales/" + seller._id
                 return (
                     <tr>
                     {/* <th scope="row"></th> */}
@@ -55,7 +56,7 @@ class ListSellers extends Component {
                     <td>{seller.email}</td>
                     <td>{seller.address}</td>
                     <td><Link to={viewProductsLink} className="btn btn-outline ">View Products</Link></td>
-                    <td><Link to={viewProductsLink} className="btn btn-outline-success ">View Sales</Link></td>
+                    <td><Link to={viewSalesLink} className="btn btn-outline-success ">View Sales</Link></td>
                   </tr>
                 )
         })
