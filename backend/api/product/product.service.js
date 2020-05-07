@@ -2,8 +2,11 @@ const Product = require("../../Models/ProductModel");
 const User = require("../../Models/UserModel");
 const client = require("../../config/redisconfig");
 var kafka = require('../../kafka/client');
+var multer = require('multer');
+const fs = require('fs');
+const aws = require('aws-sdk');
+const connectionStrings = require("../../config/configValues")
 
-const {upload} = require('../customer/customer.service')
 
 module.exports = {
 
@@ -175,20 +178,51 @@ module.exports = {
 
   addProduct: (data, callBack) => {
     console.log("In add products service");
-    // User.find({ seller_id : data.seller_id, userType: 'Seller'}, (error, results) => {
-    //   if(error)
-    //     callBack(error);
-    //   if(results.length == 0)
-    //     return callBack(null, 'No Seller with this ID')
-    // })
+    console.log(data);
     Product.create({ name: data.name, description: data.description, price: data.price, category: data.category, seller_id: data.seller_id, seller_name: data.seller_name, images: data.images }, (error, results) => {
       if (error)
         callBack(error);
-      // if(data.images.length > 0){
-      //   upload(data.images[0]);
-      // }
+
       return callBack(null, results);
     });
+
+  },
+
+  uploadMultiple: (req, callBack) => {
+
+    aws.config.setPromisesDependency();
+    aws.config.update({
+      accessKeyId: connectionStrings.s3AccessKey,
+      secretAccessKey: connectionStrings.s3SecretAccessKey,
+      region: connectionStrings.s3region
+    });
+    const s3 = new aws.S3();
+    const file = req.files;
+
+    file.map((item) => {
+      if (item.path != null) {
+        var params = {
+          ACL: 'public-read',
+          Bucket: connectionStrings.s3BucketName,
+          Body: fs.createReadStream(item.path),
+          Key: `images/products/${item.originalname}`
+        };
+
+        s3.upload(params, (err, data) => {
+
+          if (err) {
+            console.log('Error occured while trying to upload to S3 bucket', err);
+          }
+
+          if (data) {
+
+          }
+        });
+
+      }
+    });
+
+
 
   }
 

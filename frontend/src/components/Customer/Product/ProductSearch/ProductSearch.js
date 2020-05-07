@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import backendServer from "../../../webConfig";
 import { connect } from 'react-redux';
-import { backendServer } from '../../../../webConfig'
+import { backendServer, frontendServer } from '../../../../webConfig'
 import queryString from 'query-string'
 import {getRatings } from '../../../../helperFunctions/ratingsStatic'
 import JwPagination from 'jw-react-pagination';
@@ -112,7 +112,7 @@ class ProductSearch extends Component {
                     <div className="box-part col-sm-3" key={product._id}>
                         <div className="card-body">
                             <div className="product-image">
-                                <img className="img-fluid" src={product.images.length > 0 ? product.images[0].file_name : "images/no-image.jpg"} />
+                                <img className="img-fluid" src={product.images.length > 0 ? frontendServer+'/images/products/'+product.images[0].file_name : "images/no-image.jpg"} />
     
                             </div>
                             <a className="product-heading" href={productUrl}>{product.name}</a>

@@ -1,6 +1,6 @@
 const {
   searchProduct, getProductDetails,
-  addReview, insertProducts, addProduct,
+  addReview, insertProducts, addProduct, uploadMultiple,
   searchProductWithKafka, searchProductWithRedis, getProductsByCategoryName
 } = require("./product.service");
 
@@ -164,6 +164,21 @@ module.exports = {
       return res.json({
         success: 1,
         data: results
+      });
+    });
+
+    
+  },
+
+  uploadMultiple : (req, res) => {
+    uploadMultiple(req, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.json({
+        success: 1,
+        data: null
       });
     });
   }
