@@ -6,6 +6,7 @@ import { Redirect, withRouter, Route } from 'react-router';
 //import importScripts from 'import-scripts'
 //import logo from './Amazon Sign-In_files/amazonlogo.png';
 import moment from 'moment/moment';
+import {backendServer} from '../../../webConfig'
 
 
 const jwt_decode = require('jwt-decode');
@@ -30,7 +31,7 @@ class Login extends Component {
     //Bind the handlers to this className
     this.emailChangeHandler = this.emailChangeHandler.bind(this);
     this.passwordChangeHandler = this.passwordChangeHandler.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
+    //this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -46,7 +47,7 @@ class Login extends Component {
     }
     axios.defaults.withCredentials = true;
     //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-    axios.post('http://localhost:3001/' + 'orders/getOrders', data)
+    axios.post(`${backendServer}/orders/getOrders`, data)
       .then(response => {
         if (response) {
           console.log('response', response.data);
@@ -101,7 +102,7 @@ class Login extends Component {
   }
 
   //submit Login handler to send a request to the node backend
-  handleLogin = (e) => {
+  /*handleLogin = (e) => {
     const form = document.getElementById("signIn");
     form.reportValidity();
     if (form.checkValidity()) {
@@ -115,7 +116,7 @@ class Login extends Component {
       axios.defaults.withCredentials = true;
       //make a post request with the user data
       console.log('req.body', data);
-      axios.post('http://localhost:3001/' + 'login/', data)
+      axios.post(`${backendServer}/login/`, data)
         .then(response => {
           if (response) {
             localStorage.setItem("token", response.data.token);
@@ -140,7 +141,7 @@ class Login extends Component {
         });
     }
 
-  }
+  }*/
 
   render() {
     const { orderData } = this.props.location;
