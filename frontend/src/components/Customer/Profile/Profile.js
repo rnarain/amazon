@@ -25,19 +25,20 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        this.getData();
+    }
+
+    getData = () => {
+        console.log('In get Data');
         axios.get(backendServer + "/customer/getCustomerDetails", { params: { _id: localStorage.getItem('id') } })
-            .then(response => {
-                debugger
-                this.setState({
-                    name: response.data.data.name,
-                    profile_pic: response.data.data.profile_pic,
-                    count_of_votes: response.data.data.count_of_votes,
-                    user_ratings: response.data.data.ratings
-                })
+        .then(response => {
+            this.setState({
+                name: response.data.data.name,
+                profile_pic: response.data.data.profile_pic,
+                count_of_votes: response.data.data.count_of_votes,
+                user_ratings: response.data.data.ratings
             })
-
-        console.log(this.state);
-
+        })
     }
 
     handleShow = (e) => {
@@ -53,7 +54,6 @@ class Profile extends Component {
     }
 
     handleSubmit = (e) => {
-        debugger
         const data = {
             id: this.state.id,
             name: this.state.name,
@@ -109,6 +109,7 @@ class Profile extends Component {
         this.setState({
             selected_image : ''
         })
+        this.getData();
     }
 
     render() {

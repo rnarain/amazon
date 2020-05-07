@@ -6,6 +6,9 @@ import JwPagination from 'jw-react-pagination';
 import { Dialog, DialogContent, DialogTitle, Button } from "@material-ui/core";
 import { backendServer } from '../../webConfig';
 import AddProductPopUp from './AddProductPopUp';
+import queryString from 'query-string'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import backendServer from "../../webConfig/webConfig";
 
@@ -27,10 +30,12 @@ class SellerInventory extends Component {
     //maintain the state required for this component
     this.state = {
       products: [],
-      showedit: false,
-      pageOfItems: [],
-      add_product: false
-
+      showedit : false,
+      pageOfItems:[],
+      productname : "",
+      description : "",        
+      add_product: false,
+      params:null
     }
 
     this.getallsellerproducts = this.getallsellerproducts.bind(this);
@@ -51,6 +56,26 @@ class SellerInventory extends Component {
 
   }
 
+  componentDidUpdate() {
+    console.log("in component did update")
+    let name = queryString.parse(this.props.location.search).name;
+    console.log(this.props.location.search)
+    console.log(name)
+    if (name != this.state.params) {
+
+        axios.get(`${backendServer}/sellerinventory/searchproductinventory${this.props.location.search}`)
+            .then(response => {
+                this.setState({
+                    products: response.data.data,
+                 
+                })
+            }
+            ).catch(ex => {
+                alert(ex);
+            });
+    
+          }
+}
 
   getallsellerproducts = async (e) => {
     console.log("in get seller products")
@@ -60,7 +85,7 @@ class SellerInventory extends Component {
     })
     var id = localStorage.getItem("id");
     console.log("id is", id)
-    await axios.get(`${backendServer}/sellerinventory/getsellerproducts/`).then(response => {
+    await axios.get(`${backendServer}/sellerinventory/getsellerproducts/`+ id).then(response => {
       console.log(response.data)
       this.setState({
         products: response.data.data
@@ -108,7 +133,11 @@ class SellerInventory extends Component {
         console.log('data : ', data)
         axios.post(`${backendServer}/product/addProduct`, data)
           .then(response => {
-            alert('Product Successfully Posted');
+            toast.configure();
+            toast.success("Product Added Successfully", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000
+            });
           });
       })
 
@@ -187,9 +216,11 @@ class SellerInventory extends Component {
           </div>
         </div>)
     })
+    let navMessage= this.state.params ? `Showing search results for ${this.state.params}` : "Nothing to search"
 
     return (
       <div className="a-container">
+      {navMessage}
         {editform}
         <table class="table table-striped table-bordered table-sm" cellspacing="0">
           <thead>

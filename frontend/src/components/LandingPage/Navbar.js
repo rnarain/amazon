@@ -61,6 +61,17 @@ class Navbar extends Component {
                    alert(ex);
                 });
             }
+            else if(localStorage.getItem('type')==='Seller'){
+                axios.get(`${backendServer}/category/getAllCategories`)
+                .then(response => {
+                        this.setState({
+                            categories : response.data.data
+                        })
+                    }
+                ).catch( ex =>{
+                   alert(ex);
+                });
+            }
             
     }
 
@@ -114,9 +125,8 @@ class Navbar extends Component {
                 <div className="col-sm-7">
                     <ul className="nav navbar-nav xshop">
                         <li><Link to="/company/postings">Your Reviews</Link></li>
-                        <li><Link to="/cards">Cards</Link></li>
+                        <li><Link to="/payment">Cards</Link></li>
                         <li><Link to="/address">Address</Link></li>
-
                     </ul>
                 </div>
                 <div className="col-sm-3">&nbsp;</div>
@@ -178,6 +188,11 @@ class Navbar extends Component {
         });
         if (this.state.redirect && localStorage.getItem('type')==='Customer') {
             let link = "/product-search?name=" + this.state.searchValue + "&category=" + this.state.selectedCategory;
+            redirectVar = <Redirect to={link} />
+        }
+        else if (this.state.redirect && localStorage.getItem('type')==='Seller') {
+            console.log("he is a seller")
+            let link = "/sellerinventory?name=" + this.state.searchValue + "&category=" + this.state.selectedCategory + "&seller_id=" + localStorage.getItem("id");
             redirectVar = <Redirect to={link} />
         }
 

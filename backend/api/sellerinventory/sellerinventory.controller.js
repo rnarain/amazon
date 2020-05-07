@@ -53,11 +53,14 @@ const {
       },
 
       searchproductinventory: (req, res) => {
-        var queryObject = req.query;
-        console.log(queryObject);
+        console.log("in search product inventory")
+        // var queryObject = url.parse(req.url, true).query;
+
+        console.log(req.query)
+       body = req.query
 
   
-        searchproductinventory(queryObject,(err, results) => {
+        searchproductinventory(body,(err, results) => {
           if (err) {
             console.log(err);
             return;

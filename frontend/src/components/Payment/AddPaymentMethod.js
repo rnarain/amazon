@@ -11,10 +11,10 @@ class AddPaymentMethod extends Component{
     this.state = {
       show: true,
       cancel: 0,
-      expdt : null,
+      expirydate : null,
       cardname : null,
       cardnumber : null,
-      cardcvv : null,
+      cvv : null,
       cardtype : null,
       errors: {
         cardnumber : '',
@@ -22,12 +22,11 @@ class AddPaymentMethod extends Component{
       }
     }
   }
-
   handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     let errors = this.state.errors;
-  console.log("inside card error");
+  // console.log("inside card error");
     switch (name) {
       case 'cardnumber':
         errors.cardnumber = 
@@ -55,6 +54,7 @@ class AddPaymentMethod extends Component{
         console.log(errors)
     })
   }
+
 
   validateForm = () => {
     let valid = true;
@@ -96,34 +96,23 @@ class AddPaymentMethod extends Component{
     }
   }
 
+
   handleClose = (e) => {
     this.setState({ show: false });
     const data = { cancel: 1 };
     this.props.parentCallback(data)
   }
 
-  handleSave= () =>{
-    this.setState({ show: false });
-    
-    const data = 
-    { invalid : (!this.state.cardnumber || !this.state.cardname || !this.state.expdt ||
-                !this.state.cardtype || !this.state.cardcvv),
-      cardnumber : this.state.cardnumber,
-      cardname : this.state.cardname,
-      expirydate : this.state.expdt,
-      cardtype : this.state.cardtype,
-      cvv : this.state.cardcvv
-    }
-    this.props.parentCallback(data)
-  }
-
   render(){
+    console.log("Here",this.props.paymentdetails);
+    const card=this.props.paymentdetails;
+
     return (
       <>
-          <link rel="stylesheet" href="./Amazon.com Checkout_files/51AZ-Jz5kmL._RC_51da3H-4SUL.css,01evdoiemkL.css,01K+Ps1DeEL.css,31pdJv9iSzL.css,01W6EiNzKkL.css,11UGC+GXOPL.css,21LK7jaicML.css,11L58Qpo0GL.css,21kyTi1FabL.css,01ruG+gDPFL.css,01YhS3Cs-hL.css,21GwE3cR-yL.css,019SHZnt8RL.css,01wAWQRgXzL.css,21bWcRJYNIL.css" />
-          <Modal show={this.state.show} style={{ opacity: 1, marginTop: '250px' }} >
+          {/* <link rel="stylesheet" href="./Amazon.com Checkout_files/51AZ-Jz5kmL._RC_51da3H-4SUL.css,01evdoiemkL.css,01K+Ps1DeEL.css,31pdJv9iSzL.css,01W6EiNzKkL.css,11UGC+GXOPL.css,21LK7jaicML.css,11L58Qpo0GL.css,21kyTi1FabL.css,01ruG+gDPFL.css,01YhS3Cs-hL.css,21GwE3cR-yL.css,019SHZnt8RL.css,01wAWQRgXzL.css,21bWcRJYNIL.css" /> */}
+          <Modal show={this.state.show} style={{ opacity: 1 }} >
               <Modal.Header >
-                  <Modal.Title style={{ opacity: 1, marginTop: '120px' }}>Add a credit or debit card
+                  <Modal.Title style={{ opacity: 1, marginTop: '150px' }}>Add a credit or debit card
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.handleClose}>
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -132,14 +121,18 @@ class AddPaymentMethod extends Component{
               <Modal.Body>
                   <form>
                           <label for="cardnumber">Card Number</label>
-                          <input type="telno" class="form-control" id="cno" style={{width:'200px'}} onChange={this.getCardNumber}pattern='/^[0-9]{12,16}$/' required maxLength="16"></input><br/>
+                          <input  placeholder={card?card.cardnumber:null} type="telno" class="form-control" name="cardnumber" style={{width:'200px'}} onChange={this.handleChange} ></input>
+                          {this.state.errors.cardnumber.length > 0 && 
+                            <span style={{color:"red"}}>{this.state.errors.cardnumber}</span>}<br/>
                           <label for="cardname">Name on card</label>
-                          <input type="text" class="form-control" id="cname" style={{width:'200px'}} onChange={this.getCardName} required></input><br/>
+                          <input type="text" placeholder={card?card.cardname:null}  class="form-control" name="cardname" style={{width:'200px'}} onChange={this.handleChange} ></input><br/>
                           <label for="expdt">Expiration date:</label>
-                          <input type="date" class="form-control" id="expdt" style={{width:'200px'}} onChange={this.getExpDt} required></input><br/>
+                          <input placeholder={card?card.expirydate:null} type="date" class="form-control" name="expirydate" style={{width:'200px'}} onChange={this.handleChange} ></input><br/>
                           <label for="cardcvv">CVV</label>
-                          <input type="telno" class="form-control" id="cno" style={{width:'200px'}} onChange={this.getCardCvv} pattern='/^[0-9]{3}$/' required maxLength="3"></input><br/>
-                          <select style={{width:'200px'}} onChange ={this.getCardType}class="form-control" id="cardtype">
+                          <input placeholder={card?card.cvv:null} type="telno" class="form-control" name ="cvv" style={{width:'200px'}} onChange={this.handleChange}  ></input>
+                          {this.state.errors.cvv.length > 0 && 
+                            <span style={{color:"red"}}>{this.state.errors.cvv}</span>}<br/>
+                          <select style={{width:'200px'}} onChange ={this.handleChange}class="form-control" name="cardtype">
                             <option>-Select Card Type-</option>
                             <option value="Credit">Credit</option>
                             <option value="Debit">Debit</option>

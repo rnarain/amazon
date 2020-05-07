@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {backendServer} from '../../../../webConfig'
+import {backendServer, frontendServer} from '../../../../webConfig'
 import axios from 'axios';
 import { StarRating } from '../../../../helperFunctions/ratings';
 import ReviewPopUp from './ReviewPopUp';
@@ -55,7 +55,7 @@ class ProductDetail extends Component {
         renderedOutput = this.state.images.map(item =>
             
             <div class="images_preview" style={{ marginBottom: '15px' }}>
-                <img src={item.file_name} style={{ width: '80px' }} alt="im" onClick={(e) => { this.setState({ selected_image: item.file_name }) }} />
+                <img src={frontendServer + '/images/products/' + item.file_name} style={{ width: '80px' }} alt="im" onClick={(e) => { this.setState({ selected_image: item.file_name }) }} />
                 {/* <div className="row"> " " </div> */}
 
             </div>
@@ -159,7 +159,7 @@ class ProductDetail extends Component {
 
                             </div> */}
                             {this.state.images[0] != null ?
-                                <img src={this.state.selected_image} style={{ width: '450px' }} class="image-fluid"></img> :
+                                <img src={frontendServer + '/images/products/' + this.state.selected_image} style={{ width: '450px' }} class="image-fluid"></img> :
                                 null}
 
                         </div>
