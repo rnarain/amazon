@@ -361,7 +361,7 @@ this.setState({
       </div>
       )
     })
-    if(this.state.cartvalues.length > 1)
+    if(this.state.cartvalues.length > 0)
     {
      cartdata = this.state.cartvalues.map(cart => {
 

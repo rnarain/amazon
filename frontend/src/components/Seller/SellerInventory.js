@@ -6,7 +6,7 @@ import JwPagination from 'jw-react-pagination';
 import { Dialog, DialogContent, DialogTitle, Button, Collapse } from "@material-ui/core";
 import Modal from 'react-bootstrap/Modal'
 
-import { backendServer } from '../../webConfig';
+import { backendServer, frontendServer } from '../../webConfig';
 import AddProductPopUp from './AddProductPopUp';
 import queryString from 'query-string'
 import { ToastContainer, toast } from 'react-toastify';
@@ -332,7 +332,7 @@ class SellerInventory extends Component {
 
 
             <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
-              <img  src={item.images.length > 0 ? '/images/products/'+item.images[0].file_name : "/images/no-image.jpg"}   alt="img" width="90%" height={280} className="sc-product-image" />
+              <img  src={item.images.length > 0 ? frontendServer+'/images/products/'+item.images[0].file_name : "/images/no-image.jpg"}   alt="img" width="90%" height={280} className="sc-product-image" />
             </a>
           </div>
           <div></div>
@@ -360,7 +360,7 @@ class SellerInventory extends Component {
               </th>
               <th style={{ backgroundColor: "#FFA500" }} align="right">
                 <td align="right">
-                  {this.state.add_product ? <AddProductPopUp parentCallback={this.addProductCallBackFunction} /> : <input type="button" value="Add Product" align="right" onClick={() => { this.setState({ add_product: true }) }} />}
+                  {this.state.add_product ? <AddProductPopUp categories={this.state.categories} parentCallback={this.addProductCallBackFunction} /> : <input type="button" value="Add Product" align="right" onClick={() => { this.setState({ add_product: true }) }} />}
                 </td>
               </th>
             </tr>
