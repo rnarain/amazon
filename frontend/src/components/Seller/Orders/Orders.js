@@ -5,7 +5,7 @@ import { Redirect, withRouter, Route } from 'react-router';
 import { Nav ,Button} from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
-//import backendServer from '../../webConfig'
+import {backendServer, frontendServer} from '../../../webConfig'
 //import importScripts from 'import-scripts'
 //import logo from './Amazon Sign-In_files/amazonlogo.png';
 import moment from 'moment/moment';
@@ -70,7 +70,7 @@ class Order extends Component {
     }
     axios.defaults.withCredentials = true;
     //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-    axios.post('http://localhost:3001/' + 'orders/getOrders', data)
+    axios.post(backendServer + 'orders/getOrders', data)
       .then(response => {
         if (response) {
           console.log('response', response.data);
@@ -134,7 +134,7 @@ showTrackingDetails = (e) => {
   console.log('id',e.target.id);
   axios.defaults.withCredentials = true;
   //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-  axios.post('http://localhost:3001/' + 'orders/getTrackingDetails', data)
+  axios.post(backendServer + 'orders/getTrackingDetails', data)
     .then(response => {
       console.log('response',response);
       this.setState({
@@ -320,7 +320,7 @@ showTrackingDetails = (e) => {
                               <div className="a-text-center a-fixed-left-grid-col a-col-left" style={{ width: '100px', marginLeft: '-100px', float: 'left' }}>
                                 <div className="item-view-left-col-inner">
                                   <a className="a-link-normal" >
-                                  <img className="img-fluid" src={eachProduct.images.length > 0 ? eachProduct.images[0].file_name : ""} />
+                                  <img className="img-fluid" src={eachProduct.images.length > 0 ? frontendServer+'/images/products/'+eachProduct.images[0].file_name : ""} />
                                   </a>
                                 </div>
                               </div>

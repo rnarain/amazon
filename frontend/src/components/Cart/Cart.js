@@ -305,7 +305,7 @@ this.setState({
                 <div className="a-fixed-left-grid"><div className="a-fixed-left-grid-inner" style={{ paddingLeft: '190px' }}>
                 <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{width: '190px', marginLeft: '-190px', float: 'left'}}>
                       <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
-                        <img src={savedcart.image} alt="img" width={180} height={180} className="sc-product-image" />
+                        <img src={frontendServer+'/images/products/'+savedcart.image} alt="imghere" width={180} height={180} className="sc-product-image" />
                       </a>
                     </div>
                   <div className="a-fixed-left-grid-col a-col-right" style={{ paddingLeft: '0%', float: 'left' }}>
@@ -379,7 +379,7 @@ this.setState({
                   <div className="a-fixed-left-grid"><div className="a-fixed-left-grid-inner" style={{ paddingLeft: '190px' }}>
                     <div className="a-fixed-left-grid-col a-float-left sc-product-image-desktop a-col-left" style={{width: '190px', marginLeft: '-190px', float: 'left'}}>
                       <a className="a-link-normal sc-product-link" target="_self" rel="noopener" >
-                        <img src={cart.image} alt="img" width={180} height={180} className="sc-product-image" />
+                        <img src={frontendServer+'/images/products/'+cart.image[0]} alt="imgherest" width={180} height={180} className="sc-product-image" />
                       </a>
                     </div>
                     <div className="a-fixed-left-grid-col a-col-right" style={{ paddingLeft: '0%', float: 'left' }}>

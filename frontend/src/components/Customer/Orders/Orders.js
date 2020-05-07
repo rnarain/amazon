@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import { Redirect, withRouter, Route } from 'react-router';
 import { Nav ,Button} from 'react-bootstrap';
-
+import { backendServer, frontendServer } from '../../../webConfig'; 
 import { Link } from 'react-router-dom';
 //import backendServer from '../../webConfig'
 //import importScripts from 'import-scripts'
@@ -79,7 +79,7 @@ class Login extends Component {
     }
     axios.defaults.withCredentials = true;
     //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-    axios.post('http://localhost:3001/' + 'orders/getOrders', data)
+    axios.post(backendServer + 'orders/getOrders', data)
       .then(response => {
         if (response) {
           console.log('response', response.data);
@@ -123,7 +123,7 @@ class Login extends Component {
   console.log('id',e.target.id);
   axios.defaults.withCredentials = true;
   //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-  axios.post('http://localhost:3001/' + 'orders/cancelOrders', data)
+  axios.post(backendServer + 'orders/cancelOrders', data)
     .then(response => {
       console.log('inside response');
       toast.configure();
@@ -161,7 +161,7 @@ showTrackingDetails = (e) => {
   console.log('id',e.target.id);
   axios.defaults.withCredentials = true;
   //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-  axios.post('http://localhost:3001/' + 'orders/getTrackingDetails', data)
+  axios.post(backendServer + 'orders/getTrackingDetails', data)
     .then(response => {
       console.log('response',response);
       this.setState({
@@ -215,7 +215,7 @@ showTrackingDetails = (e) => {
     }
     axios.defaults.withCredentials = true;
     //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
-    axios.post('http://localhost:3001/' + 'orders/getOrders', data)
+    axios.post(backendServer + 'orders/getOrders', data)
       .then(response => {
         if (response) {
           console.log('response', response.data);
@@ -266,7 +266,7 @@ showTrackingDetails = (e) => {
       axios.defaults.withCredentials = true;
       //make a post request with the user data
       console.log('req.body', data);
-      axios.post('http://localhost:3001/' + 'login/', data)
+      axios.post(backendServer + 'login/', data)
         .then(response => {
           if (response) {
             localStorage.setItem("token", response.data.token);
@@ -484,7 +484,7 @@ showTrackingDetails = (e) => {
                               <div className="a-text-center a-fixed-left-grid-col a-col-left" style={{ width: '100px', marginLeft: '-100px', float: 'left' }}>
                                 <div className="item-view-left-col-inner">
                                   <a className="a-link-normal" >
-                                  <img className="img-fluid" src={eachProduct.images.length > 0 ? eachProduct.images[0].file_name : ""} />
+                                  <img className="img-fluid" src={eachProduct.images.length > 0 ? frontendServer+'/images/products/'+eachProduct.images[0].file_name : ""} />
                                   </a>
                                 </div>
                               </div>

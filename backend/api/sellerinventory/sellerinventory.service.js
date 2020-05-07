@@ -38,14 +38,16 @@ removeproduct :  (body,callBack) =>
 },
 
 updatesellerproduct :(data,callBack)=>{
-  Product.updateOne({ _id : data.id }, 
-  { "$set": 
+  console.log("product is getting updated")
+  Product.updateOne(
+    { _id : data.id }, 
+  { $set : 
     {
       name: data.name,
       category: data.category,
       description: data.description,
-      view_count: data.count,
       price: data.price,
+      
     }  
   },  (error, results) => {
     if (error) {
