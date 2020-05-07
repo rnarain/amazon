@@ -16,7 +16,7 @@ import AdminCategories from './Admin/Category/ListCategories';
 import AdminProducts from './Admin/Category/ListProducts';
 import ListSellers from './Admin/Sellers/ListSellers';
 import SellerOrders from './Seller/Orders/Orders';
-
+import ChangeOrderStatus from './Seller/Orders/ChangeOrderStatus';
 import ListProductsBySellerName from './Admin/Sellers/ListProductsBySellerName';
 import AdminDashboard from './Admin/Dashboard/Dashboard';
 import SellerMonthlySales from './Admin/Sellers/SellerMonthlySales';
@@ -87,6 +87,9 @@ class Main extends Component {
                         <Route path="/list-seller-products/:name" component={ListProductsBySellerName}/>
                         <Route path="/list-monthly-sales/:id" component={SellerMonthlySales}/>
                         <Route path="/admin-dashboard" component={AdminDashboard}/>
+                        <Route path="/change-order-status/:id" component={ChangeOrderStatus}/>
+
+                        
 
 
                         {footer}

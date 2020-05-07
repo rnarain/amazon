@@ -60,3 +60,20 @@ export const months = {
     10:"Nov",
     11:"Dec",
     }
+
+export const deliveryStatus = {
+    "Pending" : 0,
+    "Packing" : 1,
+    "Out for shipping" : 2,
+    "Package arrived" : 3,
+    "Out for delivery" : 4,
+    "Delivered" : 5
+}
+export const deliveryStatusReverse = {
+    0 : "Pending",
+    1 : "Packing",
+    2 : "Out for shipping",
+    3 : "Package arrived",
+    4 : "Out for delivery",
+    5 : "Delivered"
+}

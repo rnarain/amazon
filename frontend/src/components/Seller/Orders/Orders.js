@@ -102,12 +102,13 @@ class Order extends Component {
         filteredOrderedList :this.state.orderList.filter(f=>!status.includes(f.deliverystatus))
       })
 
-    }else if("Delivered"){
+    }else if(e ==="Delivered"){
       this.setState({
         filteredOrderedList :this.state.orderList.filter(f=>f.deliverystatus === "Delivered")
       })
     }
     else{
+      console.log("in cancel")
       this.setState({
         filteredOrderedList :this.state.orderList.filter(f=>f.deliverystatus === "Cancelled")
       })
@@ -206,7 +207,7 @@ showTrackingDetails = (e) => {
 
     let orderDetailsList = this.state.pageOfItems.map(eachOrder => {
       var formattedOrderDate = moment(eachOrder.orderdate).format('MMMM Do YYYY');
-
+      let changeStatusLink = "/change-order-status/" + eachOrder.id;
 
       return (
         <Fragment>
@@ -303,17 +304,12 @@ showTrackingDetails = (e) => {
                         </div>
                         <div className="actions" style={{ width: '220px' }}>
                           <div className="a-row">
-                          {eachProduct.deliverystatus != 'Cancelled' &&
-                            <div className="a-button-stack">
-                              <span className="a-declarative" data-action="set-shipment-info-cookies" data-set-shipment-info-cookies="{}">
-                                <span className="a-button a-button-base track-package-button" id="a-autoid-3"><span className="a-button-inner">
-                                <span className="a-button-text"  id={eachProduct.id} onClick={this.showTrackingDetails} >
-                                  Track package
-                                  </span>
-                              </span></span>
-                              </span>
-                            </div>
-                          }
+                          {eachProduct.deliverystatus != 'Delivered'  && eachProduct.deliverystatus != 'Cancelled' && 
+                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-7"><span className="a-button-inner">
+                                <a className="a-button-text" role="button" id={eachProduct.id} href={changeStatusLink}>
+                                    Change Order Status
+                                  </a></span></span>
+                              }
                           </div>
                         </div>
                       </div>
@@ -348,12 +344,6 @@ showTrackingDetails = (e) => {
                           <div className="a-row">
                             <div className="a-button-stack">
                             
-                              {eachProduct.deliverystatus != 'Delivered'  && eachProduct.deliverystatus != 'Cancelled' && 
-                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-7"><span className="a-button-inner">
-                                <span className="a-button-text" role="button" id={eachProduct.id} onClick={this.handleButtonClick}>
-                                    Cancel Product Order
-                                  </span></span></span>
-                              }
                             </div>
                           </div>
                         </div>
