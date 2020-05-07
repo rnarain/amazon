@@ -16,6 +16,7 @@
     "glob": "^7.1.2",
     "images-upload-middleware": "^1.1.1",
     "kafka-node": "^2.5.0",
+    "make": "^0.8.1",
     "mongodb": "^2.2.31",
     "mongodb-autoincrement": "^1.0.1",
     "mongoose": "^5.9.5",

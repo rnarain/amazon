@@ -25,7 +25,6 @@ module.exports = {
       if (error) {
         callBack(error);
       }
-      // console.log(result);
       return callBack(null, result);
     });
   },
@@ -87,85 +86,96 @@ module.exports = {
       if (error) {
         callBack(error);
       }
-      console.log(result);
       return callBack(null, result);
     });
 
   },
 
   getProductDetails: (data, callBack) => {
-    // const productDetailsRedisKey = 'product_id:details';
-
-    // return client.get(productDetailsRedisKey, (err, details) => {
-    //   if (details) {
-    //     console.log('GETTING KEY VALUE ')
-
-    //     return callBack(null, JSON.parse(details));
-    //   }
-    //   else {
-    //     Product.findOne({ _id: data._id }, (error, details) => {
-    //       if (error) {
-    //         callBack(error);
-    //       }
-    //       client.setex(productDetailsRedisKey, 3600, JSON.stringify(details))
-    //       console.log('SET KEY VALUE')
-    //       return callBack(null, details);
-
-    //     });
-
-    //   }
-    // })
-
-
-    Product.findOne({ _id: data._id }, (error, result) => {
+    const params = {
+      data: data,
+      path: 'get-product-details'
+    }
+    kafka.make_request('product', params, (error, result) => {
       if (error) {
-        console.log('error')
         callBack(error);
       }
       return callBack(null, result);
     });
+
+
+    // Product.findOne({ _id: data._id }, (error, result) => {
+    //   if (error) {
+    //     console.log('error')
+    //     callBack(error);
+    //   }
+    //   return callBack(null, result);
+    // });
 
   },
   getProductsByCategoryName: (name, callBack) => {
-    Product.find({ category: name }, (error, result) => {
+
+    const params = {
+      data: name,
+      path: 'get-products-by-category'
+    }
+    kafka.make_request('product', params, (error, result) => {
       if (error) {
         callBack(error);
       }
       return callBack(null, result);
     });
+    
+    // Product.find({ category: name }, (error, result) => {
+    //   if (error) {
+    //     callBack(error);
+    //   }
+    //   return callBack(null, result);
+    // });
   },
 
   addReview: (data, callBack) => {
-    console.log('In service ', data);
-    Product.findOneAndUpdate({ _id: data.id }, { $set: { ratings: data.ratings } }, { new: true }, (error, result) => {
-      if (error) {
-        callBack(error);
-      }
-    })
 
-    userRating = {
-      product_id: data.id,
-      product_name: data.name,
-      stars: data.ratings[data.ratings.length - 1].stars,
-      comment: data.ratings[data.ratings.length - 1].comment
+    const params = {
+      data : data,
+      path : 'add-review'
     }
 
-    console.log(userRating)
-
-
-
-    User.findOneAndUpdate({ _id: data.ratings[data.ratings.length - 1].user_id }, { $push: { ratings: userRating } }, { upsert: true }, (error, result) => {
+    kafka.make_request('product', params, (error, result) => {
       if (error) {
         callBack(error);
       }
-      // console.log(result);
       return callBack(null, result);
-    })
+    });
+
+    // Product.findOneAndUpdate({ _id: data.id }, { $set: { ratings: data.ratings } }, { new: true }, (error, result) => {
+    //   if (error) {
+    //     callBack(error);
+    //   }
+    // })
+
+    // userRating = {
+    //   product_id: data.id,
+    //   product_name: data.name,
+    //   stars: data.ratings[data.ratings.length - 1].stars,
+    //   comment: data.ratings[data.ratings.length - 1].comment
+    // }
+
+    // console.log(userRating)
+
+
+
+    // User.findOneAndUpdate({ _id: data.ratings[data.ratings.length - 1].user_id }, { $push: { ratings: userRating } }, { upsert: true }, (error, result) => {
+    //   if (error) {
+    //     callBack(error);
+    //   }
+    //   // console.log(result);
+    //   return callBack(null, result);
+    // })
 
   },
 
   insertProducts: (data, callBack) => {
-    console.log('IN insertProducts Service');
     for (let i = 0; i < data.num_of_products; i++) {
       Product.create({ name: "kapil" + i, price: 232, category: 'All', seller_id: '5ea4c57c89f77fce1106f251', seller_name: 'Great Value' }, (error, result) => {
         if (error)
@@ -177,14 +187,26 @@ module.exports = {
   },
 
   addProduct: (data, callBack) => {
-    console.log("In add products service");
-    console.log(data);
-    Product.create({ name: data.name, description: data.description, price: data.price, category: data.category, seller_id: data.seller_id, seller_name: data.seller_name, images: data.images }, (error, results) => {
-      if (error)
-        callBack(error);
 
-      return callBack(null, results);
+    const params = {
+      data : data,
+      path : 'add-product'
+    }
+
+    kafka.make_request('product', params, (error, result) => {
+      if (error) {
+        callBack(error);
+      }
+      return callBack(null, result);
     });
+
+    // console.log(data);
+    // Product.create({ name: data.name, description: data.description, price: data.price, category: data.category, seller_id: data.seller_id, seller_name: data.seller_name, images: data.images }, (error, results) => {
+    //   if (error)
+    //     callBack(error);
+
+    //   return callBack(null, results);
+    // });
 
   },
 

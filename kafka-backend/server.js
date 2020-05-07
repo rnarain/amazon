@@ -1,6 +1,9 @@
 var connection =  new require('./kafka/Connection');
 //topics files
 var Product = require('./services/product.js');
+var Customer = require('./services/customer.js');
+var Address = require('./services/address.js');
+var Card = require('./services/card.js');
 
 const { mongoDB} = require('./config/configValues');
 
@@ -56,6 +59,9 @@ function handleTopicRequest(topic_name,fname){
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-handleTopicRequest("product",Product)
+handleTopicRequest("product",Product);
+handleTopicRequest("customer",Customer);
+handleTopicRequest("address", Address);
+handleTopicRequest("card", Card);
 
 

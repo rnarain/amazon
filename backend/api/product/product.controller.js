@@ -39,6 +39,7 @@ var upload = multer({
 
 module.exports = {
   searchProduct: (req, res) => {
+    var queryObject = url.parse(req.url, true).query;
     console.log(queryObject);
     searchProduct(queryObject, (err, results) => {
       if (err) {
