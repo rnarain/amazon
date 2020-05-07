@@ -16,7 +16,11 @@ module.exports = {
       if (error) {
         callBack(error);
       }
-      return callBack(null, result);
+      results = {
+          status: "200",
+          message: "Order placed successfully"
+        }
+      return callBack(null, results);
     });
 
     // const card = orderdetails.card;
