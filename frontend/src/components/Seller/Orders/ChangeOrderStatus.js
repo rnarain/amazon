@@ -31,7 +31,7 @@ class ChangeOrderStatus extends Component {
         var data = {
             id: this.props.match.params.id
           }
-        axios.post('http://localhost:3001/orders/getTrackingDetails', data)
+        axios.post(backendServer+'/orders/getTrackingDetails', data)
         .then(response => {
         console.log('response',response);
         this.setState({

@@ -197,9 +197,6 @@ class Login extends Component {
                                                         Your name
                                 </label>
                                                     <input name="name" type="text" onChange={this.handleChange} required maxLength={50} id="ap_customer_name" autoComplete="off" tabIndex={1} className="a-input-text a-span12 auth-autofocus auth-required-field auth-contact-verification-request-info" />
-                                                    <div id="auth-customerName-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                        Enter your name
-                                    </div></div></div>
                                                 </div>
                                                 <div className="auth-require-fields-match-group">
                                                     <div className="a-row a-spacing-base">
@@ -207,21 +204,7 @@ class Login extends Component {
                                                             Email
                                   </label>
                                                         <input name="email" type="email" onChange={this.handleChange} required maxLength={64} id="ap_email" name="email" tabIndex={3} className="a-input-text a-span12 auth-required-field auth-require-fields-match auth-require-email-validaton auth-require-reverify-on-change auth-contact-verification-request-info" />
-                                                        <div id="auth-email-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Enter your email
-                                      </div></div></div>
-                                                        <div id="auth-email-invalid-email-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Enter a valid email address
-                                      </div></div></div>
-                                                        <div id="auth-email-invalid-claim-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Wrong or Invalid email address or mobile phone number. Please correct and try again.
-                                      </div></div></div>
-                                                        <div id="auth-email-missing-alert-ango-email" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Enter your email
-                                      </div></div></div>
-                                                        <div id="auth-email-missing-alert-ango-phone" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Enter your mobile phone number
-                                      </div></div></div>
+                                                        
                                                     </div>
                                                 </div>
 
@@ -249,21 +232,13 @@ class Login extends Component {
                                                         <div className="a-box a-alert-inline a-alert-inline-info auth-inlined-information-message a-spacing-top-mini"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                                                             Passwords must be at least 6 characters.
                                       </div></div></div>
-                                                        <div id="auth-password-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Enter your password
-                                      </div></div></div>
-                                                        <div id="auth-password-invalid-password-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Passwords must be at least 6 characters.
-                                      </div></div></div>
                                                     </div>
                                                     <div className="a-row a-spacing-base">
                                                         <label htmlFor="ap_password_check" className="a-form-label">
                                                             Re-enter password
                                   </label>
                                                         <input onChange={this.handlePasswordChange} required type="password" minLength={6} maxLength={1024} id="ap_password_check" autoComplete="off" name="passwordCheck" tabIndex={6} className="a-input-text a-form-normal a-span12 auth-required-field auth-require-fields-match" />
-                                                        <div id="auth-passwordCheck-missing-alert" className="a-box a-alert-inline a-alert-inline-error auth-inlined-error-message a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
-                                                            Type your password again
-                                      </div></div></div>
+                                                        
                                                         {this.state.showPasswordMismatchError &&
                                                             <div id="auth-password-mismatch-alert" className="a-box a-alert-inline a-alert-inline-error a-spacing-top-mini" aria-live="assertive" role="alert"><div className="a-box-inner a-alert-container"><i className="a-icon a-icon-alert" /><div className="a-alert-content">
                                                                 Passwords must match

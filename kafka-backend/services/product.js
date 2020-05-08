@@ -17,7 +17,7 @@ function handle_request(msg, callBack) {
 
   if (msg.path == "get-product-details") {
     let data = msg.data;
-    Product.findOne({ _id: data._id }, (error, result) => {
+    Product.findOneAndUpdate({ _id: data._id }, {$inc : {'view_count' : 1}}, (error, result) => {
       if (error) {
         console.log('error')
         callBack(error);
