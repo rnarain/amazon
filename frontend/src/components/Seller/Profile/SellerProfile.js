@@ -89,13 +89,14 @@ class SellerProfile extends Component {
         axios.post(backendServer + "/customer/upload", data)
             .then(res => { // then print response status
                 if (res.data.success === 1) {
-                    alert('Uploaded Successfully')
+                    alert('Uploaded Successfully');
+                    this.getData();
                 }
             });
         this.setState({
             selected_image: ''
         })
-        this.getData();
+
 
     }
 

@@ -44,11 +44,11 @@ function handle_request(msg, callBack) {
         for(let idx=0; idx< data.products.length; idx++){
           const value_query = 'select sum(productprice * quantity) from productandorders where productid='
                         + '\'' + data.products[idx]._id + '\'' +  ' and sellerid= ' + 
-                        '\'' + data.sellerid + '\';'
+                        '\'' + data.sellerid + '\' and deliverystatus=\'Delivered\';'
 
           const quant_query = 'select sum(quantity) from productandorders where productid='
                         + '\'' + data.products[idx]._id + '\'' +  ' and sellerid= ' + 
-                        '\'' + data.sellerid + '\';'
+                        '\'' + data.sellerid + '\' and deliverystatus=\'Delivered\';'
           sqlpool.query(value_query, (error, result) => {
             if (error) {
               callBack(error);
@@ -73,6 +73,7 @@ function handle_request(msg, callBack) {
               if (detail.total_value !==0) {
                 total_result.push(detail);
               }
+              console.log(detail);
               if (size === data.products.length){
                 return callBack(null, total_result);
               }
