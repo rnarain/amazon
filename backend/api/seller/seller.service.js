@@ -74,6 +74,37 @@ module.exports = {
         // })
     },
 
+    getSellerStatistics : (data, callBack) =>{
+
+      const params = {
+        data: data,
+        path: 'get-seller-statistics'
+      }
+      kafka.make_request('seller', params, (error, result) => {
+          if (error) {
+              callBack(error);
+          }
+          return callBack(null, result);
+      });
+
+      // var results = [];
+      // var  detail = {};
+      // for(let idx=0; idx<data.products.length; idx++){
+      //   var query = 'select sum(productprice * quantity) from productandorders where productid='
+      //                 + '\'' + data.products[idx]._id + '\'' +  ' and sellerid= ' + 
+      //                 '\'' + data.sellerid + '\';'
+      //   detail.total_value = await sqlpool.query(query);
+
+      //   query = 'select sum(quantity) from productandorders where productid='
+      //            + '\'' + data.products[idx]._id + '\'' +  ' and sellerid= ' + 
+      //            '\'' + data.sellerid + '\';'
+      //   detail.total_quantity =  await sqlpool.query(query);
+      //   detail.productid = data.products[idx]._id;
+      //   results.push(detail);
+      // }
+      // return callBack(null, results);
+    },
+
     updateProfile: (data, callBack) => {
 
         const params = {

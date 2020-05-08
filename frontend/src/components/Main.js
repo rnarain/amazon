@@ -21,6 +21,7 @@ import ChangeOrderStatus from './Seller/Orders/ChangeOrderStatus';
 import ListProductsBySellerName from './Admin/Sellers/ListProductsBySellerName';
 import AdminDashboard from './Admin/Dashboard/Dashboard';
 import SellerMonthlySales from './Admin/Sellers/SellerMonthlySales';
+import SellerStatistics from './Seller/SellerStatistics';
 
 
 
@@ -76,6 +77,10 @@ class Main extends Component {
                         <Route exact path="/orderdetails/" component={OrderDetailsPage}/>
                         <Route exact path="/order-details/" component={OrderDetailsCommon}/>
                         <Route exact path="/checkout" component={Checkout} />
+                        <Route exact path="/sellerstatistics" component={SellerStatistics}/>
+
+
+                       
                         {/*
                         <Route exact path="/orders/" component={Orders}/>
                         <Route exact path="/seller" component={SellerPage} /> */}

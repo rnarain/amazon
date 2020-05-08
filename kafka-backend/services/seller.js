@@ -37,6 +37,50 @@ function handle_request(msg, callBack) {
         })
     }
 
+    if (msg.path == 'get-seller-statistics') {
+        var total_result = [];
+        const data = msg.data;
+        var size = 0;
+        for(let idx=0; idx< data.products.length; idx++){
+          const value_query = 'select sum(productprice * quantity) from productandorders where productid='
+                        + '\'' + data.products[idx]._id + '\'' +  ' and sellerid= ' + 
+                        '\'' + data.sellerid + '\';'
+
+          const quant_query = 'select sum(quantity) from productandorders where productid='
+                        + '\'' + data.products[idx]._id + '\'' +  ' and sellerid= ' + 
+                        '\'' + data.sellerid + '\';'
+          sqlpool.query(value_query, (error, result) => {
+            if (error) {
+              callBack(error);
+              console.error(error);
+            }
+            var detail = {};
+            var obj = JSON.parse(JSON.stringify(result[0]));
+            detail.total_value = obj[Object.keys(obj)[0]] ?  obj[Object.keys(obj)[0]] : 0;
+
+            detail.category = data.products[idx].category;
+            detail.productid = data.products[idx]._id;
+            detail.productname = data.products[idx].name;
+
+            sqlpool.query(quant_query, (error,result)=>{
+              if (error) {
+                callBack(error);
+                console.error(error);
+              }
+              obj = JSON.parse(JSON.stringify(result[0]));
+              detail.total_quantity= obj[Object.keys(obj)[0]] ? obj[Object.keys(obj)[0]] : 0;
+              size = size + 1;
+              if (detail.total_value !==0) {
+                total_result.push(detail);
+              }
+              if (size === data.products.length){
+                return callBack(null, total_result);
+              }
+            });
+          });
+        }
+    }
+
     if (msg.path == 'update-seller-profile') {
 
         const data = msg.data;
