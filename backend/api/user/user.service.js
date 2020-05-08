@@ -44,7 +44,7 @@ module.exports = {
     })
 
     
-    await sqlpool.query('SELECT COUNT(*) as count FROM amazondb.order WHERE DATEDIFF(CURRENT_TIMESTAMP,orderdate) < 1', (error, result) => {
+    await sqlpool.query(`SELECT COUNT(*) as count FROM amazondb.order WHERE DATEDIFF(CURRENT_TIMESTAMP,orderdate) < 1`, (error, result) => {
       if (error) {
         console.log(error);
         //callBack(error);
@@ -54,6 +54,7 @@ module.exports = {
       }
     })
     await sqlpool.query(`SELECT productid , COUNT(productid) AS count FROM amazondb.productandorders
+    WHERE deliverystatus <> "Cancelled"
     GROUP BY productid
     ORDER BY COUNT(productid) DESC
     LIMIT 5`, (error, result) => {
@@ -72,6 +73,7 @@ module.exports = {
       }
     })
     await sqlpool.query(`SELECT sellerid , SUM(quantity * productprice ) AS sales FROM amazondb.productandorders
+    WHERE deliverystatus <> "Cancelled"
     GROUP BY sellerid
     ORDER BY  SUM(quantity * productprice ) DESC
     LIMIT 5`, (error, result) => {
@@ -88,9 +90,11 @@ module.exports = {
         analytics.top5Sellers = result;
       }
     })
-    await sqlpool.query(`SELECT userid , SUM(totalcost) AS sales FROM amazondb.order
-    GROUP BY userid
-    ORDER BY  SUM(totalcost) DESC
+    await sqlpool.query(`SELECT userid , SUM(b.quantity * b.productprice) AS sales FROM amazondb.order as a
+    JOIN amazondb.productandorders as b  ON a.orderid = b.orderid
+    WHERE b.deliverystatus <> "Cancelled"
+    GROUP BY a.userid
+    ORDER BY  SUM(b.quantity * b.productprice) DESC
     LIMIT 5`, (error, result) => {
       if (error) {
         console.log(error);
