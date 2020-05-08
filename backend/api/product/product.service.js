@@ -226,10 +226,11 @@ module.exports = {
         var params = {
           ACL: 'public-read',
           Bucket: connectionStrings.s3BucketName,
-          Body: fs.createReadStream(item.path),
+	  Body: fs.createReadStream(item.path),
           Key: `images/products/${item.originalname}`
         };
-
+	console.log(' in PARAMS OF AWS S# IMAGE UPLOADDDDDDD', item);
+	console.log(' PARAMS ', params);
         s3.upload(params, (err, data) => {
 
           if (err) {
@@ -237,7 +238,7 @@ module.exports = {
           }
 
           if (data) {
-
+		console.log('data in upload ', data);
           }
         });
 
