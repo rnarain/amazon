@@ -54,7 +54,7 @@ module.exports = {
       }
     })
     await sqlpool.query(`SELECT productid , COUNT(productid) AS count FROM amazondb.productandorders
-    WHERE deliverystatus <> "Cancelled"
+    WHERE deliverystatus = "Delivered"
     GROUP BY productid
     ORDER BY COUNT(productid) DESC
     LIMIT 5`, (error, result) => {
@@ -73,7 +73,7 @@ module.exports = {
       }
     })
     await sqlpool.query(`SELECT sellerid , SUM(quantity * productprice ) AS sales FROM amazondb.productandorders
-    WHERE deliverystatus <> "Cancelled"
+    WHERE deliverystatus = "Delivered"
     GROUP BY sellerid
     ORDER BY  SUM(quantity * productprice ) DESC
     LIMIT 5`, (error, result) => {
@@ -92,7 +92,7 @@ module.exports = {
     })
     await sqlpool.query(`SELECT userid , SUM(b.quantity * b.productprice) AS sales FROM amazondb.order as a
     JOIN amazondb.productandorders as b  ON a.orderid = b.orderid
-    WHERE b.deliverystatus <> "Cancelled"
+    WHERE b.deliverystatus = "Delivered"
     GROUP BY a.userid
     ORDER BY  SUM(b.quantity * b.productprice) DESC
     LIMIT 5`, (error, result) => {

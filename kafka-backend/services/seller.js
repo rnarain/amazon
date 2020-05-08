@@ -116,7 +116,7 @@ function handle_request(msg, callBack) {
         sqlpool.query(`SELECT MONTH(a.orderdate) as SalesMonth , YEAR(a.orderdate) as SalesYear , SUM(b.quantity * b.productprice) AS TotalSales
         FROM amazondb.order as a
         inner join amazondb.productandorders as b on a.orderid= b.orderid
-        Where b.sellerid=? AND b.deliverystatus<>'Cancelled'
+        Where b.sellerid=? AND b.deliverystatus = "Delivered"
         GROUP BY  YEAR(a.orderdate) , MONTH(a.orderdate)
         ORDER BY YEAR(a.orderdate) DESC , MONTH(a.orderdate) DESC`,
             [

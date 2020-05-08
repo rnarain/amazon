@@ -12,15 +12,30 @@ module.exports = {
 
   searchProduct: (data, callBack) => {
     let filter = {};
-    if (data.category == 'All') filter = {
-      name: { "$regex": data.name, "$options": "i" }
+    if (data.category == 'All'){
+    filter = {
+               '$or' : [ 
+                        {name: { "$regex": data.name, "$options": "i" }}  ,
+                        {seller_name: { "$regex": data.name, "$options": "i" }}
+                     ]
+     }
     }
     else {
-      filter = {
-        name: { "$regex": data.name, "$options": "i" },
-        category: { "$regex": data.category, "$options": "i" }
+      filter = 
+        {
+          '$and' : [
+                   { 
+                     '$or' : [ 
+                              {name: { "$regex": data.name, "$options": "i" }}  ,
+                              {seller_name: { "$regex": data.name, "$options": "i" }}
+                           ]
+                   },
+                   { 
+                    category: { "$regex": data.category, "$options": "i" }
+                   }
+                 ]
+        }
       }
-    }
     Product.find(filter, (error, result) => {
       if (error) {
         callBack(error);
@@ -67,29 +82,44 @@ module.exports = {
   },
 
 
-  searchProductWithKafka: (data, callBack) => {
-    let filter = {};
-    if (data.category == 'All') filter = {
-      name: { "$regex": data.name, "$options": "i" }
-    }
-    else {
-      filter = {
-        name: { "$regex": data.name, "$options": "i" },
-        category: { "$regex": data.category, "$options": "i" }
-      }
-    }
-    const params = {
-      data: filter,
-      path: 'search-product'
-    }
-    kafka.make_request('product', params, (error, result) => {
-      if (error) {
-        callBack(error);
-      }
-      return callBack(null, result);
-    });
+  // searchProductWithKafka: (data, callBack) => {
+  //   let filter = {};
+  //   if (data.category == 'All'){
+  //   filter = {
+  //              '$or' : [ 
+  //                       {name: { "$regex": data.name, "$options": "i" }}  ,
+  //                       {seller_name: { "$regex": data.name, "$options": "i" }}
+  //                    ]
+  //    }
+  //   }
+  //   else {
+  //     filter = 
+  //       {
+  //         '$and' : [
+  //                  { 
+  //                    '$or' : [ 
+  //                             {name: { "$regex": data.name, "$options": "i" }}  ,
+  //                             {seller_name: { "$regex": data.name, "$options": "i" }}
+  //                          ]
+  //                  },
+  //                  { 
+  //                   category: { "$regex": data.category, "$options": "i" }
+  //                  }
+  //                ]
+  //       }
+  //     }
+  //   const params = {
+  //     data: filter,
+  //     path: 'search-product'
+  //   }
+  //   kafka.make_request('product', params, (error, result) => {
+  //     if (error) {
+  //       callBack(error);
+  //     }
+  //     return callBack(null, result);
+  //   });
 
-  },
+  // },
 
   getProductDetails: (data, callBack) => {
     const params = {
