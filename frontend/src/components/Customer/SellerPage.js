@@ -21,14 +21,15 @@ class SellerPage extends Component {
         console.log(this.props);
         // const queryString = window.location.search;
         console.log('QueryStrng ', this.props.match.params.name);
-
+        debugger
         axios.get(`${backendServer}/seller/getSellerDetails`, { params: { name: this.props.match.params.name } })
             .then(response => {
+                debugger
                 this.setState({
-                    name: response.data.data.name,
-                    address: response.data.data.address,
-                    profile_pic: response.data.data.profile_pic,
-                    email: response.data.data.email
+                    name: response.data.data[0].name,
+                    address: response.data.data[0].address,
+                    profile_pic: response.data.data[0].profile_pic,
+                    email: response.data.data[0].email
                 })
                 //debugger;
             })
@@ -69,8 +70,8 @@ class SellerPage extends Component {
 
                         <br />
 
-                        {/* <div className="col-md-5"></div> */}
-                        <img src={frontendServer + "/images/" + this.state.profile_pic} style={{ display: 'inline-block', width: '100px', height:'auto', float: 'left' }} />
+                        <div className="col-md-5"></div>
+                        <img src={frontendServer + "/images/" + this.state.profile_pic} style={{ padding:'5px', display: 'inline-block', width: '100px', height:'auto', float: 'left' }} />
                         <div style={{ display: 'block', fontFamily: 'Amazon Ember' }}>
                             <h2> {this.state.name}  <br /> </h2>
                             {/* <div className="col-md-4"></div> */}
