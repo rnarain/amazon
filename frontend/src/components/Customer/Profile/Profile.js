@@ -164,7 +164,7 @@ class Profile extends Component {
                             <Modal.Title> <br />Change your name</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <input name="name" type="text" onChange={this.onChange} />
+                            <input name="name" type="text" value={this.state.name} onChange={this.onChange} />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={(e) => { this.setState({ show: false }) }}>
