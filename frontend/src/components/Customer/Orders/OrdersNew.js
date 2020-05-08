@@ -414,7 +414,7 @@ class OrdersNew extends Component {
                                   </span>
                                 </div>
                                 <div className="a-row">
-                                <a className="a-link-normal" href={"/seller/name=" +  orderProduct.seller_name}>
+                                <a className="a-link-normal" href={"/seller/name=" +  orderProduct.productDetails.seller_name}>
                                   <span className="a-size-small a-color-secondary">
                                     Sold by:
                                     {orderProduct.productDetails.seller_name}
