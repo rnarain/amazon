@@ -61,7 +61,7 @@ function handle_request(msg, callBack) {
 
   if (msg.path == "add-product") {
     const data = msg.data;
-    Product.create({ name: data.name, description: data.description, price: data.price, category: data.category, seller_id: data.seller_id, seller_name: data.seller_name, images: data.images }, (error, results) => {
+    await Product.create({ name: data.name, description: data.description, price: data.price, category: data.category, seller_id: data.seller_id, seller_name: data.seller_name, images: data.images }, (error, results) => {
       if (error)
         callBack(error);
 

@@ -178,9 +178,9 @@ class SellerInventory extends Component {
 
       this.setState(prevState => ({
         add_product: 0
-      }), function () {
-        console.log('data : ', data)
-        axios.post(`${backendServer}/product/addProduct`, data)
+      }), async function () {
+        console.log('data : ', data);
+        await axios.post(`${backendServer}/product/addProduct`, data)
           .then(response => {
 
             this.getallsellerproducts();
