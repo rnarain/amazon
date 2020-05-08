@@ -107,7 +107,7 @@ class Login extends Component {
             axios.defaults.withCredentials = true;
             console.log('data', data);
             //make a post request with the user data
-            axios.post('http://localhost:3001/' + 'signup', data)
+            axios.post(`${backendServer}/signup`, data)
                 .then(response => {
                     toast.configure();
                     toast.success("Registration succesfull! Redirecting to login page.", {

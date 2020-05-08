@@ -90,7 +90,7 @@ class Login extends Component {
             axios.defaults.withCredentials = true;
             //make a post request with the user data
             console.log('req.body', data);
-            axios.post('http://localhost:3001/' + 'login/', data)
+            axios.post(`${backendServer}/login/`, data)
                 .then(response => {
                     if(response){
                         localStorage.setItem("token", response.data.token);

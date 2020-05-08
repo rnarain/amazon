@@ -5,8 +5,6 @@ module.exports = {
 
   placeOrder: (orderdetails, callBack) => {
 
-    
-
     const params = {
       orderdetails: orderdetails,
       path: 'place-order'
