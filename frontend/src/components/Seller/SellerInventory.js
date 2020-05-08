@@ -78,14 +78,14 @@ class SellerInventory extends Component {
       });
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
     console.log("in component did update")
     let name = queryString.parse(this.props.location.search).name;
     console.log(this.props.location.search)
     console.log(name)
     if (name != this.state.params) {
-
-      axios.get(`${backendServer}/sellerinventory/searchproductinventory${this.props.location.search}`)
+      if(name){
+        await axios.get(`${backendServer}/sellerinventory/searchproductinventory${this.props.location.search}`)
         .then(response => {
           this.setState({
             products: response.data.data,
@@ -95,6 +95,20 @@ class SellerInventory extends Component {
         ).catch(ex => {
           alert(ex);
         });
+      }
+      else{
+        var id = localStorage.getItem("id");
+        console.log("id is", id)
+        await axios.get(`${backendServer}/sellerinventory/getsellerproducts/` + id).then(response => {
+        console.log(response.data)
+        this.setState({
+          products: response.data.data,
+          params : name
+        })
+    })
+      }
+
+     
 
     }
   }
@@ -109,7 +123,8 @@ class SellerInventory extends Component {
     await axios.get(`${backendServer}/sellerinventory/getsellerproducts/` + id).then(response => {
       console.log(response.data)
       this.setState({
-        products: response.data.data
+        products: response.data.data,
+        params : null
       })
     })
     this.setState({
