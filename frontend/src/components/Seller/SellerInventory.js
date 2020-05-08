@@ -165,16 +165,6 @@ class SellerInventory extends Component {
         add_product: 0
       }), async function () {
         console.log('data : ', data);
-        await axios.post(`${backendServer}/product/addProduct`, data)
-          .then(response => {
-
-            this.getallsellerproducts();
-            toast.configure();
-            toast.success("Product Added Successfully", {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 3000
-            });
-          });
       })
 
 

@@ -46,7 +46,7 @@ class AddProductPopUp extends Component {
         const data = { cancel: 1 }
         this.props.parentCallback(data)
     }
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         debugger
         var images = []
         for (let i = 0; i < this.state.images.length; i++) {
@@ -63,6 +63,16 @@ class AddProductPopUp extends Component {
             category: this.state.category,
             images: images
         }
+
+        await axios.post(`${backendServer}/product/addProduct`, data)
+          .then(response => {
+
+            toast.configure();
+            toast.success("Product Added Successfully", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000
+            });
+          });
         this.props.parentCallback(data);
     }
 

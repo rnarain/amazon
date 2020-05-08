@@ -3,7 +3,7 @@ const User = require('../Models/UserModel');
 const client = require("../../backend/config/redisconfig");
 // var kafka = require('../../kafka/client');
 
-function handle_request(msg, callBack) {
+async function handle_request(msg, callBack) {
 
   if (msg.path == "search-product") {
     let filter = msg.data;
