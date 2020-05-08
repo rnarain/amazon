@@ -49,7 +49,7 @@ class SellerPage extends Component {
         renderedOutput = newArr.map(item =>
             // <div>
             <div class="card" style={{ display: 'inline-block', width: '450px', height: '350px', borderBottom: '2px solid #d5dbdb', borderRight: '2px solid #d5dbdb', borderTop: '5px solid #d5dbdb' }}>
-                <img class="card-img-top" src={item.images.length > 0 ? frontendServer+'/images/product/'+item.images[0].file_name : "/images/no-image.jpg"}  style={{ width: '350px', height: '250px', padding: '15px' }} />
+                <img class="card-img-top" src={item.images.length > 0 ? frontendServer+'/images/products/'+item.images[0].file_name : "/images/no-image.jpg"}  style={{ width: '350px', height: '250px', padding: '15px' }} />
                 <div class="card-body">
                     <h5 class="card-title" style={{ padding: '5px', textAlign: 'center' }}> {item.name}</h5>
 

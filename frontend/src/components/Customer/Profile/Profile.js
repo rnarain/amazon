@@ -104,12 +104,13 @@ class Profile extends Component {
             .then(res => { // then print response status
                 if(res.data.success === 1) {
                     alert('Uploaded Successfully')
+                    this.getData();
                 }
             });
         this.setState({
             selected_image : ''
         })
-        this.getData();
+        
     }
 
     render() {
