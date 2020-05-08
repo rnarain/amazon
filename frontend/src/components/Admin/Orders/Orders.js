@@ -64,7 +64,7 @@ class Order extends Component {
   componentWillMount() {
     var data = {
       userid: localStorage.getItem('id'),
-      userType:"Seller",
+      userType:"Admin",
       orderStatus: "Open"
     }
     axios.defaults.withCredentials = true;
@@ -121,7 +121,7 @@ class Order extends Component {
 
     var data = {
       userid: localStorage.getItem('id'),
-      userType:"Seller",
+      userType:"Admin",
       orderStatus: queryType
     }
     axios.defaults.withCredentials = true;

@@ -94,7 +94,7 @@ class ChangeOrderStatus extends Component {
                           this.setState({
                             trackingData: this.state.trackingData.concat({
                                 deliverystatus : deliveryStatusReverse[this.state.lastStatus + 1],
-                                updatedtime : moment(new Date()).format('MMMM Do YYYY, h:mm a')
+                                updatedtime : new Date()
                             }),
                             lastStatus : this.state.lastStatus + 1
                           })
@@ -112,7 +112,7 @@ class ChangeOrderStatus extends Component {
                     <tr>
                     {/* <th scope="row"></th> */}
                     <td>{track.deliverystatus}</td>
-                    <td>{track.updatedtime}</td>
+                    <td>{moment(track.updatedtime).format('MMMM Do YYYY, h:mm a')}</td>
                   </tr>
                 )
         })

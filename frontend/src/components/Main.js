@@ -14,6 +14,7 @@ import Payment from './Payment/Payment';
 import Address from './Address/Address';
 import AdminCategories from './Admin/Category/ListCategories';
 import AdminProducts from './Admin/Category/ListProducts';
+import AdminOrders from './Admin/Orders/Orders';
 import ListSellers from './Admin/Sellers/ListSellers';
 import SellerOrders from './Seller/Orders/Orders';
 import ChangeOrderStatus from './Seller/Orders/ChangeOrderStatus';
@@ -37,6 +38,7 @@ import Footer from './LandingPage/Footer';
 import { Redirect } from 'react-router';
 import SellerInventory from './Seller/SellerInventory';
 import OrderDetailsPage from './Customer/OrderDetailsPage/OrderDetailsPage';
+import OrderDetailsCommon from './Customer/OrderDetailsPage/OrderDetailsCommon';
 import SellerProfile from './Seller/Profile/SellerProfile';
 
 //Create a Main Component
@@ -72,8 +74,7 @@ class Main extends Component {
                         <Route exact path="/seller-orders" component={SellerOrders}/>
                         <Route exact path="/sellerinventory/" component={SellerInventory}/>
                         <Route exact path="/orderdetails/" component={OrderDetailsPage}/>
-
-                       
+                        <Route exact path="/order-details/" component={OrderDetailsCommon}/>
                         <Route exact path="/checkout" component={Checkout} />
                         {/*
                         <Route exact path="/orders/" component={Orders}/>
@@ -82,6 +83,7 @@ class Main extends Component {
                         <Route exact path="/address" component={Address} />
 
                         <Route path="/admin-category" component={AdminCategories}/>
+                        <Route path="/admin-orders" component={AdminOrders}/>
                         <Route path="/admin-product/:name" component={AdminProducts}/>
                         <Route path="/list-sellers" component={ListSellers}/>
                         <Route path="/list-seller-products/:name" component={ListProductsBySellerName}/>

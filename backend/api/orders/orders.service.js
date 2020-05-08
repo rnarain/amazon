@@ -10,26 +10,45 @@ var sqlpool = require('../../config/sqlconfig');
 
 
 module.exports = {
-  orders1: (req, res) => {
-
-    var orderObj;
+  orders: (req, res) => {
     var getcast;
-    if(req.body.type == "All"){
-      getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '"';
-      console.log('inside all');
-    }else if(req.body.type == "Open"){
-      getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus <> "Delivered" And productandorders.deliverystatus <> "Cancelled"';
-      console.log('inside open');
+    console.log(req.body);
+    // userid: localStorage.getItem('id'),
+    // userType:"Seller",
+    // orderStatus: "Open"
+    if(req.body.userType == 'Customer'){
+      if(req.body.orderStatus == "All"){
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '"';
+      }else if(req.body.type == "Open"){
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus <> "Delivered" And productandorders.deliverystatus <> "Cancelled"';
+      }
+      else{
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus ="Cancelled"';
+      }
     }
-    else if(req.body.type == "Seller"){
-    getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where  productandorders.sellerid = "' +  req.body.sellerid + '" ORDER BY order.orderdate DESC';
+    else if (req.body.userType == "Seller"){
+      if( req.body.orderStatus == 'Delivered'){
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where  productandorders.sellerid = "' +  req.body.userid + '"  And productandorders.deliverystatus="Delivered" ORDER BY order.orderdate DESC';
+      }
+      else if(req.body.orderStatus == 'Open'){
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where productandorders.sellerid = "' +  req.body.userid + '" And productandorders.deliverystatus <> "Delivered" And productandorders.deliverystatus <> "Cancelled" ORDER BY order.orderdate DESC';
+      }
+      else{
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where productandorders.sellerid = "' +  req.body.userid + '" And productandorders.deliverystatus ="Cancelled" ORDER BY order.orderdate DESC';
+      }
+        
     }
-    
-    else{
-      getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus ="Cancelled"';
-      console.log('inside nit open');
+    else if (req.body.userType == 'Admin'){
+      if( req.body.orderStatus == 'Delivered'){
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where productandorders.deliverystatus="Delivered" ORDER BY order.orderdate DESC';
+      }
+      else if(req.body.orderStatus == 'Open'){
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where productandorders.deliverystatus <> "Delivered" And productandorders.deliverystatus <> "Cancelled" ORDER BY order.orderdate DESC';
+      }
+      else{
+        getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where  productandorders.deliverystatus ="Cancelled" ORDER BY order.orderdate DESC';
+      }
     }
-  
     //Get orders ddata
 
     sqlpool.query(getcast, (error, result) => {
@@ -64,23 +83,11 @@ module.exports = {
              return res.send(group)
           });
       }
-
-       
-
-        //   //res.body = user;
-        //   //return res.send(result);
-        // } else {
-        //   res.writeHead(401, {
-        //     'Content-Type': 'text/plain'
-        //   })
-        //   console.log('invalid');
-        //   res.end("Invalid Credentials");
-        // }
       }
 
     });
   },
-  orders: (req, res) => {
+  orders1: (req, res) => {
 
     var orderObj;
     var getcast;
