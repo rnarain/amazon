@@ -19,7 +19,7 @@ module.exports = {
     if(req.body.userType == 'Customer'){
       if(req.body.orderStatus == "All"){
         getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '"';
-      }else if(req.body.type == "Open"){
+      }else if(req.body.orderStatus == "Open"){
         getcast = 'SELECT * FROM amazondb.order INNER JOIN amazondb.productandorders ON order.orderid = productandorders.orderid Where order.userid = "' +  req.body.userid + '" And productandorders.deliverystatus <> "Delivered" And productandorders.deliverystatus <> "Cancelled"';
       }
       else{

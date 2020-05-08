@@ -101,7 +101,7 @@ class Login extends Component {
                             window.location.href = "/product-search";
                         }
                         else if(response.data.userType === 'Seller'){
-                            window.location.href = "/product-search";
+                            window.location.href = "/sellerinventory";
                         }
                         else{
                             window.location.href = "/admin-dashboard";

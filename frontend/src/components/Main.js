@@ -9,7 +9,7 @@ import SellerPage from './Customer/SellerPage';
 import Checkout from './Checkout/Checkout';
 import CustomerProfile from './Customer/Profile/Profile';
 import SignUp from './Signup/Signup';
-import Orders from './Customer/Orders/Orders';
+import Orders from './Customer/Orders/OrdersNew';
 import Payment from './Payment/Payment';
 import Address from './Address/Address';
 import AdminCategories from './Admin/Category/ListCategories';

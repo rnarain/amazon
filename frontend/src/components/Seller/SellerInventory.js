@@ -350,7 +350,7 @@ class SellerInventory extends Component {
     let navMessage = this.state.params ? `Showing search results for ${this.state.params}` : "Nothing to search"
 
     return (
-      <div>
+      <div classname="amazon-body">
         {navMessage}
         {editform}
         <table style={{ borderCollapse: "collapse" }} class="table table-striped table-bordered table-sm" cellspacing="0">

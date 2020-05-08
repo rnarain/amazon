@@ -140,7 +140,7 @@ class Navbar extends Component {
         else if(localStorage.getItem('type')==='Admin'){
             navLinks = (
                 <ul className="nav navbar-nav navbar-right">
-                    <li><Link to="/product-search">{this.state.name}</Link></li>
+                    <li><Link to="/admin-dashboard">{this.state.name}</Link></li>
                     <li><a onClick={this.handleLogout}>Logout</a></li>
                 </ul>
             );
@@ -163,7 +163,7 @@ class Navbar extends Component {
         else{
             navLinks = (
                 <ul className="nav navbar-nav navbar-right">
-                    <li><Link to="/product-search">{this.state.name}</Link></li>
+                    <li><Link to="/seller/profile">{this.state.name}</Link></li>
                     <li><a onClick={this.handleLogout}>Logout</a></li>
                 </ul>
             );
@@ -172,10 +172,9 @@ class Navbar extends Component {
                 <div className="container-fluid">
                 <div className="col-sm-offset-2 col-sm-7">
                     <ul className="nav navbar-nav xshop">
-                        {/* <li><Link to="/admin-dashboard">Dashboard</Link></li>
-                        <li><Link to="/admin-category">categories</Link></li>
-                        <li><Link to="/list-sellers">Sellers</Link></li>
-                        <li><Link to="#">Orders</Link></li> */}
+                        <li><Link to="/sellerinventory">Inventory</Link></li>
+                        <li><Link to="/seller-orders">Orders</Link></li>
+                        <li><Link to="/seller-reports">Reports</Link></li>
                     </ul>
                 </div>
                 <div className="col-sm-3">&nbsp;</div>
