@@ -79,13 +79,6 @@ class AddProductPopUp extends Component {
         this.state.images.forEach(file => {
             data.append("images", file)
         })
-        data.append('name', this.state.name);
-        data.append('description', this.state.description);
-        data.append('seller_id', localStorage.getItem('id'));
-        data.append('seller_name', localStorage.getItem('name'));
-        data.append('price', this.state.price);
-        data.append('category', this.state.category);
-        data.append('images_1', images)
 
         // data.append('array_images', this.state.images);
         debugger

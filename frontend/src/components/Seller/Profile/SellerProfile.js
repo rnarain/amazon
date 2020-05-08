@@ -29,9 +29,9 @@ class SellerProfile extends Component {
             .then(response => {
                 debugger
                 this.setState({
-                    name: response.data.data.name,
-                    profile_pic: response.data.data.profile_pic,
-                    address: response.data.data.address,
+                    name: response.data.data[0].name,
+                    profile_pic: response.data.data[0].profile_pic,
+                    address: response.data.data[0].address,
                 })
             })
     }
@@ -63,10 +63,14 @@ class SellerProfile extends Component {
             .then(response => {
                 if (response.data.data === 'Name Already Exists') {
                     alert('Name Already Exists');
-                    this.getData();
+
                 }
-                else
+                else {
                     alert('Profile Updated Successfully');
+                    localStorage.setItem('name', this.state.name);
+                    // this.getData();
+                    window.location.reload();
+                }
                 this.setState({
                     show: false
                 })
