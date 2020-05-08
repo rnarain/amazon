@@ -174,7 +174,7 @@ class Navbar extends Component {
                     <ul className="nav navbar-nav xshop">
                         <li><Link to="/sellerinventory">Inventory</Link></li>
                         <li><Link to="/seller-orders">Orders</Link></li>
-                        <li><Link to="/seller-reports">Reports</Link></li>
+                        <li><Link to="/sellerstatistics">Reports</Link></li>
                     </ul>
                 </div>
                 <div className="col-sm-3">&nbsp;</div>
