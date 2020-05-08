@@ -51,9 +51,9 @@ class OrdersNew extends Component {
       redirectToHome: false,
       showLoginError: false,
       orderList: {},
-      deliveredOrdersClassname: "",
+      ordersClassname: "selected",
       cancelledOrdersClassname: "",
-      openOrdersClassname: "selected",
+      openOrdersClassname: "",
       showModal :false,
       trackingData:[],
       pageOfItems:[]
@@ -68,7 +68,7 @@ class OrdersNew extends Component {
     var data = {
       userid: localStorage.getItem('id'),
       userType:"Customer",
-      orderStatus: "Open"
+      orderStatus: "All"
     }
     axios.defaults.withCredentials = true;
     //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
@@ -411,6 +411,21 @@ class OrdersNew extends Component {
                                 <div className="a-row">
                                   <span class="a-size-small a-color-price">
                                     Quantity :{orderProduct.quantity}
+                                  </span>
+                                </div>
+                                <div className="a-row">
+                                <a className="a-link-normal" href={"/seller/name=" +  orderProduct.seller_name}>
+                                  <span className="a-size-small a-color-secondary">
+                                    Sold by:
+                                    {orderProduct.productDetails.seller_name}
+                                   
+                                </span>
+                                </a>
+                                </div>
+                                <div className="a-row">
+
+                                  <span class="a-size-small a-color-price">
+                                    ${orderProduct.productprice}
                                   </span>
                                 </div>
                                 </div>

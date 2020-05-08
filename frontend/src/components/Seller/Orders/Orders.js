@@ -58,7 +58,8 @@ class Order extends Component {
       trackingData:[],
       pageOfItems:[]
     }
-    //Bind the handlers to this className
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    //Bind the handlers to this className\
   }
   //Call the Will Mount to set the auth Flag to false
   componentWillMount() {
@@ -92,6 +93,34 @@ class Order extends Component {
       authFlag: false
     })
   }
+
+  handleButtonClick = (e) => {
+    var data = {
+      id: e.target.id
+    }
+    console.log('id',e.target.id);
+    axios.defaults.withCredentials = true;
+    //axios.defaults.headers.common['authorization'] = localStorage.getItem('token');
+    axios.post(`${backendServer}/orders/cancelOrders`, data)
+      .then(response => {
+        console.log('inside response');
+        toast.configure();
+        toast.success("Cancellation succesfull! Updating Orders", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000
+        });
+        setTimeout(() => { window.location.reload(); }, 3000);
+      }
+      ).catch(ex => {
+        console.log('error', ex);
+        this.setState({
+          showLoginError: true
+        })
+      });
+  
+} 
+
+
   handleTabChange = (e) => {
 
     var queryType;
@@ -287,15 +316,26 @@ class Order extends Component {
                                     Quantity :{orderProduct.quantity}
                                   </span>
                                 </div>
+                                <div className="a-row">
+                                  <span class="a-size-small a-color-price">
+                                    ${orderProduct.productprice}
+                                  </span>
+                                </div>
                                 </div>
                                 </div>
                                 </div>
                                 </div>
                         </div>
                         <div className="a-fixed-right-grid-col a-col-right" style={{ width: '220px', marginRight: '-220px', float: 'left' }}>
-                          <div className="a-row">
+                        <div className="a-row">
                             <div className="a-button-stack">
                             
+                              {orderProduct.deliverystatus != 'Delivered'  && orderProduct.deliverystatus != 'Cancelled' && 
+                              <span className="a-button a-button-normal a-spacing-mini a-button-base" id="a-autoid-7"><span className="a-button-inner">
+                                <span className="a-button-text" role="button" id={orderProduct.id} onClick={this.handleButtonClick}>
+                                    Cancel Product Order
+                                  </span></span></span>
+                              }
                             </div>
                           </div>
                         </div>

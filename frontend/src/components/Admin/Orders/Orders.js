@@ -287,6 +287,21 @@ class Order extends Component {
                                     Quantity :{orderProduct.quantity}
                                   </span>
                                 </div>
+                                <div className="a-row">
+                                <a className="a-link-normal" href={"/seller/name=" +  orderProduct.seller_name}>
+                                  <span className="a-size-small a-color-secondary">
+                                    Sold by:
+                                    {orderProduct.productDetails.seller_name}
+                                   
+                                </span>
+                                </a>
+                                </div>
+                                <div className="a-row">
+
+                                  <span class="a-size-small a-color-price">
+                                    ${orderProduct.productprice}
+                                  </span>
+                                </div>
                                 </div>
                                 </div>
                                 </div>
