@@ -19,6 +19,11 @@ class AddProductPopUp extends Component {
             images_new: [],
             categories: this.props.categories
         }
+        for (var i = 0; i < this.state.categories.length; i++)
+            if (this.state.categories[i].category === "All") {
+                this.state.categories.splice(i, 1);
+                break;
+            }
 
         console.log(this.props);
     }
