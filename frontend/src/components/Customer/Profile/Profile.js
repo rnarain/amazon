@@ -105,6 +105,7 @@ class Profile extends Component {
                 if(res.data.success === 1) {
                     alert('Uploaded Successfully')
                     this.getData();
+                    window.location.reload();
                 }
             });
         this.setState({

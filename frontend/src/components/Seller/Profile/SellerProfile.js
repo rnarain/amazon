@@ -68,7 +68,8 @@ class SellerProfile extends Component {
                 else {
                     alert('Profile Updated Successfully');
                     localStorage.setItem('name', this.state.name);
-                    this.getData();
+                    // this.getData();
+                    window.location.reload();
                 }
                 this.setState({
                     show: false
