@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.13",
     "aws-sdk": "^2.668.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "import-scripts": "^1.0.0",
     "jw-paginate": "^1.0.4",
